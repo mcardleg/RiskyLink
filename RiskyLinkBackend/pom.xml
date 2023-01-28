@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>ie.tcd.mcardleg</groupId>
 	<artifactId>RiskyLinkBackend</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>RiskyLinkBackend</name>
 	<description>Tool for identifying risky links in integrated datasets.</description>
 	<properties>
@@ -26,6 +26,18 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.semanticweb.owl</groupId>
+			<artifactId>align</artifactId>
+			<version>4.10</version>
+		</dependency>
+
+		<dependency>
+			<groupId>fr.inrialpes.exmo.align</groupId>
+			<artifactId>alignsvc</artifactId>
+			<version>4.10</version>
 		</dependency>
 	</dependencies>
 
