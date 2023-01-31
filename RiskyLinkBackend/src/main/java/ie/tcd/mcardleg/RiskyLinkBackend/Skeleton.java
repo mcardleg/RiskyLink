@@ -19,12 +19,16 @@ import java.nio.charset.StandardCharsets;
 import java.net.URI;
 import java.util.Properties;
 
+
 public class Skeleton {
 
-    public static void main( String[] args ) {
+    public static void skel() {
+        String[] args = new String[]{"file://$PWD/alignapi-version-4.10/examples/rdf/onto1.owl",
+                "file://$PWD/alignapi-version-4.10/examples/rdf/onto2.owl"};
+
         URI onto1 = null;
         URI onto2 = null;
-        Properties params = new BasicParameters();
+        Properties params = new Properties();
 
         try {
             // Loading ontologies
@@ -49,6 +53,7 @@ public class Skeleton {
             a1.render(renderer);
             writer.flush();
             writer.close();
+            System.out.println("reached");
 
         } catch (Exception e) { e.printStackTrace(); };
     }
