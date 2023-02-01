@@ -38,17 +38,11 @@ public class AlignmentGenerator {
             a1.align( (Alignment)null, params );
 
             // Creates a FileOutputStream
-            FileOutputStream file = new FileOutputStream("output.txt");
+            FileOutputStream file = new FileOutputStream(
+                    String.format("resources/%s_alignment.ttl", alignmentDirectory.split("/")[1]));
 
             // Creates a PrintWriter
             PrintWriter writer = new PrintWriter(file, true);
-
-//            PrintWriter writer = new PrintWriter (
-//                    new BufferedWriter(
-//                            new OutputStreamWriter( System.out, StandardCharsets.UTF_8.name() )), true);
-
-//            File file = new File (RESULTS_DIRECTORY, filename);
-//            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 
             AlignmentVisitor renderer = new OWLAxiomsRendererVisitor(writer);
             a1.render(renderer);
