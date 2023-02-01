@@ -12,10 +12,7 @@ import fr.inrialpes.exmo.align.impl.renderer.RDFRendererVisitor;
 
 import org.xml.sax.SAXException;
 
-import java.io.PrintWriter;
-import java.io.BufferedWriter;
-import java.io.OutputStreamWriter;
-import java.io.File;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.net.URI;
 import java.util.Properties;
@@ -40,9 +37,15 @@ public class AlignmentGenerator {
             a1.init ( onto1, onto2 );
             a1.align( (Alignment)null, params );
 
-            PrintWriter writer = new PrintWriter (
-                    new BufferedWriter(
-                            new OutputStreamWriter( System.out, StandardCharsets.UTF_8.name() )), true);
+            // Creates a FileOutputStream
+            FileOutputStream file = new FileOutputStream("output.txt");
+
+            // Creates a PrintWriter
+            PrintWriter writer = new PrintWriter(file, true);
+
+//            PrintWriter writer = new PrintWriter (
+//                    new BufferedWriter(
+//                            new OutputStreamWriter( System.out, StandardCharsets.UTF_8.name() )), true);
 
 //            File file = new File (RESULTS_DIRECTORY, filename);
 //            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
