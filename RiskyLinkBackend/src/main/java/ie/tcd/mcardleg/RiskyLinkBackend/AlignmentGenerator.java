@@ -15,6 +15,7 @@ import org.xml.sax.SAXException;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.net.URI;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 import static ie.tcd.mcardleg.RiskyLinkBackend.Constants.ETHICS_ONTOLOGOY_DIRECTORY;
@@ -37,10 +38,9 @@ public class AlignmentGenerator {
             a1.init ( onto1, onto2 );
             a1.align( (Alignment)null, params );
 
-            // Creates a FileOutputStream
             FileOutputStream file = new FileOutputStream(
                     String.format("resources/%s_alignment.ttl",
-                            alignmentDirectory.split("/")[alignmentDirectory.length()-1].split(".")[0]));
+                            alignmentDirectory.split("/")[1].split(".")[0]));
 
             // Creates a PrintWriter
             PrintWriter writer = new PrintWriter(file, true);
