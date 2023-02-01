@@ -5,17 +5,9 @@ import org.semanticweb.owl.align.Alignment;
 import org.semanticweb.owl.align.AlignmentProcess;
 import org.semanticweb.owl.align.AlignmentVisitor;
 
-import fr.inrialpes.exmo.align.impl.BasicAlignment;
-import fr.inrialpes.exmo.align.impl.BasicParameters;
-import fr.inrialpes.exmo.align.impl.method.StringDistAlignment;
-import fr.inrialpes.exmo.align.impl.renderer.RDFRendererVisitor;
-
-import org.xml.sax.SAXException;
-
-import java.io.*;
-import java.nio.charset.StandardCharsets;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.net.URI;
-import java.nio.file.Paths;
 import java.util.Properties;
 import org.apache.commons.io.FilenameUtils;
 
@@ -24,7 +16,7 @@ import static ie.tcd.mcardleg.RiskyLinkBackend.Constants.ETHICS_ONTOLOGOY_DIRECT
 
 public class AlignmentGenerator {
 
-    public static void generate(String ontologyDirectory, AlignmentProcess aligner) {
+    public static void generate(String ontologyDirectory, String alignerName, AlignmentProcess aligner) {
         String currentDirectory = System.getProperty("user.dir");
 
         URI onto1 = null;
@@ -39,7 +31,7 @@ public class AlignmentGenerator {
             aligner.align( (Alignment)null, params );
 
             FileOutputStream file = new FileOutputStream(
-                    String.format("resources/%s_alignment.ttl", FilenameUtils.getBaseName(ontologyDirectory)));
+                    String.format("resources/%s_%s.ttl", FilenameUtils.getBaseName(ontologyDirectory), alignerName));
 
             PrintWriter writer = new PrintWriter(file, true);
 

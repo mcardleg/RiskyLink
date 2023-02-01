@@ -6,26 +6,27 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class RESTController {
 
     @GetMapping("/")
     public void runAlignmentAPI() {
-        List<AlignmentProcess> aligners = new ArrayList<AlignmentProcess>();
-        aligners.add(new ClassStructAlignment());
-        aligners.add(new EditDistNameAlignment());
-        aligners.add(new NameAndPropertyAlignment());
-        aligners.add(new NameEqAlignment());
-        aligners.add(new SMOANameAlignment());
-        aligners.add(new StringDistAlignment());
-        aligners.add(new StrucSubsDistAlignment());
-        aligners.add(new SubsDistNameAlignment());
+        HashMap<String, AlignmentProcess> aligners = new HashMap<String, AlignmentProcess>();
+        aligners.put("ClassStruct", new ClassStructAlignment());
+        aligners.put("EditDistName", new EditDistNameAlignment());
+        aligners.put("NameAndProperty", new NameAndPropertyAlignment());
+        aligners.put("NameEq", new NameEqAlignment());
+        aligners.put("SMOAName", new SMOANameAlignment());
+        aligners.put("StringDist", new StringDistAlignment());
+        aligners.put("StrucSubsDist", new StrucSubsDistAlignment());
+        aligners.put("SubsDistName", new SubsDistNameAlignment());
 
-
-        for (AlignmentProcess aligner : aligners) {
-            AlignmentGenerator.generate("resources/example.owl", aligner);
+        for (Map.Entry<String, AlignmentProcess> set : aligners.entrySet()) {
+            AlignmentGenerator.generate("resources/example.owl", set.getKey(), set.getValue());
         }
     }
 
