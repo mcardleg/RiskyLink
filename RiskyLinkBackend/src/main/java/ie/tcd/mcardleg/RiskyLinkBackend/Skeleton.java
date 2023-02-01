@@ -23,8 +23,8 @@ import java.util.Properties;
 public class Skeleton {
 
     public static void skel() {
-        String[] args = new String[]{"file://$PWD/alignapi-version-4.10/examples/rdf/onto1.owl",
-                "file://$PWD/alignapi-version-4.10/examples/rdf/onto2.owl"};
+        String[] args = new String[]{"file:///alignapi-version-4.10/examples/rdf/onto1.owl",
+                "file:///alignapi-version-4.10/examples/rdf/onto2.owl"};
 
         URI onto1 = null;
         URI onto2 = null;
