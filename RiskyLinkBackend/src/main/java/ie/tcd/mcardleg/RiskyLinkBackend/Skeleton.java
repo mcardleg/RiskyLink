@@ -23,8 +23,11 @@ import java.util.Properties;
 public class Skeleton {
 
     public static void skel() {
-        String[] args = new String[]{"file://$PWD/alignapi-version-4.10/examples/rdf/onto1.owl",
-                "file://$PWD/alignapi-version-4.10/examples/rdf/onto2.owl"};
+        String currentDirectory = System.getProperty("user.dir");
+        String[] args = new String[]{
+                String.format("file://%s/alignapi-version-4.10/examples/rdf/onto1.owl", currentDirectory),
+                String.format("file://%s/alignapi-version-4.10/examples/rdf/onto2.owl", currentDirectory)
+        };
 
         URI onto1 = null;
         URI onto2 = null;
