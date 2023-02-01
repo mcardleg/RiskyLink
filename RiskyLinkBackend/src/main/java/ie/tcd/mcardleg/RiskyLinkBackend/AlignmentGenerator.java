@@ -17,6 +17,7 @@ import java.nio.charset.StandardCharsets;
 import java.net.URI;
 import java.nio.file.Paths;
 import java.util.Properties;
+import org.apache.commons.io.FilenameUtils;
 
 import static ie.tcd.mcardleg.RiskyLinkBackend.Constants.ETHICS_ONTOLOGOY_DIRECTORY;
 
@@ -39,8 +40,7 @@ public class AlignmentGenerator {
             a1.align( (Alignment)null, params );
 
             FileOutputStream file = new FileOutputStream(
-                    String.format("resources/%s_alignment.ttl",
-                            alignmentDirectory.split("/")[1].split(".")[0]));
+                    String.format("resources/%s_alignment.ttl", FilenameUtils.getBaseName(alignmentDirectory)));
 
             // Creates a PrintWriter
             PrintWriter writer = new PrintWriter(file, true);
