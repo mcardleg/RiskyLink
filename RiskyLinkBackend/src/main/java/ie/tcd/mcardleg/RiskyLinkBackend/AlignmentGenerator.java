@@ -39,7 +39,7 @@ public class AlignmentGenerator {
 
             // Creates a FileOutputStream
             FileOutputStream file = new FileOutputStream(
-                    String.format("resources/%s_alignment.ttl", alignmentDirectory.split("/")[1]));
+                    String.format("resources/%s_alignment.ttl", alignmentDirectory.split("/")[-1].split(".")[0]));
 
             // Creates a PrintWriter
             PrintWriter writer = new PrintWriter(file, true);
