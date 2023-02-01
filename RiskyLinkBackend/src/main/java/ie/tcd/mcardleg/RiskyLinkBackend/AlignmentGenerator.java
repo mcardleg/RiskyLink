@@ -24,7 +24,7 @@ import static ie.tcd.mcardleg.RiskyLinkBackend.Constants.ETHICS_ONTOLOGOY_DIRECT
 
 public class AlignmentGenerator {
 
-    public static void generate(String alignmentDirectory) {
+    public static void generate(String ontologyDirectory, AlignmentProcess aligner) {
         String currentDirectory = System.getProperty("user.dir");
 
         URI onto1 = null;
@@ -33,20 +33,18 @@ public class AlignmentGenerator {
 
         try {
             onto1 = new URI(String.format("file://%s/%s", currentDirectory, ETHICS_ONTOLOGOY_DIRECTORY));
-            onto2 = new URI(String.format("file://%s/%s", currentDirectory, alignmentDirectory));
+            onto2 = new URI(String.format("file://%s/%s", currentDirectory, ontologyDirectory));
 
-            AlignmentProcess a1 = new StringDistAlignment();
-            a1.init ( onto1, onto2 );
-            a1.align( (Alignment)null, params );
+            aligner.init ( onto1, onto2 );
+            aligner.align( (Alignment)null, params );
 
             FileOutputStream file = new FileOutputStream(
-                    String.format("resources/%s_alignment.ttl", FilenameUtils.getBaseName(alignmentDirectory)));
+                    String.format("resources/%s_alignment.ttl", FilenameUtils.getBaseName(ontologyDirectory)));
 
-            // Creates a PrintWriter
             PrintWriter writer = new PrintWriter(file, true);
 
             AlignmentVisitor renderer = new OWLAxiomsRendererVisitor(writer);
-            a1.render(renderer);
+            aligner.render(renderer);
             writer.flush();
             writer.close();
 
