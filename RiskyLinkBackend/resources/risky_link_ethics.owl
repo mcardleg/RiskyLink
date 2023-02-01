@@ -1,0 +1,130 @@
+@prefix : <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics> .
+
+<http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics> rdf:type owl:Ontology .
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Disabled_person
+:Disabled_person rdf:type owl:Class ;
+                 rdfs:subClassOf <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Person> .
+
+
+###  http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Ethnic_origin
+:Ethnic_origin rdf:type owl:Class ;
+               rdfs:subClassOf <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Sensitive_information> .
+
+
+###  http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Health_related_data
+:Health_related_data rdf:type owl:Class ;
+                     rdfs:subClassOf <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Sensitive_information> .
+
+
+###  http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Ill_person
+:Ill_person rdf:type owl:Class ;
+            rdfs:subClassOf <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Person> .
+
+
+###  http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Philisophical_beliefs
+:Philisophical_beliefs rdf:type owl:Class ;
+                       rdfs:subClassOf <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Sensitive_information> .
+
+
+###  http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Political_opinion
+:Political_opinion rdf:type owl:Class ;
+                   rdfs:subClassOf <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Sensitive_information> .
+
+
+###  http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Race
+:Race rdf:type owl:Class ;
+      rdfs:subClassOf <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Sensitive_information> .
+
+
+###  http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Religion
+:Religion rdf:type owl:Class ;
+          rdfs:subClassOf <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Sensitive_information> .
+
+
+###  http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Sexual_preferences
+:Sexual_preferences rdf:type owl:Class ;
+                    rdfs:subClassOf <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Sensitive_information> .
+
+
+###  http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Trade_union_membership
+:Trade_union_membership rdf:type owl:Class ;
+                        rdfs:subClassOf <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Sensitive_information> .
+
+
+###  http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Biological_information
+<http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Biological_information> rdf:type owl:Class ;
+                                                                                                       rdfs:subClassOf <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Sensitive_information> .
+
+
+###  http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Blood_type
+<http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Blood_type> rdf:type owl:Class ;
+                                                                                           rdfs:subClassOf <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Biological_information> .
+
+
+###  http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Child
+<http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Child> rdf:type owl:Class ;
+                                                                                      rdfs:subClassOf <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Person> .
+
+
+###  http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Crime
+<http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Crime> rdf:type owl:Class ;
+                                                                                      rdfs:subClassOf <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Sensitive_information> .
+
+
+###  http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Disability
+<http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Disability> rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Financial_information
+<http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Financial_information> rdf:type owl:Class ;
+                                                                                                      rdfs:subClassOf <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Sensitive_information> .
+
+
+###  http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Genetic_data
+<http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Genetic_data> rdf:type owl:Class ;
+                                                                                             rdfs:subClassOf <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Biological_information> .
+
+
+###  http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Illness
+<http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Illness> rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Mental_illness
+<http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Mental_illness> rdf:type owl:Class ;
+                                                                                               rdfs:subClassOf [ rdf:type owl:Class ;
+                                                                                                                 owl:unionOf ( <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Disability>
+                                                                                                                               <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Illness>
+                                                                                                                             )
+                                                                                                               ] .
+
+
+###  http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Net_worth
+<http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Net_worth> rdf:type owl:Class ;
+                                                                                          rdfs:subClassOf <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Financial_information> .
+
+
+###  http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Person
+<http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Person> rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Salary
+<http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Salary> rdf:type owl:Class ;
+                                                                                       rdfs:subClassOf <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Financial_information> .
+
+
+###  http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Sensitive_information
+<http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#Sensitive_information> rdf:type owl:Class .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

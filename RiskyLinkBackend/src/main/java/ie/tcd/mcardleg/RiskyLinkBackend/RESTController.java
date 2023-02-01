@@ -8,7 +8,7 @@ public class RESTController {
 
     @GetMapping("/")
     public void runAlignmentAPI() {
-        Skeleton.skel();
+        AlignmentGenerator.generate("resources/example.owl");
     }
 
 }
