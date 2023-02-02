@@ -1,0 +1,48 @@
+<http://riskylink.ie#Mayorâ€™s_Allowance_%28January_â€“_June_2021>
+        a       <http://www.semanticweb.org/gwenmcardle/ontologies/2023/01/councillor_salaries#councillor> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2023/01/councillor_salaries#salaryOf>
+                <http://riskylink.ie#â‚¬14%2C373.75> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2023/01/councillor_salaries#title>
+                "Mayorâ€™s Allowance (January â€“ June 2021"^^<http://www.w3.org/ns/r2rml#string> .
+
+<http://riskylink.ie#Deputy_Mayorâ€™s_Allowance_%28July_â€“_Dec_2021>
+        a       <http://www.semanticweb.org/gwenmcardle/ontologies/2023/01/councillor_salaries#councillor> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2023/01/councillor_salaries#salaryOf>
+                <http://riskylink.ie#â‚¬3%2C334.70> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2023/01/councillor_salaries#title>
+                "Deputy Mayorâ€™s Allowance (July â€“ Dec 2021"^^<http://www.w3.org/ns/r2rml#string> .
+
+<http://riskylink.ie#Mayorâ€™s_Allowance_%28July_â€“_Dec_2021%29>
+        a       <http://www.semanticweb.org/gwenmcardle/ontologies/2023/01/councillor_salaries#councillor> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2023/01/councillor_salaries#salaryOf>
+                <http://riskylink.ie#â‚¬16%2C673.55> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2023/01/councillor_salaries#title>
+                "Mayorâ€™s Allowance (July â€“ Dec 2021)"^^<http://www.w3.org/ns/r2rml#string> .
+
+<http://riskylink.ie#Total_Expenses_paid_to_Members_in_respect_of_attendance_at_meetings_of_the_County_Council_and_its_Committee>
+        a       <http://www.semanticweb.org/gwenmcardle/ontologies/2023/01/councillor_salaries#councillor> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2023/01/councillor_salaries#salaryOf>
+                <http://riskylink.ie#â‚¬303%2C831.70> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2023/01/councillor_salaries#title>
+                "Total Expenses paid to Members in respect of attendance at meetings of the County Council and its Committee"^^<http://www.w3.org/ns/r2rml#string> .
+
+<http://riskylink.ie#Strategic_Policy_Committee_Chairpersons_Allowance_Total>
+        a       <http://www.semanticweb.org/gwenmcardle/ontologies/2023/01/councillor_salaries#councillor> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2023/01/councillor_salaries#salaryOf>
+                <http://riskylink.ie#â‚¬36%2C000.00> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2023/01/councillor_salaries#title>
+                "Strategic Policy Committee Chairpersons Allowance Total"^^<http://www.w3.org/ns/r2rml#string> .
+
+<http://riskylink.ie#Deputy_Mayorâ€™s_Allowance_%28January_â€“_June_2021%29>
+        a       <http://www.semanticweb.org/gwenmcardle/ontologies/2023/01/councillor_salaries#councillor> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2023/01/councillor_salaries#salaryOf>
+                <http://riskylink.ie#â‚¬2%2C874.74> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2023/01/councillor_salaries#title>
+                "Deputy Mayorâ€™s Allowance (January â€“ June 2021)"^^<http://www.w3.org/ns/r2rml#string> .
+
+<http://riskylink.ie#Representational_Payments_Total>
+        a       <http://www.semanticweb.org/gwenmcardle/ontologies/2023/01/councillor_salaries#councillor> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2023/01/councillor_salaries#salaryOf>
+                <http://riskylink.ie#â‚¬976%2C931.00> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2023/01/councillor_salaries#title>
+                "Representational Payments Total"^^<http://www.w3.org/ns/r2rml#string> .
