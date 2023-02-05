@@ -3,23 +3,28 @@ package ie.tcd.mcardleg.RiskyLinkBackend;
 import fr.inrialpes.exmo.align.impl.method.*;
 import fr.inrialpes.exmo.align.impl.renderer.OWLAxiomsRendererVisitor;
 import org.semanticweb.owl.align.Alignment;
+import org.semanticweb.owl.align.AlignmentException;
 import org.semanticweb.owl.align.AlignmentProcess;
 import org.semanticweb.owl.align.AlignmentVisitor;
 
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URI;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.net.URISyntaxException;
+import java.util.*;
+
 import org.apache.commons.io.FilenameUtils;
-import org.springframework.http.ResponseEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static ie.tcd.mcardleg.RiskyLinkBackend.Constants.ETHICS_ONTOLOGOY_DIRECTORY;
 
 
 public class AlignmentGenerator {
-    public static void runGenerator() {
+    private static Logger log = LoggerFactory.getLogger(AlignmentGenerator.class);
+
+    public static List<String> runGenerator() {
         HashMap<String, AlignmentProcess> aligners = new HashMap<String, AlignmentProcess>();
         aligners.put("ClassStruct", new ClassStructAlignment());
         aligners.put("EditDistName", new EditDistNameAlignment());
@@ -30,13 +35,18 @@ public class AlignmentGenerator {
         aligners.put("StrucSubsDist", new StrucSubsDistAlignment());
         aligners.put("SubsDistName", new SubsDistNameAlignment());
 
+        List<String> filePaths = new ArrayList<String>();
         for (Map.Entry<String, AlignmentProcess> set : aligners.entrySet()) {
-            generate("resources/example.owl", set.getKey(), set.getValue());
+            filePaths.add(generate("resources/example.owl", set.getKey(), set.getValue()));
         }
+        log.info("Alignments generated.");
+        return filePaths;
     }
 
-    public static void generate(String ontologyDirectory, String alignerName, AlignmentProcess aligner) {
+    public static String generate(String ontologyDirectory, String alignerName, AlignmentProcess aligner) {
         String currentDirectory = System.getProperty("user.dir");
+        String filePath = String.format("resources/%s_%s.owl",
+                FilenameUtils.getBaseName(ontologyDirectory), alignerName);
 
         URI onto1 = null;
         URI onto2 = null;
@@ -49,8 +59,7 @@ public class AlignmentGenerator {
             aligner.init ( onto1, onto2 );
             aligner.align( (Alignment)null, params );
 
-            FileOutputStream file = new FileOutputStream(
-                    String.format("resources/%s_%s.owl", FilenameUtils.getBaseName(ontologyDirectory), alignerName));
+            FileOutputStream file = new FileOutputStream(filePath);
 
             PrintWriter writer = new PrintWriter(file, true);
 
@@ -59,6 +68,10 @@ public class AlignmentGenerator {
             writer.flush();
             writer.close();
 
-        } catch (Exception e) { e.printStackTrace(); };
+        } catch (IOException | URISyntaxException | AlignmentException e) {
+            log.error(e.getMessage(), e);
+        }
+
+        return filePath;
     }
 }

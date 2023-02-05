@@ -1,27 +1,142 @@
 package ie.tcd.mcardleg.RiskyLinkBackend;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
-import org.eclipse.rdf4j.model.Model;
+import org.eclipse.rdf4j.model.Value;
+import org.eclipse.rdf4j.query.BindingSet;
+import org.eclipse.rdf4j.query.TupleQuery;
+import org.eclipse.rdf4j.query.TupleQueryResult;
+import org.eclipse.rdf4j.repository.Repository;
+import org.eclipse.rdf4j.repository.RepositoryConnection;
+import org.eclipse.rdf4j.repository.sail.SailRepository;
 import org.eclipse.rdf4j.rio.RDFFormat;
-import org.eclipse.rdf4j.rio.Rio;
+import org.eclipse.rdf4j.sail.nativerdf.NativeStore;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
 public class GraphDBHandler {
-    private static Logger log = LoggerFactory.getLogger(GraphDBHandler.class);
+    private Logger log = LoggerFactory.getLogger(GraphDBHandler.class);
+    private String baseURI = "";
+    private Repository repo;
+    private RepositoryConnection connection;
+    private int datasetCount = 0;
+    private int ontologyCount = 0;
 
-    public static void uploadDataset(String filename) {
-//        InputStream input = GraphDBHandler.class.getResourceAsStream("/councillor_salaries.ttl");
-        InputStream input = GraphDBHandler.class.getResourceAsStream("/" + filename);
-        log.debug(input.toString());
-//        try {
-//            Model model = Rio.parse(input, "", RDFFormat.TURTLE);
-//            model.forEach(System.out::println);
-//        } catch (IOException e) {
-//            log.error(e.getMessage(), e);
-//        }
+    public void addDataset(String filePath) {
+        if (!checkRepositoryExists()) {
+            setUpDB();
+        }
+        uploadTurtleFile(filePath);
+        datasetCount += 1;
+    }
+
+    public void addOntology(String filePath) {
+        if (!checkRepositoryExists()) {
+            setUpDB();
+        }
+        uploadTurtleFile(filePath);
+        ontologyCount += 1;
+    }
+
+    private boolean checkRepositoryExists() {
+        if (connection == null) {
+            return false;
+        }
+        return connection.isOpen();
+    }
+
+    private void setUpDB() {
+        repo = new SailRepository(new NativeStore());
+        connection = repo.getConnection();
+        log.info("Database connection acquired.");
+    }
+
+    private void uploadTurtleFile(String filePath) {
+        try {
+            connection.add(new File(filePath), baseURI, RDFFormat.TURTLE);
+            log.info("Uploaded " + filePath);
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+        }
+    }
+
+    public String checkDBReady() {
+        String status;
+        if (!checkRepositoryExists()) {
+            status = "No datasets or ontologies have been added.";
+            log.info(status);
+            return status;
+        }
+        if (datasetCount == 0) {
+            status = "No datasets have been added.";
+            log.info(status);
+            return status;
+        }
+        if (ontologyCount == 0) {
+            status = "No ontologies have been added.";
+            log.info(status);
+            return status;
+        }
+        return Constants.READY;
+    }
+
+    public void tearDownDB() {
+        connection.close();
+        log.info("Database connection closed.");
+    }
+
+    public List<List<QueryResult>> runQueries() {
+        List<List<QueryResult>> results = new ArrayList<List<QueryResult>>();
+
+        JSONParser parser = new JSONParser();
+        try {
+            JSONObject jsonObject = (JSONObject)parser.parse(
+                    new FileReader("src/main/resources/sparql_queries.json"));
+            JSONArray queries = (JSONArray)jsonObject.get("queries");
+            Iterator queriesIterator = queries.iterator();
+            while (queriesIterator.hasNext()) {
+                JSONArray queryLines = (JSONArray)queriesIterator.next();
+                Iterator linesIterator = queryLines.iterator();
+                String queryString = "";
+                while (linesIterator.hasNext()) {
+                    queryString += "\n" + linesIterator.next().toString();
+                }
+                results.add(query(queryString));
+            }
+        } catch(IOException | ParseException e) {
+            log.error(e.getMessage(), e);
+        }
+        log.info("Queries have been run.");
+
+        return results;
+    }
+
+    private List<QueryResult> query(String queryString) {
+        TupleQuery tupleQuery = connection.prepareTupleQuery(queryString);
+        TupleQueryResult result = tupleQuery.evaluate();
+        List<QueryResult> queryResults = new ArrayList<QueryResult>();
+
+        while (result.hasNext()) {  // iterate over the result
+            BindingSet bindingSet = result.next();
+            Value demographic = bindingSet.getValue("demographic");
+            Value data = bindingSet.getValue("data");
+            Value equivilent_classes = bindingSet.getValue("equivilent_classes");
+            queryResults.add(new QueryResult(
+                    bindingSet.getValue("demographic").toString(),
+                    bindingSet.getValue("data").toString(),
+                    bindingSet.getValue("equivilent_classes").toString()));
+        }
+        result.close();
+        return queryResults;
     }
 }
