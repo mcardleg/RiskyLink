@@ -49,7 +49,7 @@ public class GraphDBHandler {
         ontologyCount += 1;
 
         for (String alignmentPath : AlignmentGenerator.runGenerator(path.toString())){
-            uploadFile(alignmentPath, RDFFormat.RDFA);
+            uploadFile(alignmentPath, RDFFormat.TURTLE);
         }
     }
 
