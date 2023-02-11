@@ -28,18 +28,16 @@ import org.slf4j.LoggerFactory;
 
 public class GraphDBHandler {
     private Logger log = LoggerFactory.getLogger(GraphDBHandler.class);
-    private String baseURI = "";
+//    private String baseURI = "";
+    private String baseURI = "http://www.semanticweb.org/gwenmcardle/alignments";
     private Repository repo;
     private RepositoryConnection connection;
-    private int datasetCount = 0;
-    private int ontologyCount = 0;
 
     public void addDataset(String filePath) {
         if (!checkRepositoryExists()) {
             setUpDB();
         }
         uploadFile(filePath, RDFFormat.TURTLE);
-        datasetCount += 1;
     }
 
     public void addOntology(Path path) {
@@ -47,7 +45,6 @@ public class GraphDBHandler {
             setUpDB();
         }
         uploadFile(path.toString(), RDFFormat.TURTLE);
-        ontologyCount += 1;
 
         for (String alignmentPath : AlignmentGenerator.runGenerator(path.toString())){
             try {
