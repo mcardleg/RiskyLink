@@ -51,7 +51,7 @@ public class GraphDBHandler {
 
         for (String alignmentPath : AlignmentGenerator.runGenerator(path.toString())){
             try {
-                BufferedReader in = new BufferedReader(new FileReader(path));
+                BufferedReader in = new BufferedReader(new FileReader(path.toString()));
                 String line = in.readLine();
                 while(line != null)
                 {
