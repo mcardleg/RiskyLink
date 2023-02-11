@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 public class GraphDBHandler {
     private Logger log = LoggerFactory.getLogger(GraphDBHandler.class);
 //    private String baseURI = "";
-    private String baseURI = "http://www.semanticweb.org/gwenmcardle/alignments";
+    private String baseURI = "http://www.semanticweb.org/riskylink";
     private Repository repo;
     private RepositoryConnection connection;
 
