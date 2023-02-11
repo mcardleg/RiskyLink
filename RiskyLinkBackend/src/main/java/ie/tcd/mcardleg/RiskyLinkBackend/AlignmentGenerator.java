@@ -65,14 +65,6 @@ public class AlignmentGenerator {
             aligner.render(renderer);
             writer.flush();
             writer.close();
-            BufferedReader in = new BufferedReader(new FileReader(filePath));
-            String line = in.readLine();
-            while(line != null)
-            {
-                System.out.println(line);
-                line = in.readLine();
-            }
-            in.close();
 
         } catch (IOException | URISyntaxException | AlignmentException e) {
             log.error(e.getMessage(), e);

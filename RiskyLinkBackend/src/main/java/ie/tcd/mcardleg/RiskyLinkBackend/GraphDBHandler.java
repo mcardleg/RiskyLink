@@ -1,5 +1,6 @@
 package ie.tcd.mcardleg.RiskyLinkBackend;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -49,6 +50,19 @@ public class GraphDBHandler {
         ontologyCount += 1;
 
         for (String alignmentPath : AlignmentGenerator.runGenerator(path.toString())){
+            try {
+                BufferedReader in = new BufferedReader(new FileReader(path));
+                String line = in.readLine();
+                while(line != null)
+                {
+                    System.out.println(line);
+                    line = in.readLine();
+                }
+                in.close();
+            } catch (IOException e) {
+                log.error(e.getMessage(), e);
+            }
+
             uploadFile(alignmentPath, RDFFormat.RDFXML);
         }
     }
