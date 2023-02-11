@@ -71,19 +71,25 @@ public class RESTController {
     }
 
     @GetMapping("/runQueries")
-    public ResponseEntity<List<List<QueryResult>>> runAlignmentAPI() {
-        List<List<QueryResult>> results;
+    public ResponseEntity<List<List<QueryResult>>> runQueries() {
+        List<List<QueryResult>> results = null;
 
-        String DBReadyResponse = graphDBHandler.checkDBReady();
-        if (DBReadyResponse != Constants.READY){
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Error", DBReadyResponse);
-            return new ResponseEntity<>(null, headers, HttpStatus.BAD_REQUEST);
+        try {
+            String DBReadyResponse = graphDBHandler.checkDBReady();
+            if (DBReadyResponse != Constants.READY){
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("Error", DBReadyResponse);
+                return new ResponseEntity<>(null, headers, HttpStatus.BAD_REQUEST);
+            }
+            results = graphDBHandler.runQueries();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+
+        } finally {
+            graphDBHandler.tearDownDB();
+
         }
-
-        results = graphDBHandler.runQueries();
-
-        graphDBHandler.tearDownDB();
 
         //Order results
 
