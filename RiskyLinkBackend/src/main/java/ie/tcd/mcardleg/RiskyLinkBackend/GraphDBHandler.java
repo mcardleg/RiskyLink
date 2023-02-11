@@ -3,6 +3,7 @@ package ie.tcd.mcardleg.RiskyLinkBackend;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -40,12 +41,16 @@ public class GraphDBHandler {
         datasetCount += 1;
     }
 
-    public void addOntology(String filePath) {
+    public void addOntology(Path path) {
         if (!checkRepositoryExists()) {
             setUpDB();
         }
-        uploadTurtleFile(filePath);
+        uploadTurtleFile(path.toString());
         ontologyCount += 1;
+
+        for (String alignmentPath : AlignmentGenerator.runGenerator(path.toString())){
+            uploadTurtleFile(alignmentPath);
+        }
     }
 
     private boolean checkRepositoryExists() {
@@ -61,7 +66,7 @@ public class GraphDBHandler {
         log.info("Database connection acquired.");
     }
 
-    public void uploadTurtleFile(String filePath) {
+    private void uploadTurtleFile(String filePath) {
         try {
             connection.add(new File(filePath), baseURI, RDFFormat.TURTLE);
             log.info("Uploaded " + filePath);

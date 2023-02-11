@@ -24,7 +24,7 @@ import static ie.tcd.mcardleg.RiskyLinkBackend.Constants.ETHICS_ONTOLOGOY_DIRECT
 public class AlignmentGenerator {
     private static Logger log = LoggerFactory.getLogger(AlignmentGenerator.class);
 
-    public static List<String> runGenerator() {
+    public static List<String> runGenerator(String ontologyDirectory) {
         HashMap<String, AlignmentProcess> aligners = new HashMap<String, AlignmentProcess>();
         aligners.put("ClassStruct", new ClassStructAlignment());
         aligners.put("EditDistName", new EditDistNameAlignment());
@@ -37,7 +37,7 @@ public class AlignmentGenerator {
 
         List<String> filePaths = new ArrayList<String>();
         for (Map.Entry<String, AlignmentProcess> set : aligners.entrySet()) {
-            filePaths.add(generate("resources/example.owl", set.getKey(), set.getValue()));
+            filePaths.add(generate(ontologyDirectory, set.getKey(), set.getValue()));
         }
         log.info("Alignments generated.");
         return filePaths;

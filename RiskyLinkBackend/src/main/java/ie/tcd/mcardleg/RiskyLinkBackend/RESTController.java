@@ -1,24 +1,18 @@
 package ie.tcd.mcardleg.RiskyLinkBackend;
 
-import org.eclipse.rdf4j.query.TupleQueryResult;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 @RestController
 public class RESTController {
@@ -26,7 +20,7 @@ public class RESTController {
     String filePath;
 
     @PostMapping("/uploadDataset")
-    public ResponseEntity<String> uploadFile(@RequestPart("file") MultipartFile file) {
+    public ResponseEntity<String> uploadDataset(@RequestPart("file") MultipartFile file) {
         if (null == file.getOriginalFilename()) {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Error", "No file passed.");
@@ -56,7 +50,7 @@ public class RESTController {
             byte[] bytes = file.getBytes();
             Path path = Paths.get(file.getOriginalFilename());
             Files.write(path, bytes);
-            graphDBHandler.addOntology(path.toString());
+            graphDBHandler.addOntology(path);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -76,7 +70,7 @@ public class RESTController {
 
     }
 
-    @GetMapping("/generateAlignments")
+    @GetMapping("/runQueries")
     public ResponseEntity<List<List<QueryResult>>> runAlignmentAPI() {
         List<List<QueryResult>> results;
 
@@ -85,10 +79,6 @@ public class RESTController {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Error", DBReadyResponse);
             return new ResponseEntity<>(null, headers, HttpStatus.BAD_REQUEST);
-        }
-
-        for (String alignmentPath : AlignmentGenerator.runGenerator()){
-            graphDBHandler.uploadTurtleFile(alignmentPath);
         }
 
         results = graphDBHandler.runQueries();
