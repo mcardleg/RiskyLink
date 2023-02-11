@@ -9,9 +9,7 @@
       "SELECT ?demographic ?data ?equivilent_classes",
       "WHERE {",
       "?types_of_sensitive_info rdfs:subClassOf ont:Sensitive_information .",
-      "?equivilent_classes owl:equivalentClass ?types_of_sensitive_info .",
-      "?data rdf:type ?equivilent_classes .",
-      "?demographic ?p ?data",
+      "?equivilent_classes owl:equivalentClass ?types_of_sensitive_info ."
       "}"
     ]
   ]
