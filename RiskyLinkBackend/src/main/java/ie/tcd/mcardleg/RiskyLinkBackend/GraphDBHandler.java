@@ -111,12 +111,13 @@ public class GraphDBHandler {
 
         while (result.hasNext()) {  // iterate over the result
             BindingSet bindingSet = result.next();
-            Value demographic = bindingSet.getValue("demographic");
-            Value data = bindingSet.getValue("data");
+//            Value demographic = bindingSet.getValue("demographic");
+//            Value data = bindingSet.getValue("data");
             Value equivilent_classes = bindingSet.getValue("equivilent_classes");
             QueryResult queryResult = new QueryResult(
-                    bindingSet.getValue("demographic").toString(),
-                    bindingSet.getValue("data").toString(),
+//                    bindingSet.getValue("demographic").toString(),
+//                    bindingSet.getValue("data").toString(),
+                    null, null,
                     bindingSet.getValue("equivilent_classes").toString());
             System.out.println(queryResult.toString());
             queryResults.add(queryResult);
