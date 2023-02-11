@@ -7,9 +7,7 @@ import org.semanticweb.owl.align.AlignmentException;
 import org.semanticweb.owl.align.AlignmentProcess;
 import org.semanticweb.owl.align.AlignmentVisitor;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
@@ -67,6 +65,14 @@ public class AlignmentGenerator {
             aligner.render(renderer);
             writer.flush();
             writer.close();
+            BufferedReader in = new BufferedReader(new FileReader(filePath));
+            String line = in.readLine();
+            while(line != null)
+            {
+                System.out.println(line);
+                line = in.readLine();
+            }
+            in.close();
 
         } catch (IOException | URISyntaxException | AlignmentException e) {
             log.error(e.getMessage(), e);
