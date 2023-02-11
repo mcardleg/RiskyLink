@@ -61,7 +61,7 @@ public class GraphDBHandler {
         log.info("Database connection acquired.");
     }
 
-    private void uploadTurtleFile(String filePath) {
+    public void uploadTurtleFile(String filePath) {
         try {
             connection.add(new File(filePath), baseURI, RDFFormat.TURTLE);
             log.info("Uploaded " + filePath);

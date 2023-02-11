@@ -4,13 +4,14 @@ import org.eclipse.rdf4j.query.TupleQueryResult;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -20,16 +21,39 @@ import java.util.concurrent.Executors;
 public class RESTController {
     GraphDBHandler graphDBHandler = new GraphDBHandler();
 
-
-    @GetMapping("/uploadDataset")
-    public ResponseEntity uploadDataset() {
-        graphDBHandler.addDataset("resources/councillor_salaries.ttl");
+    @PostMapping("/uploadDataset")
+    public ResponseEntity<String> uploadFile(@RequestPart("file") MultipartFile file) {
+        if (null == file.getOriginalFilename()) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Error", "No file passed.");
+            return new ResponseEntity<>(null, headers, HttpStatus.BAD_REQUEST);
+        }
+        try {
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(file.getOriginalFilename());
+            Files.write(path, bytes);
+            graphDBHandler.addDataset(path.toString());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
         return ResponseEntity.ok("Dataset uploaded.");
     }
 
-    @GetMapping("/uploadOntology")
-    public ResponseEntity uploadOntology() {
-        graphDBHandler.addOntology("resources/councillor_salaries_ont.ttl");
+    @PostMapping("/uploadOntology")
+    public ResponseEntity<String> uploadOntology(@RequestPart("file") MultipartFile file) {
+        if (null == file.getOriginalFilename()) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Error", "No file passed.");
+            return new ResponseEntity<>(null, headers, HttpStatus.BAD_REQUEST);
+        }
+        try {
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(file.getOriginalFilename());
+            Files.write(path, bytes);
+            graphDBHandler.addOntology(path.toString());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
         return ResponseEntity.ok("Ontology uploaded.");
     }
 
@@ -44,9 +68,9 @@ public class RESTController {
             return new ResponseEntity<>(null, headers, HttpStatus.BAD_REQUEST);
         }
 
-//        for (String alignmentPath : AlignmentGenerator.runGenerator()){
-//            graphDBHandler.uploadTurtleFile(alignmentPath);
-//        }
+        for (String alignmentPath : AlignmentGenerator.runGenerator()){
+            graphDBHandler.uploadTurtleFile(alignmentPath);
+        }
 
         results = graphDBHandler.runQueries();
 
