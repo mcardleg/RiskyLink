@@ -93,16 +93,6 @@ public class GraphDBHandler {
             log.info(status);
             return status;
         }
-        if (datasetCount == 0) {
-            status = "No datasets have been added.";
-            log.info(status);
-            return status;
-        }
-        if (ontologyCount == 0) {
-            status = "No ontologies have been added.";
-            log.info(status);
-            return status;
-        }
         return Constants.READY;
     }
 
