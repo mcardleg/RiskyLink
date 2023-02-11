@@ -12,4 +12,12 @@ public class QueryResult {
         this.equivalentClass = equivalentClass;
     }
 
+    @Override
+    public String toString() {
+        return "QueryResult{" +
+                "demographic='" + demographic + '\'' +
+                ", data='" + data + '\'' +
+                ", equivalentClass='" + equivalentClass + '\'' +
+                '}';
+    }
 }

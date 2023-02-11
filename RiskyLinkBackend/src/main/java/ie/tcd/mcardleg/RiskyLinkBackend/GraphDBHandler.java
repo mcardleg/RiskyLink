@@ -47,19 +47,6 @@ public class GraphDBHandler {
         uploadFile(path.toString(), RDFFormat.TURTLE);
 
         for (String alignmentPath : AlignmentGenerator.runGenerator(path.toString())){
-            try {
-                BufferedReader in = new BufferedReader(new FileReader(path.toString()));
-                String line = in.readLine();
-                while(line != null)
-                {
-                    System.out.println(line);
-                    line = in.readLine();
-                }
-                in.close();
-            } catch (IOException e) {
-                log.error(e.getMessage(), e);
-            }
-
             uploadFile(alignmentPath, RDFFormat.RDFXML);
         }
     }
@@ -84,16 +71,6 @@ public class GraphDBHandler {
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }
-    }
-
-    public String checkDBReady() {
-        String status;
-        if (!checkRepositoryExists()) {
-            status = "No datasets or ontologies have been added.";
-            log.info(status);
-            return status;
-        }
-        return Constants.READY;
     }
 
     public void tearDownDB() {
@@ -137,10 +114,12 @@ public class GraphDBHandler {
             Value demographic = bindingSet.getValue("demographic");
             Value data = bindingSet.getValue("data");
             Value equivilent_classes = bindingSet.getValue("equivilent_classes");
-            queryResults.add(new QueryResult(
+            QueryResult queryResult = new QueryResult(
                     bindingSet.getValue("demographic").toString(),
                     bindingSet.getValue("data").toString(),
-                    bindingSet.getValue("equivilent_classes").toString()));
+                    bindingSet.getValue("equivilent_classes").toString());
+            System.out.println(queryResult.toString());
+            queryResults.add(queryResult);
         }
         result.close();
         return queryResults;
