@@ -67,12 +67,12 @@ public class GraphDBHandler {
     }
 
     private void uploadTurtleFile(String filePath) {
-        try {
-            connection.add(new File(filePath), baseURI, RDFFormat.TURTLE);
-            log.info("Uploaded " + filePath);
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
-        }
+//        try {
+//            connection.add(new File(filePath), baseURI, RDFFormat.TURTLE);
+//            log.info("Uploaded " + filePath);
+//        } catch (IOException e) {
+//            log.error(e.getMessage(), e);
+//        }
     }
 
     public String checkDBReady() {
