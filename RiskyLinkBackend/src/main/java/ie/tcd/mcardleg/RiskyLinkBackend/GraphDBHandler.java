@@ -37,7 +37,7 @@ public class GraphDBHandler {
         if (!checkRepositoryExists()) {
             setUpDB();
         }
-        uploadTurtleFile(filePath);
+        uploadFile(filePath, RDFFormat.TURTLE);
         datasetCount += 1;
     }
 
@@ -45,11 +45,11 @@ public class GraphDBHandler {
         if (!checkRepositoryExists()) {
             setUpDB();
         }
-        uploadTurtleFile(path.toString());
+        uploadFile(path.toString(), RDFFormat.TURTLE);
         ontologyCount += 1;
 
         for (String alignmentPath : AlignmentGenerator.runGenerator(path.toString())){
-            uploadTurtleFile(alignmentPath);
+            uploadFile(alignmentPath, RDFFormat.RDFXML);
         }
     }
 
@@ -66,9 +66,9 @@ public class GraphDBHandler {
         log.info("Database connection acquired.");
     }
 
-    private void uploadTurtleFile(String filePath) {
+    private void uploadFile(String filePath, RDFFormat format) {
         try {
-            connection.add(new File(filePath), baseURI, RDFFormat.TURTLE);
+            connection.add(new File(filePath), baseURI, format);
             log.info("Uploaded " + filePath);
         } catch (IOException e) {
             log.error(e.getMessage(), e);
