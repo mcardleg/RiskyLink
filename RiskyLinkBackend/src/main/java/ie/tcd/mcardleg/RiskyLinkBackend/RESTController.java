@@ -75,12 +75,6 @@ public class RESTController {
         List<List<QueryResult>> results = null;
 
         try {
-            String DBReadyResponse = graphDBHandler.checkDBReady();
-            if (DBReadyResponse != Constants.READY){
-                HttpHeaders headers = new HttpHeaders();
-                headers.add("Error", DBReadyResponse);
-                return new ResponseEntity<>(null, headers, HttpStatus.BAD_REQUEST);
-            }
             results = graphDBHandler.runQueries();
 
         } catch (Exception e) {
