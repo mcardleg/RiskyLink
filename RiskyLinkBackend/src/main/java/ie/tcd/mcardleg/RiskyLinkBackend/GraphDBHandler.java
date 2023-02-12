@@ -110,6 +110,7 @@ public class GraphDBHandler {
         List<QueryResult> queryResults = new ArrayList<QueryResult>();
 
         while (result.hasNext()) {  // iterate over the result
+            System.out.println("reached");
             BindingSet bindingSet = result.next();
 //            Value demographic = bindingSet.getValue("demographic");
 //            Value data = bindingSet.getValue("data");
