@@ -8,7 +8,6 @@
       "PREFIX owl: <http://www.w3.org/2002/07/owl#>",
       "SELECT ?equivilent_classes",
       "WHERE {",
-      "?types_of_sensitive_info rdfs:subClassOf ont:Sensitive_information .",
       "?equivilent_classes owl:equivalentClass ?types_of_sensitive_info .",
       "}"
     ],
