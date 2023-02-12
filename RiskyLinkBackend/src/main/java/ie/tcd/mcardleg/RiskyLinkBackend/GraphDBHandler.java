@@ -105,6 +105,7 @@ public class GraphDBHandler {
     }
 
     private List<QueryResult> query(String queryString) {
+        System.out.println(queryString);
         TupleQuery tupleQuery = connection.prepareTupleQuery(queryString);
         TupleQueryResult result = tupleQuery.evaluate();
         List<QueryResult> queryResults = new ArrayList<QueryResult>();
