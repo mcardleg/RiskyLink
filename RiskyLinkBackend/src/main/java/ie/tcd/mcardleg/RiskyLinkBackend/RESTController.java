@@ -13,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class RESTController {
@@ -71,8 +72,8 @@ public class RESTController {
     }
 
     @GetMapping("/runQueries")
-    public ResponseEntity<List<List<QueryResult>>> runQueries() {
-        List<List<QueryResult>> results = null;
+    public ResponseEntity<Map<String, List<QueryResult>>> runQueries() {
+        Map<String, List<QueryResult>> results = null;
 
         try {
             results = graphDBHandler.runQueries();

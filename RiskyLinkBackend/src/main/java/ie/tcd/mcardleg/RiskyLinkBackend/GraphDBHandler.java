@@ -5,9 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import org.eclipse.rdf4j.model.Value;
 import org.eclipse.rdf4j.query.BindingSet;
@@ -78,8 +76,8 @@ public class GraphDBHandler {
         log.info("Database connection closed.");
     }
 
-    public List<List<QueryResult>> runQueries() {
-        List<List<QueryResult>> results = new ArrayList<List<QueryResult>>();
+    public Map<String, List<QueryResult>> runQueries() {
+        Map<String, List<QueryResult>> results = new HashMap<String, List<QueryResult>>();
 
         JSONParser parser = new JSONParser();
         try {
@@ -88,13 +86,15 @@ public class GraphDBHandler {
             JSONArray queries = (JSONArray)jsonObject.get("queries");
             Iterator queriesIterator = queries.iterator();
             while (queriesIterator.hasNext()) {
-                JSONArray queryLines = (JSONArray)queriesIterator.next();
+                JSONObject object = (JSONObject)queriesIterator.next();
+                String queryName = (String)object.get("query_name");
+                JSONArray queryLines = (JSONArray)object.get("query");
                 Iterator linesIterator = queryLines.iterator();
                 String queryString = "";
                 while (linesIterator.hasNext()) {
                     queryString += "\n" + linesIterator.next().toString();
                 }
-                results.add(query(queryString));
+                results.put(queryName, query(queryString));
             }
         } catch(IOException | ParseException e) {
             log.error(e.getMessage(), e);
@@ -105,13 +105,11 @@ public class GraphDBHandler {
     }
 
     private List<QueryResult> query(String queryString) {
-        System.out.println(queryString);
         TupleQuery tupleQuery = connection.prepareTupleQuery(queryString);
         TupleQueryResult result = tupleQuery.evaluate();
         List<QueryResult> queryResults = new ArrayList<QueryResult>();
 
         while (result.hasNext()) {  // iterate over the result
-            System.out.println("reached");
             BindingSet bindingSet = result.next();
 //            Value demographic = bindingSet.getValue("demographic");
 //            Value data = bindingSet.getValue("data");
@@ -121,7 +119,6 @@ public class GraphDBHandler {
 //                    bindingSet.getValue("data").toString(),
                     null, null,
                     bindingSet.getValue("equivilent_classes").toString());
-            System.out.println(queryResult.toString());
             queryResults.add(queryResult);
         }
         result.close();
