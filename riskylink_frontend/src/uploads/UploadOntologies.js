@@ -1,23 +1,27 @@
 import upload_icon from './upload-icon.png';
-import './UploadDatasets.css';
+import './UploadOntologies.css';
+import { useState } from "react";
 
-function UploadDatasets() {
-    return (
-      <div className="UploadDatasets">
-        <header className="header">
-          <img src={upload_icon} className="icon" alt="icon" />
-          <p>Upload datasets</p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+function UploadOntologies() {
+  const [response, setResponse] = useState("");
+
+  const sendRunQueriesGET = () => {
+    fetch("https://catfact.ninja/fact")
+      .then(res => res.json())
+      .then(data => setResponse(JSON.stringify(data)))
+      .catch(error => console.error(error));
+  };
+
+  return (
+    <div className="UploadOntologies">
+      <header className="header">
+        <img src={upload_icon} className="icon" alt="icon" />
+        <p>Upload ontologies</p>
+        <button onClick={sendRunQueriesGET} className="button" alt="button">Get risky links</button>
+        <p>{response}</p>
+      </header>
+    </div>
+  );
 }
 
-export default UploadDatasets;
+export default UploadOntologies;

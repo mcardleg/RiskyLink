@@ -18,6 +18,9 @@
     color: white;
 }
 
-.link {
-    color: #61dafb;
+.button {
+    background-color: #61c0fb;
+    height: 5vh;
+    width: 15vh;
+
 }
