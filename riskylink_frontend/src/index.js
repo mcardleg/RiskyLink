@@ -1,26 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
-import {
-  createBrowserRouter,
-  RouterProvider
-} from "react-router-dom";
-import UploadDatasets from './UploadDatasets';
-import UploadOntologies from './UploadOntologies';
+import Home from './home/Home';
+import UploadDatasets from './uploads/UploadDatasets';
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import UploadOntologies from './uploads/UploadOntologies';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: App(),
+    element: <Home />,
   },
   {
     path: "UploadDatasets",
-    element: UploadDatasets(),
+    element: <UploadDatasets />,
   },
   {
     path: "UploadOntologies",
-    element: UploadOntologies(),
+    element: <UploadOntologies />
   }
 ]);
 
@@ -28,10 +25,3 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <RouterProvider router={router} />
 );
-
-
-
-
-// createRoot(document.getElementById("root")).render(
-//   <RouterProvider router={router} />
-// );

@@ -1,19 +1,19 @@
-.App {
+.Home {
   text-align: center;
 }
 
-.App-link {
+.link_icon {
   height: 40vmin;
   pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-link {
-    animation: App-link-spin infinite 20s linear;
+  .link_icon {
+    animation: link_icon-spin infinite 20s linear;
   }
 }
 
-.App-header {
+.header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -24,20 +24,15 @@
   color: white;
 }
 
-.App-link {
+.link {
   color: #61dafb;
 }
 
-@keyframes App-link-spin {
+@keyframes link_icon-spin {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
   }
-}
-
-.App-uploaddatasets {
-  color: #61dafb;
-
 }
