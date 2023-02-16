@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import './ListLinks.css';
-import { DiagramModel } from "@ontodia/core";
-import { DiagramView } from "@ontodia/view";
-
+// import { DiagramModel } from "@ontodia/core";
+// import { DiagramView } from "@ontodia/view";
+import { DiagramModel, DiagramView } from "ontodia";
 
 const TripleTableRow = ({ triple }) => (
   <tr>
