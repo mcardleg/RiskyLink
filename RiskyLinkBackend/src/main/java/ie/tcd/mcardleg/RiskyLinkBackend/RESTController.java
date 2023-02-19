@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 @RestController
 public class RESTController {
     GraphDBHandler graphDBHandler = new GraphDBHandler();
@@ -59,37 +59,23 @@ public class RESTController {
         return ResponseEntity.ok("Ontology uploaded.");
     }
 
-    @GetMapping("/printFiles")
-    public void printFiles() throws IOException {
-        BufferedReader in = new BufferedReader(new FileReader(filePath));
-        String line = in.readLine();
-        while(line != null)
-        {
-            System.out.println(line);
-            line = in.readLine();
-        }
-        in.close();
-
-    }
-
     @GetMapping("/runQueries")
     public ResponseEntity<Map<String, List<QueryResult>>> runQueries() {
         Map<String, List<QueryResult>> results = null;
 
-        try {
-            results = graphDBHandler.runQueries();
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-
-        } finally {
-            graphDBHandler.tearDownDB();
-
-        }
+        results = graphDBHandler.runQueries();
 
         //Order results
-
         return new ResponseEntity<>(results, HttpStatus.OK);
     }
+
+    @GetMapping("/sessionEnded")
+    public ResponseEntity<String> sessionEnded(@RequestHeader("sessionID") String sessionId) {
+//        System.out.println(sessionId);
+        graphDBHandler.tearDownDB();
+        return ResponseEntity.ok("Session shutdown");
+    }
+
+
 
 }
