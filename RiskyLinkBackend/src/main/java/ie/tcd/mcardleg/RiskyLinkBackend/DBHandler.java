@@ -29,7 +29,7 @@ public class DBHandler {
 
     private HashMap<String, RepositoryConnection> activeRepos = new HashMap<>();
     private String baseURI = "http://www.semanticweb.org/riskylink";
-    private Logger log = LoggerFactory.getLogger(GraphDBHandler.class);
+    private Logger log = LoggerFactory.getLogger(DBHandler.class);
 
     public void addDataset(String sessionId, Path path) {
         if (!checkRepositoryExists(sessionId)) {

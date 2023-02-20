@@ -23,6 +23,7 @@ public class AlignmentGenerator {
     private static Logger log = LoggerFactory.getLogger(AlignmentGenerator.class);
 
     public static List<String> runGenerator(String ontologyDirectory) {
+        log.debug("runGenerator called");
         HashMap<String, AlignmentProcess> aligners = new HashMap<String, AlignmentProcess>();
         aligners.put("ClassStruct", new ClassStructAlignment());
         aligners.put("EditDistName", new EditDistNameAlignment());
