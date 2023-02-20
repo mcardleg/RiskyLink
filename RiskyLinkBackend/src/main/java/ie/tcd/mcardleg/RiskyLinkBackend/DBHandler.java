@@ -102,7 +102,7 @@ public class DBHandler {
 
     private void uploadFile(String sessionId, String filePath, RDFFormat format) {
         try {
-            log.info("Set up DB");
+            log.info("Uploaded " + filePath);
             activeRepos.get(sessionId).add(new File(filePath), baseURI, format);
         } catch (IOException e) {
             log.error(e.getMessage(), e);
