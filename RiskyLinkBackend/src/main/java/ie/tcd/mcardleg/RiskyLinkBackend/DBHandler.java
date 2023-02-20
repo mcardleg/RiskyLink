@@ -33,14 +33,14 @@ public class DBHandler {
 
     public void addDataset(String sessionId, Path path) {
         if (!checkRepositoryExists(sessionId)) {
-            setupDB(sessionId);
+            setUpRepository(sessionId);
         }
         uploadFile(sessionId, path.toString(), RDFFormat.TURTLE);
     }
 
     public void addOntology(String sessionId, Path path) {
         if (!checkRepositoryExists(sessionId)) {
-            setupDB(sessionId);
+            setUpRepository(sessionId);
         }
         uploadFile(sessionId, path.toString(), RDFFormat.TURTLE);
 
@@ -61,6 +61,7 @@ public class DBHandler {
             while (queriesIterator.hasNext()) {
                 JSONObject object = (JSONObject)queriesIterator.next();
                 String queryName = (String)object.get("query_name");
+                log.info(queryName);
                 JSONArray queryLines = (JSONArray)object.get("query");
                 Iterator linesIterator = queryLines.iterator();
                 String queryString = "";
@@ -84,11 +85,11 @@ public class DBHandler {
     }
 
     // Utils
-    private void setupDB(String sessionId) {
+    private void setUpRepository(String sessionId) {
         File dataDir = new File(sessionId + "/");
         Repository repo = new SailRepository(new NativeStore(dataDir));
         activeRepos.put(sessionId, repo.getConnection());
-        log.info("Set up DB");
+        log.info("Set up repo");
     }
 
     private boolean checkRepositoryExists(String sessionId) {
