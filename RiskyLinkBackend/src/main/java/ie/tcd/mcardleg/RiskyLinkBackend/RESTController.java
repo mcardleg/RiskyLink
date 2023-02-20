@@ -63,7 +63,7 @@ public class RESTController {
     public ResponseEntity<Map<String, List<QueryResult>>> runQueries(@RequestHeader("sessionID") String sessionId) {
         Map<String, List<QueryResult>> results = null;
 
-        // results = graphDBHandler.runQueries();
+        results = dbHandler.runQueries(sessionId);
 
         //Order results
         return new ResponseEntity<>(results, HttpStatus.OK);
