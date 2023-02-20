@@ -71,7 +71,7 @@ public class RESTController {
 
     @GetMapping("/sessionEnded")
     public ResponseEntity<String> sessionEnded(@RequestHeader("sessionID") String sessionId) {
-//        System.out.println(sessionId);
+        // System.out.println(sessionId);
         // graphDBHandler.tearDownDB();
         dbHandler.tearDownDB(sessionId);
         return ResponseEntity.ok("Session shutdown");

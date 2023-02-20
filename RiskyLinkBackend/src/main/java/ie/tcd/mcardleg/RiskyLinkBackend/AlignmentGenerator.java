@@ -36,6 +36,7 @@ public class AlignmentGenerator {
         List<String> filePaths = new ArrayList<String>();
         for (Map.Entry<String, AlignmentProcess> set : aligners.entrySet()) {
             filePaths.add(generate(ontologyDirectory, set.getKey(), set.getValue()));
+            log.debug("generate called.");
         }
         log.info("Alignments generated.");
         return filePaths;
