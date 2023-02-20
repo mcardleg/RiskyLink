@@ -52,7 +52,7 @@ public class RESTController {
             Path path = Paths.get(file.getOriginalFilename());
             Files.write(path, bytes);
             // graphDBHandler.addOntology(sessionId, path);
-            dbHandler.addDataset(sessionId, path);
+            dbHandler.addOntology(sessionId, path);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
