@@ -69,7 +69,7 @@ public class AlignmentGenerator {
         } catch (IOException | URISyntaxException | AlignmentException e) {
             log.error(e.getMessage(), e);
         }
-
+        log.info("Alignment generated: " + filePath);
         return filePath;
     }
 }
