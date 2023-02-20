@@ -85,7 +85,7 @@ public class DBHandler {
 
     // Utils
     private void setupDB(String sessionId) {
-        File dataDir = new File("/" + sessionId + "/");
+        File dataDir = new File(sessionId + "/");
         Repository repo = new SailRepository(new NativeStore(dataDir));
         activeRepos.put(sessionId, repo.getConnection());
         log.info("Set up DB");
