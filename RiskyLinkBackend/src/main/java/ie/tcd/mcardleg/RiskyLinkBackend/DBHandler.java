@@ -44,9 +44,9 @@ public class DBHandler {
         }
         uploadFile(sessionId, path.toString(), RDFFormat.TURTLE);
 
-        // for (String alignmentPath : AlignmentGenerator.runGenerator(path.toString())){
-        //     uploadFile(sessionId, alignmentPath, RDFFormat.RDFXML);
-        // }
+        for (String alignmentPath : AlignmentGenerator.runGenerator(path.toString())){
+            uploadFile(sessionId, alignmentPath, RDFFormat.RDFXML);
+        }
     }
 
     public HashMap<String, List<QueryResult>> runQueries(String sessionId) {
