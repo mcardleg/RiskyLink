@@ -6,8 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -18,11 +16,12 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 @RestController
 public class RESTController {
-    GraphDBHandler graphDBHandler = new GraphDBHandler();
+    // GraphDBHandler graphDBHandler = new GraphDBHandler();
+    DBHandler dbHandler = new DBHandler();
     String filePath;
 
     @PostMapping("/uploadDataset")
-    public ResponseEntity<String> uploadDataset(@RequestPart("file") MultipartFile file) {
+    public ResponseEntity<String> uploadDataset(@RequestHeader("sessionID") String sessionId, @RequestPart("file") MultipartFile file) {
         if (null == file.getOriginalFilename()) {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Error", "No file passed.");
@@ -31,10 +30,10 @@ public class RESTController {
         try {
             byte[] bytes = file.getBytes();
             Path path = Paths.get(file.getOriginalFilename());
-            filePath = path.toString();
 
             Files.write(path, bytes);
-            graphDBHandler.addDataset(path.toString());
+            // graphDBHandler.addDataset(sessionId, path);
+            dbHandler.addDataset(sessionId, path);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -42,7 +41,7 @@ public class RESTController {
     }
 
     @PostMapping("/uploadOntology")
-    public ResponseEntity<String> uploadOntology(@RequestPart("file") MultipartFile file) {
+    public ResponseEntity<String> uploadOntology(@RequestHeader("sessionID") String sessionId, @RequestPart("file") MultipartFile file) {
         if (null == file.getOriginalFilename()) {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Error", "No file passed.");
@@ -52,7 +51,8 @@ public class RESTController {
             byte[] bytes = file.getBytes();
             Path path = Paths.get(file.getOriginalFilename());
             Files.write(path, bytes);
-            graphDBHandler.addOntology(path);
+            // graphDBHandler.addOntology(sessionId, path);
+            dbHandler.addDataset(sessionId, path);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -60,10 +60,10 @@ public class RESTController {
     }
 
     @GetMapping("/runQueries")
-    public ResponseEntity<Map<String, List<QueryResult>>> runQueries() {
+    public ResponseEntity<Map<String, List<QueryResult>>> runQueries(@RequestHeader("sessionID") String sessionId) {
         Map<String, List<QueryResult>> results = null;
 
-        results = graphDBHandler.runQueries();
+        // results = graphDBHandler.runQueries();
 
         //Order results
         return new ResponseEntity<>(results, HttpStatus.OK);
@@ -72,7 +72,8 @@ public class RESTController {
     @GetMapping("/sessionEnded")
     public ResponseEntity<String> sessionEnded(@RequestHeader("sessionID") String sessionId) {
 //        System.out.println(sessionId);
-        graphDBHandler.tearDownDB();
+        // graphDBHandler.tearDownDB();
+        dbHandler.tearDownDB(sessionId);
         return ResponseEntity.ok("Session shutdown");
     }
 

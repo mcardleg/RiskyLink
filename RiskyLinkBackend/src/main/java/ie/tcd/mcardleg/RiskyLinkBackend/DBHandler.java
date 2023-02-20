@@ -1,81 +1,56 @@
 package ie.tcd.mcardleg.RiskyLinkBackend;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.*;
+import java.text.ParseException;
+import java.io.FileReader;
 
-import org.eclipse.rdf4j.model.Value;
+import org.eclipse.rdf4j.rio.RDFFormat;
 import org.eclipse.rdf4j.query.BindingSet;
 import org.eclipse.rdf4j.query.TupleQuery;
 import org.eclipse.rdf4j.query.TupleQueryResult;
 import org.eclipse.rdf4j.repository.Repository;
 import org.eclipse.rdf4j.repository.RepositoryConnection;
 import org.eclipse.rdf4j.repository.sail.SailRepository;
-import org.eclipse.rdf4j.rio.RDFFormat;
 import org.eclipse.rdf4j.sail.nativerdf.NativeStore;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
-public class GraphDBHandler {
-    private Logger log = LoggerFactory.getLogger(GraphDBHandler.class);
+public class DBHandler {
+
+    private HashMap<String, RepositoryConnection> activeRepos = new HashMap<>();
     private String baseURI = "http://www.semanticweb.org/riskylink";
-    private Repository repo;
-    private RepositoryConnection connection;
+    private Logger log = LoggerFactory.getLogger(GraphDBHandler.class);
 
     public void addDataset(String sessionId, Path path) {
-        if (!checkRepositoryExists()) {
-            setUpDB();
+        if (!checkRepositoryExists(sessionId)) {
+            setupDB(sessionId);
         }
-        uploadFile(path.toString(), RDFFormat.TURTLE);
+        uploadFile(sessionId, path.toString(), RDFFormat.TURTLE);
     }
 
     public void addOntology(String sessionId, Path path) {
-        if (!checkRepositoryExists()) {
-            setUpDB();
+        if (!checkRepositoryExists(sessionId)) {
+            setupDB(sessionId);
         }
-        uploadFile(path.toString(), RDFFormat.TURTLE);
+        uploadFile(sessionId, path.toString(), RDFFormat.TURTLE);
 
-        for (String alignmentPath : AlignmentGenerator.runGenerator(path.toString())){
-            uploadFile(alignmentPath, RDFFormat.RDFXML);
-        }
+        // for (String alignmentPath : AlignmentGenerator.runGenerator(path.toString())){
+        //     uploadFile(sessionId, alignmentPath, RDFFormat.RDFXML);
+        // }
     }
 
-    private boolean checkRepositoryExists() {
-        if (connection == null) {
-            return false;
-        }
-        return connection.isOpen();
-    }
-
-    private void setUpDB() {
-        repo = new SailRepository(new NativeStore());
-        connection = repo.getConnection();
-        log.info("Database connection acquired.");
-    }
-
-    private void uploadFile(String filePath, RDFFormat format) {
-        try {
-            connection.add(new File(filePath), baseURI, format);
-            log.info("Uploaded " + filePath);
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
-        }
-    }
-
-    public void tearDownDB() {
-        connection.close();
-        log.info("Database connection closed.");
-    }
-
-    public Map<String, List<QueryResult>> runQueries() {
-        Map<String, List<QueryResult>> results = new HashMap<String, List<QueryResult>>();
+    public HashMap<String, List<QueryResult>> runQueries(String sessionId) {
+        HashMap<String, List<QueryResult>> results = new HashMap<String, List<QueryResult>>();
 
         JSONParser parser = new JSONParser();
         try {
@@ -92,18 +67,50 @@ public class GraphDBHandler {
                 while (linesIterator.hasNext()) {
                     queryString += "\n" + linesIterator.next().toString();
                 }
-                results.put(queryName, query(queryString));
+                results.put(queryName, query(sessionId, queryString));
             }
-        } catch(IOException | ParseException e) {
+        } catch(Exception e) {
             log.error(e.getMessage(), e);
         }
         log.info("Queries have been run.");
 
         return results;
     }
+    
+    public void tearDownDB(String sessionId) {
+        if (activeRepos.containsKey(sessionId)) {
+            activeRepos.get(sessionId).close();
+        }
+    }
 
-    private List<QueryResult> query(String queryString) {
-        TupleQuery tupleQuery = connection.prepareTupleQuery(queryString);
+    // Utils
+    private void setupDB(String sessionId) {
+        File dataDir = new File("/" + sessionId + "/");
+        Repository repo = new SailRepository(new NativeStore(dataDir));
+        activeRepos.put(sessionId, repo.getConnection());
+        log.info("Set up DB");
+    }
+
+    private boolean checkRepositoryExists(String sessionId) {
+        if (activeRepos.containsKey(sessionId) && activeRepos.get(sessionId).isOpen()) {
+            log.info("Repo exists");
+            return true;
+        }
+        log.info("Repo does not exist");
+        return false;
+    }
+
+    private void uploadFile(String sessionId, String filePath, RDFFormat format) {
+        try {
+            log.info("Set up DB");
+            activeRepos.get(sessionId).add(new File(filePath), baseURI, format);
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+        }
+    }
+
+    private List<QueryResult> query(String sessionId, String queryString) {
+        TupleQuery tupleQuery = activeRepos.get(sessionId).prepareTupleQuery(queryString);
         TupleQueryResult result = tupleQuery.evaluate();
         List<QueryResult> queryResults = new ArrayList<QueryResult>();
 
@@ -119,4 +126,5 @@ public class GraphDBHandler {
         result.close();
         return queryResults;
     }
+    
 }

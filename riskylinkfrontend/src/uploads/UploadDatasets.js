@@ -22,10 +22,13 @@ function UploadDatasets() {
 
 		formData.append('file', selectedFile);
 
-		fetch(
-      'http://localhost:8080/uploadDataset', 
-      { method: 'POST', body: formData, credentials: 'include' }
-    )
+    fetch('http://localhost:8080/uploadDataset', {
+      method: 'POST',
+      headers: {
+        'sessionID': document.cookie,
+      },
+      body: formData
+    })
 		.then((response) => {
 			console.log('Success:', response);
 		})

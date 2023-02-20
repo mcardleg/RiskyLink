@@ -35,8 +35,11 @@ function ListLinks() {
   const [triples, setTriples] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/runQueries", {
-      credentials: 'include'
+    fetch('http://localhost:8080/runQueries', {
+      method: 'GET',
+      headers: {
+        'sessionID': document.cookie,
+      }
     })
       .then(response => response.json())
       .then(data => {

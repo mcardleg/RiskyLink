@@ -23,10 +23,13 @@ function UploadOntologies() {
 
 		formData.append('file', selectedFile);
 
-		fetch(
-      'http://localhost:8080/uploadOntology', 
-      { method: 'POST', body: formData, credentials: 'include' }
-    )
+    fetch('http://localhost:8080/uploadOntology', {
+      method: 'POST',
+      headers: {
+        'sessionID': document.cookie,
+      },
+      body: formData
+    })
 		.then((response) => {
 			console.log('Success:', response);
 		})
