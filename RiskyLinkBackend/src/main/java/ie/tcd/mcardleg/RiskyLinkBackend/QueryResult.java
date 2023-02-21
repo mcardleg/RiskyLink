@@ -12,8 +12,10 @@ public class QueryResult {
 
     public QueryResult(Value sensitiveInfo, Value demographic,
                        Value subject, Value predicate, Value object) {
-        this.sensitiveInfo = sensitiveInfo.toString();
-        this.demographic = demographic.toString();
+//        this.sensitiveInfo = sensitiveInfo.toString();
+//        this.demographic = demographic.toString();
+        this.sensitiveInfo = null;
+        this.demographic = null;
         this.subject = subject.toString();
         this.predicate = predicate.toString();
         this.object = object.toString();
@@ -23,32 +25,32 @@ public class QueryResult {
         return sensitiveInfo;
     }
 
-    public void setSensitiveInfo(String sensitiveInfo) {
-        this.sensitiveInfo = sensitiveInfo;
+    public void setSensitiveInfo(Value sensitiveInfo) {
+        this.sensitiveInfo = sensitiveInfo.toString();
     }
 
     public String getDemographic() {
         return demographic;
     }
 
-    public void setDemographic(String demographic) {
-        this.demographic = demographic;
+    public void setDemographic(Value demographic) {
+        this.demographic = demographic.toString();
     }
 
     public String getSubject() {
         return subject;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
+    public void setSubject(Value subject) {
+        this.subject = subject.toString();
     }
 
     public String getPredicate() {
         return predicate;
     }
 
-    public void setPredicate(String predicate) {
-        this.predicate = predicate;
+    public void setPredicate(Value predicate) {
+        this.predicate = predicate.toString();
     }
 
     @Override
