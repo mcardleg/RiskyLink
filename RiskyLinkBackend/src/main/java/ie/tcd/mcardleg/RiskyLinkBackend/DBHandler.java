@@ -124,12 +124,12 @@ public class DBHandler {
         while (result.hasNext()) {  // iterate over the result
             BindingSet bindingSet = result.next();
             QueryResult queryResult = new QueryResult(
-                    bindingSet.getValue(SENSITIVE_INFO_FIELD),
+//                    bindingSet.getValue(SENSITIVE_INFO_FIELD),
 //                    bindingSet.getValue(DEMOGRAPHIC_FIELD),
-                    null, null, null, null);
-//                    bindingSet.getValue(SUBJECT_FIELD),
-//                    bindingSet.getValue(PREDICATE_FIELD),
-//                    bindingSet.getValue(OBJECT_FIELD));
+//                    null, null, null, null);
+                    bindingSet.getValue(SUBJECT_FIELD),
+                    bindingSet.getValue(PREDICATE_FIELD),
+                    bindingSet.getValue(OBJECT_FIELD));
             log.debug(bindingSet.getValue(SUBJECT_FIELD).toString());
             queryResults.add(queryResult);
         }

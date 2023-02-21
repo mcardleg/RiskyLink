@@ -58,10 +58,9 @@ public class AlignmentGenerator {
             aligner.align( (Alignment)null, params );
 
             FileOutputStream file = new FileOutputStream(filePath);
-
             PrintWriter writer = new PrintWriter(file, true);
-
             AlignmentVisitor renderer = new OWLAxiomsRendererVisitor(writer);
+
             aligner.render(renderer);
             writer.flush();
             writer.close();
