@@ -23,8 +23,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import static ie.tcd.mcardleg.RiskyLinkBackend.Constants.QUERIES_DIRECTORY;
-
 public class DBHandler {
 
     private HashMap<String, RepositoryConnection> activeRepos = new HashMap<>();
