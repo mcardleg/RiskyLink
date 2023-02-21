@@ -126,7 +126,7 @@ public class DBHandler {
             QueryResult queryResult = new QueryResult(
 //                    bindingSet.getValue(SENSITIVE_INFO_FIELD),
 //                    bindingSet.getValue(DEMOGRAPHIC_FIELD),
-//                    null, null, null, null);
+                    null, null, 
                     bindingSet.getValue(SUBJECT_FIELD),
                     bindingSet.getValue(PREDICATE_FIELD),
                     bindingSet.getValue(OBJECT_FIELD));
