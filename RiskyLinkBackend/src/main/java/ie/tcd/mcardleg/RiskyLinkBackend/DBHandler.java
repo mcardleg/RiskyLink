@@ -55,7 +55,7 @@ public class DBHandler {
 
     public HashMap<String, List<QueryResult>> runQueries(String sessionId) {
         HashMap<String, List<QueryResult>> results = new HashMap<String, List<QueryResult>>();
-
+        log.debug(String.valueOf(checkRepositoryExists(sessionId)));
         JSONParser parser = new JSONParser();
         try {
             JSONObject jsonObject = (JSONObject)parser.parse(
@@ -65,7 +65,7 @@ public class DBHandler {
             while (queriesIterator.hasNext()) {
                 JSONObject object = (JSONObject)queriesIterator.next();
                 String queryName = (String)object.get("query_name");
-                log.info(queryName);
+                log.debug(queryName);
                 JSONArray queryLines = (JSONArray)object.get("query");
                 Iterator linesIterator = queryLines.iterator();
                 String queryString = "";
@@ -128,6 +128,7 @@ public class DBHandler {
                     bindingSet.getValue(SUBJECT_FIELD),
                     bindingSet.getValue(PREDICATE_FIELD),
                     bindingSet.getValue(OBJECT_FIELD));
+            log.debug(bindingSet.getValue(SUBJECT_FIELD).toString());
             queryResults.add(queryResult);
         }
         result.close();

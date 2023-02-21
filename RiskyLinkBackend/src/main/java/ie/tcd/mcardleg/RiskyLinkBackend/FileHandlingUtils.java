@@ -32,6 +32,7 @@ public class FileHandlingUtils {
         //Delete alignments
         try {
             FileUtils.deleteDirectory(new File(sessionId + "/"));
+            log.info("Deleted session resources.");
         } catch (IOException e) {
             log.error(e.getMessage());
         }
