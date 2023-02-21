@@ -1,16 +1,23 @@
 {
   "queries" : [
     {
-      "query_name": "basic_query",
+      "query_name": "person_sensitive_info",
       "query": [
-        "PREFIX ex: <http://riskylink.edu/>",
         "PREFIX ont: <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#>",
         "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>",
         "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
         "PREFIX owl: <http://www.w3.org/2002/07/owl#>",
-        "SELECT ?equivilent_classes",
+        "SELECT DISTINCT ?data1 ?p ?data2 ?types_of_sensitive_info ?types_of_person",
         "WHERE {",
-        "?equivilent_classes owl:equivalentClass ?types_of_sensitive_info .",
+        "?types_of_sensitive_info rdfs:subClassOf ont:Sensitive_information .",
+        "?equivilents1 owl:equivalentClass ?types_of_sensitive_info .",
+        "?data1 rdf:type ?equivilents1 .",
+
+        "?types_of_person rdfs:subClassOf ont:Person .",
+        "?equivilents2 owl:equivalentClass ?types_of_person .",
+        "?data2 rdf:type ?equivilents2 .",
+
+        "?data1 ?p ?data2 .",
         "}"
       ]
     }
