@@ -1,15 +1,30 @@
 package ie.tcd.mcardleg.RiskyLinkBackend;
 
+import org.eclipse.rdf4j.model.Value;
+
 public class QueryResult {
 
+    private String sensitiveInfo;
     private String demographic;
-    private String data;
-    private String equivalentClass;
+    private String subject;
+    private String predicate;
+    private String object;
 
-    public QueryResult(String demographic, String data, String equivalentClass) {
-        this.demographic = demographic;
-        this.data = data;
-        this.equivalentClass = equivalentClass;
+    public QueryResult(Value sensitiveInfo, Value demographic,
+                       Value subject, Value predicate, Value object) {
+        this.sensitiveInfo = sensitiveInfo.toString();
+        this.demographic = demographic.toString();
+        this.subject = subject.toString();
+        this.predicate = predicate.toString();
+        this.object = object.toString();
+    }
+
+    public String getSensitiveInfo() {
+        return sensitiveInfo;
+    }
+
+    public void setSensitiveInfo(String sensitiveInfo) {
+        this.sensitiveInfo = sensitiveInfo;
     }
 
     public String getDemographic() {
@@ -20,28 +35,33 @@ public class QueryResult {
         this.demographic = demographic;
     }
 
-    public String getData() {
-        return data;
+    public String getSubject() {
+        return subject;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
-    public String getEquivalentClass() {
-        return equivalentClass;
+    public String getPredicate() {
+        return predicate;
     }
 
-    public void setEquivalentClass(String equivalentClass) {
-        this.equivalentClass = equivalentClass;
+    public void setPredicate(String predicate) {
+        this.predicate = predicate;
     }
 
     @Override
     public String toString() {
         return "QueryResult{" +
-                "demographic='" + demographic + '\'' +
-                ", data='" + data + '\'' +
-                ", equivalentClass='" + equivalentClass + '\'' +
+                "sensitiveInfo='" + sensitiveInfo + '\'' +
+                ", demographic='" + demographic + '\'' +
+                ", subject='" + subject + '\'' +
+                ", predicate='" + predicate + '\'' +
+                ", object='" + object + '\'' +
                 '}';
     }
+
 }
+
+

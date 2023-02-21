@@ -7,7 +7,6 @@ import java.util.List;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.text.ParseException;
 import java.io.FileReader;
 
 import org.eclipse.rdf4j.rio.RDFFormat;
@@ -24,12 +23,19 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import static ie.tcd.mcardleg.RiskyLinkBackend.Constants.QUERIES_DIRECTORY;
 
 public class DBHandler {
 
     private HashMap<String, RepositoryConnection> activeRepos = new HashMap<>();
     private String baseURI = "http://www.semanticweb.org/riskylink";
     private Logger log = LoggerFactory.getLogger(DBHandler.class);
+    private final String QUERIES_DIRECTORY = "src/main/resources/sparql_queries.json";
+    private final String SENSITIVE_INFO_FIELD = "types_of_sensitive_info";
+    private final String DEMOGRAPHIC_FIELD = "demographic";
+    private final String SUBJECT_FIELD = "subject";
+    private final String PREDICATE_FIELD = "predicate";
+    private final String OBJECT_FIELD = "object";
 
     public void addDataset(String sessionId, Path path) {
         if (!checkRepositoryExists(sessionId)) {
@@ -55,7 +61,7 @@ public class DBHandler {
         JSONParser parser = new JSONParser();
         try {
             JSONObject jsonObject = (JSONObject)parser.parse(
-                    new FileReader("src/main/resources/sparql_queries.json"));
+                    new FileReader(QUERIES_DIRECTORY));
             JSONArray queries = (JSONArray)jsonObject.get("queries");
             Iterator queriesIterator = queries.iterator();
             while (queriesIterator.hasNext()) {
@@ -118,10 +124,11 @@ public class DBHandler {
         while (result.hasNext()) {  // iterate over the result
             BindingSet bindingSet = result.next();
             QueryResult queryResult = new QueryResult(
-//                    bindingSet.getValue("demographic").toString(),
-//                    bindingSet.getValue("data").toString(),
-                    null, null,
-                    bindingSet.getValue("equivilent_classes").toString());
+                    bindingSet.getValue(SENSITIVE_INFO_FIELD),
+                    bindingSet.getValue(DEMOGRAPHIC_FIELD),
+                    bindingSet.getValue(SUBJECT_FIELD),
+                    bindingSet.getValue(PREDICATE_FIELD),
+                    bindingSet.getValue(OBJECT_FIELD));
             queryResults.add(queryResult);
         }
         result.close();

@@ -7,17 +7,17 @@
         "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>",
         "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
         "PREFIX owl: <http://www.w3.org/2002/07/owl#>",
-        "SELECT DISTINCT ?data1 ?p ?data2 ?types_of_sensitive_info ?types_of_person",
+        "SELECT DISTINCT ?subject ?predicate ?object ?types_of_sensitive_info ?demographic",
         "WHERE {",
         "?types_of_sensitive_info rdfs:subClassOf ont:Sensitive_information .",
         "?equivilents1 owl:equivalentClass ?types_of_sensitive_info .",
-        "?data1 rdf:type ?equivilents1 .",
+        "?subject rdf:type ?equivilents1 .",
 
-        "?types_of_person rdfs:subClassOf ont:Person .",
-        "?equivilents2 owl:equivalentClass ?types_of_person .",
-        "?data2 rdf:type ?equivilents2 .",
+        "?demographic rdfs:subClassOf ont:Person .",
+        "?equivilents2 owl:equivalentClass ?demographic .",
+        "?object rdf:type ?equivilents2 .",
 
-        "?data1 ?p ?data2 .",
+        "?subject ?predicate ?object .",
         "}"
       ]
     }

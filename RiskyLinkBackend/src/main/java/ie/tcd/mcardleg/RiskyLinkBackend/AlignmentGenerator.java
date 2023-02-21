@@ -16,28 +16,26 @@ import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static ie.tcd.mcardleg.RiskyLinkBackend.Constants.ETHICS_ONTOLOGOY_DIRECTORY;
+import static ie.tcd.mcardleg.RiskyLinkBackend.Constants.*;
 
 
 public class AlignmentGenerator {
     private static Logger log = LoggerFactory.getLogger(AlignmentGenerator.class);
 
     public static List<String> runGenerator(String ontologyDirectory) {
-        log.debug("runGenerator called");
         HashMap<String, AlignmentProcess> aligners = new HashMap<String, AlignmentProcess>();
-        aligners.put("ClassStruct", new ClassStructAlignment());
-        aligners.put("EditDistName", new EditDistNameAlignment());
-        aligners.put("NameAndProperty", new NameAndPropertyAlignment());
-        aligners.put("NameEq", new NameEqAlignment());
-        aligners.put("SMOAName", new SMOANameAlignment());
-        aligners.put("StringDist", new StringDistAlignment());
-        aligners.put("StrucSubsDist", new StrucSubsDistAlignment());
-        aligners.put("SubsDistName", new SubsDistNameAlignment());
+        aligners.put(CLASS_STRUCT_MATCHER, new ClassStructAlignment());
+        aligners.put(EDIT_DIST_NAME_MATCHER, new EditDistNameAlignment());
+        aligners.put(NAME_AND_PROPERTY_MATCHER, new NameAndPropertyAlignment());
+        aligners.put(NAME_EQ_MATCHER, new NameEqAlignment());
+//        aligners.put(SMOAN_NAME_MATCHER, new SMOANameAlignment());
+//        aligners.put(STRING_DIST_MATCHER, new StringDistAlignment());
+//        aligners.put(STRUC_SUBS_DIST_MATCHER, new StrucSubsDistAlignment());
+//        aligners.put(SUBS_DIST_NAME_MATCHER, new SubsDistNameAlignment());
 
         List<String> filePaths = new ArrayList<String>();
         for (Map.Entry<String, AlignmentProcess> set : aligners.entrySet()) {
             filePaths.add(generate(ontologyDirectory, set.getKey(), set.getValue()));
-            log.debug("generate called.");
         }
         log.info("Alignments generated.");
         return filePaths;
@@ -71,7 +69,6 @@ public class AlignmentGenerator {
         } catch (IOException | URISyntaxException | AlignmentException e) {
             log.error(e.getMessage(), e);
         }
-        log.info("Alignment generated: " + filePath);
         return filePath;
     }
 }
