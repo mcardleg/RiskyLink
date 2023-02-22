@@ -17,6 +17,7 @@
         "?demographic owl:equivalentClass ?demo_equivalents .",
         "?object rdf:type ?demo_equivalents .",
 
+        "?subject ?predicate ?object .",
         "}"
       ]
     },
@@ -37,6 +38,7 @@
         "?demographic owl:equivalentClass ?demo_equivalents .",
         "?object rdf:type ?demo_equivalents .",
 
+        "?object ?predicate ?subject .",
         "}"
       ]
     }

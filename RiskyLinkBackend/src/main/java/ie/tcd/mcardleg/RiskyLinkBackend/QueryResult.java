@@ -17,10 +17,10 @@ public class QueryResult {
 //        this.sensitiveInfo = null;
 //        this.demographic = null;
 //        this.subject = null;
-        this.predicate = null;
+//        this.predicate = null;
 //        this.object = null;
         this.subject = subject.toString();
-//        this.predicate = predicate.toString();
+        this.predicate = predicate.toString();
         this.object = object.toString();
     }
 

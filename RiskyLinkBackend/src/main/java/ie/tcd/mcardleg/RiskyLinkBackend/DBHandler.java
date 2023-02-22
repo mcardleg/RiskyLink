@@ -130,8 +130,8 @@ public class DBHandler {
                     bindingSet.getValue(SENSITIVE_INFO_FIELD),
                     bindingSet.getValue(DEMOGRAPHIC_FIELD),
                     bindingSet.getValue(SUBJECT_FIELD),
-                    null,
-//                    bindingSet.getValue(PREDICATE_FIELD),
+//                    null,
+                    bindingSet.getValue(PREDICATE_FIELD),
                     bindingSet.getValue(OBJECT_FIELD));
 //            log.debug(bindingSet.getValue(SUBJECT_FIELD).toString());
             queryResults.add(queryResult);
