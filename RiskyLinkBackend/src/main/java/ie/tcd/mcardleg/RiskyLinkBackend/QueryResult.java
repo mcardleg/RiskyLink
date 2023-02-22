@@ -56,6 +56,14 @@ public class QueryResult {
         this.predicate = predicate.toString();
     }
 
+    public String getObject() {
+        return object;
+    }
+
+    public void setObject(Value object) {
+        this.object = object.toString();
+    }
+
     @Override
     public String toString() {
         return "QueryResult{" +
