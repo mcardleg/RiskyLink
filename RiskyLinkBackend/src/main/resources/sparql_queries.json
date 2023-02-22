@@ -1,7 +1,7 @@
 {
   "queries" : [
     {
-      "query_name": "person_sensitive_info",
+      "query_name": "sensitiveInfo_person",
       "query": [
         "PREFIX ont: <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#>",
         "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>",
@@ -10,10 +10,32 @@
         "SELECT DISTINCT ?subject ?predicate ?object ?types_of_sensitive_info ?demographic",
         "WHERE {",
         "?types_of_sensitive_info rdfs:subClassOf ont:Sensitive_information .",
-        "?types_of_sensitive_info owl:equivalentClass ?subject .",
+        "?types_of_sensitive_info owl:equivalentClass ?info_equivalents .",
+        "?subject rdf:type ?info_equivalents .",
 
         "?demographic rdfs:subClassOf ont:Person .",
-        "?demographic owl:equivalentClass ?object .",
+        "?demographic owl:equivalentClass ?demo_equivalents .",
+        "?object rdf:type ?demo_equivalents .",
+
+        "}"
+      ]
+    },
+    {
+      "query_name": "person_sensitiveInfo",
+      "query": [
+        "PREFIX ont: <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#>",
+        "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>",
+        "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+        "PREFIX owl: <http://www.w3.org/2002/07/owl#>",
+        "SELECT DISTINCT ?subject ?predicate ?object ?types_of_sensitive_info ?demographic",
+        "WHERE {",
+        "?types_of_sensitive_info rdfs:subClassOf ont:Sensitive_information .",
+        "?types_of_sensitive_info owl:equivalentClass ?info_equivalents .",
+        "?subject rdf:type ?info_equivalents .",
+
+        "?demographic rdfs:subClassOf ont:Person .",
+        "?demographic owl:equivalentClass ?demo_equivalents .",
+        "?object rdf:type ?demo_equivalents .",
 
         "}"
       ]
