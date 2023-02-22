@@ -18,8 +18,8 @@ function App() {
         fetch('http://localhost:8080/sessionEnded', {
           method: 'GET',
           headers: {
-            // 'sessionID': document.cookie,
-            'sessionID': GetCookie(),
+            'sessionID': document.cookie,
+            // 'sessionID': GetCookie(),
           },
         });
         DeleteSessionID();

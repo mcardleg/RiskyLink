@@ -29,8 +29,8 @@ function GetCookie() {
 function CheckCookie() {
   console.log("CheckCookie");
   console.log(document.cookie);
-
-  if (GetCookie === "") {
+  let cookie = GetCookie();
+  if (cookie === "" | cookie === null) {
     return false;
   }
   return true;

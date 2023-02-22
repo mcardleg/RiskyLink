@@ -1,5 +1,7 @@
 package ie.tcd.mcardleg.RiskyLinkBackend;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,8 @@ import java.util.Map;
 @RestController
 public class RESTController {
     private DBHandler dbHandler = new DBHandler();
+    private Logger log = LoggerFactory.getLogger(RESTController.class);
+
 
     @PostMapping("/uploadDataset")
     public ResponseEntity<String> uploadDataset(@RequestHeader("sessionID") String sessionId, @RequestPart("file") MultipartFile file) {
@@ -45,7 +49,7 @@ public class RESTController {
 
     @GetMapping("/sessionEnded")
     public ResponseEntity<String> sessionEnded(@RequestHeader("sessionID") String sessionId) {
-        System.out.println(sessionId);
+        log.debug(sessionId);
         dbHandler.tearDownDB(sessionId);
         FileHandlingUtils.deleteSessionFiles(sessionId);
         //Delete files
