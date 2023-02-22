@@ -18,10 +18,10 @@ public class QueryResult {
 //        this.demographic = null;
 //        this.subject = null;
         this.predicate = null;
-        this.object = null;
+//        this.object = null;
         this.subject = subject.toString();
 //        this.predicate = predicate.toString();
-//        this.object = object.toString();
+        this.object = object.toString();
     }
 
     public String getSensitiveInfo() {
