@@ -10,6 +10,8 @@
         "SELECT DISTINCT ?subject ?predicate ?object ?types_of_sensitive_info ?demographic",
         "WHERE {",
         "?types_of_sensitive_info rdfs:subClassOf ont:Sensitive_information .",
+        "?subject owl:equivalentClass ?types_of_sensitive_info .",
+
         "?demographic rdfs:subClassOf ont:Person .",
         "}"
       ]
