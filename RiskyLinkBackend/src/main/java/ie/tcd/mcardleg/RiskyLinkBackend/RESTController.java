@@ -45,7 +45,9 @@ public class RESTController {
 
     @GetMapping("/sessionEnded")
     public ResponseEntity<String> sessionEnded(@RequestHeader("sessionID") String sessionId) {
+        System.out.println(sessionId);
         dbHandler.tearDownDB(sessionId);
+        FileHandlingUtils.deleteSessionFiles(sessionId);
         //Delete files
         return ResponseEntity.ok("Session shutdown");
     }

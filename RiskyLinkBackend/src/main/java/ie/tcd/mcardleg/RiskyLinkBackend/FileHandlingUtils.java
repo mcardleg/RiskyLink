@@ -31,7 +31,7 @@ public class FileHandlingUtils {
         //Delete files uploaded above
         //Delete alignments
         try {
-            FileUtils.deleteDirectory(new File(String.format("\'%s\'/", sessionId)));
+            FileUtils.deleteDirectory(new File(sessionId));
             log.info("Deleted session resources.");
         } catch (IOException e) {
             log.error(e.getMessage());

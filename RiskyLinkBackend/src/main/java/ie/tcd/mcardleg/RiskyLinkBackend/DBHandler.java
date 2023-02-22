@@ -124,16 +124,14 @@ public class DBHandler {
         TupleQueryResult result = tupleQuery.evaluate();
         List<QueryResult> queryResults = new ArrayList<QueryResult>();
 
-        while (result.hasNext()) {  // iterate over the result
+        while (result.hasNext()) {
             BindingSet bindingSet = result.next();
             QueryResult queryResult = new QueryResult(
                     bindingSet.getValue(SENSITIVE_INFO_FIELD),
                     bindingSet.getValue(DEMOGRAPHIC_FIELD),
                     bindingSet.getValue(SUBJECT_FIELD),
-//                    null,
                     bindingSet.getValue(PREDICATE_FIELD),
                     bindingSet.getValue(OBJECT_FIELD));
-//            log.debug(bindingSet.getValue(SUBJECT_FIELD).toString());
             queryResults.add(queryResult);
         }
         result.close();

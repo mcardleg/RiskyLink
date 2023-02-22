@@ -6,7 +6,7 @@ import ListLinks from './results/ListLinks';
 import GenerateOntodia from './results/OntodiaDisplay';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
-import { DeleteSessionID } from './Cookies';
+import { GetCookie, DeleteSessionID } from './Cookies';
 
 
 function App() {
@@ -18,7 +18,8 @@ function App() {
         fetch('http://localhost:8080/sessionEnded', {
           method: 'GET',
           headers: {
-            'sessionID': document.cookie,
+            // 'sessionID': document.cookie,
+            'sessionID': GetCookie(),
           },
         });
         DeleteSessionID();
