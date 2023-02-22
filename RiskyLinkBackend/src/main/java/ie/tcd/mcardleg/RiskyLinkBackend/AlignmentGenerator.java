@@ -16,10 +16,20 @@ import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static ie.tcd.mcardleg.RiskyLinkBackend.Constants.*;
+import static ie.tcd.mcardleg.RiskyLinkBackend.Constants.ETHICS_ONTOLOGOY_DIRECTORY;
 
 
 public class AlignmentGenerator {
+
+    private static final String CLASS_STRUCT_MATCHER = "ClassStruct";
+    private static final String EDIT_DIST_NAME_MATCHER = "EditDistName";
+    private static final String NAME_AND_PROPERTY_MATCHER = "NameAndProperty";
+    private static final String NAME_EQ_MATCHER = "NameEq";
+    private static final String SMOAN_NAME_MATCHER = "SMOAName";
+    private static final String STRING_DIST_MATCHER = "StringDist";
+    private static final String STRUC_SUBS_DIST_MATCHER = "StrucSubsDist";
+    private static final String SUBS_DIST_NAME_MATCHER = "SubsDistName";
+
     private static Logger log = LoggerFactory.getLogger(AlignmentGenerator.class);
 
     public static List<String> runGenerator(String ontologyDirectory) {

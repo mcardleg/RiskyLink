@@ -9,6 +9,13 @@
         "PREFIX owl: <http://www.w3.org/2002/07/owl#>",
         "SELECT DISTINCT ?subject ?predicate ?object ?types_of_sensitive_info ?demographic",
         "WHERE {",
+        "?types_of_sensitive_info rdfs:subClassOf ont:Sensitive_information .",
+        "?equivilents1 owl:equivalentClass ?types_of_sensitive_info .",
+        "?subject rdf:type ?equivilents1 .",
+
+        "?demographic rdfs:subClassOf ont:Person .",
+        "?equivilents2 owl:equivalentClass ?demographic .",
+        "?object rdf:type ?equivilents2 .",
 
         "?subject ?predicate ?object .",
         "}"

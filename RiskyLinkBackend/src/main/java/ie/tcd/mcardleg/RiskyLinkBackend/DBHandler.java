@@ -23,6 +23,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import static ie.tcd.mcardleg.RiskyLinkBackend.Constants.ETHICS_ONTOLOGOY_DIRECTORY;
+
 public class DBHandler {
 
     private HashMap<String, RepositoryConnection> activeRepos = new HashMap<>();
@@ -95,6 +97,7 @@ public class DBHandler {
         File dataDir = new File(sessionId + "/");
         Repository repo = new SailRepository(new NativeStore(dataDir));
         activeRepos.put(sessionId, repo.getConnection());
+        uploadFile(sessionId, ETHICS_ONTOLOGOY_DIRECTORY, RDFFormat.TURTLE);
         log.info("Set up repo");
     }
 
@@ -124,9 +127,9 @@ public class DBHandler {
         while (result.hasNext()) {  // iterate over the result
             BindingSet bindingSet = result.next();
             QueryResult queryResult = new QueryResult(
-//                    bindingSet.getValue(SENSITIVE_INFO_FIELD),
-//                    bindingSet.getValue(DEMOGRAPHIC_FIELD),
-                    null, null, 
+                    bindingSet.getValue(SENSITIVE_INFO_FIELD),
+                    bindingSet.getValue(DEMOGRAPHIC_FIELD),
+//                    null, null,
                     bindingSet.getValue(SUBJECT_FIELD),
                     bindingSet.getValue(PREDICATE_FIELD),
                     bindingSet.getValue(OBJECT_FIELD));
