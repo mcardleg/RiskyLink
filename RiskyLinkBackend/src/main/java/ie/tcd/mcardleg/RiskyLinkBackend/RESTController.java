@@ -25,7 +25,7 @@ public class RESTController {
             headers.add("Error", "No file passed.");
             return new ResponseEntity<>(null, headers, HttpStatus.BAD_REQUEST);
         }
-        dbHandler.addDataset(sessionId, FileHandlingUtils.fileUpload(file));
+        dbHandler.addDataset(sessionId, FileHandlingUtils.fileUpload(sessionId, file));
 
         return ResponseEntity.ok("Dataset uploaded.");
     }
@@ -37,7 +37,7 @@ public class RESTController {
             headers.add("Error", "No file passed.");
             return new ResponseEntity<>(null, headers, HttpStatus.BAD_REQUEST);
         }
-        dbHandler.addOntology(sessionId, FileHandlingUtils.fileUpload(file));
+        dbHandler.addOntology(sessionId, FileHandlingUtils.fileUpload(sessionId, file));
 
         return ResponseEntity.ok("Ontology uploaded.");
     }

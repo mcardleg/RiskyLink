@@ -15,11 +15,12 @@ public class FileHandlingUtils {
 
     private static Logger log = LoggerFactory.getLogger(FileHandlingUtils.class);
 
-    public static Path fileUpload(MultipartFile file) {
+    public static Path fileUpload(String sessionId, MultipartFile file) {
         Path path = null;
         try {
             byte[] bytes = file.getBytes();
-            path = Paths.get(file.getOriginalFilename());
+            path = Paths.get("temp_files_" + sessionId + "/" + file.getOriginalFilename());
+            log.info(path.toString());
             Files.write(path, bytes);
         } catch (IOException e) {
             log.error(e.getMessage());
