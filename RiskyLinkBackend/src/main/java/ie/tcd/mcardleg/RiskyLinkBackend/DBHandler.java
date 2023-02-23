@@ -91,6 +91,7 @@ public class DBHandler {
     // Utils
     private void setUpRepository(String sessionId) {
         File dataDir = new File(sessionId + "/");
+        File tempDir = new File("temp_files_" + sessionId + "/");
         Repository repo = new SailRepository(new NativeStore(dataDir));
         activeRepos.put(sessionId, repo.getConnection());
         uploadFile(sessionId, ETHICS_ONTOLOGOY_DIRECTORY, RDFFormat.TURTLE, false);
