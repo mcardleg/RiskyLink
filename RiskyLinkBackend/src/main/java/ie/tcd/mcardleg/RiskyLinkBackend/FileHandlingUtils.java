@@ -37,12 +37,16 @@ public class FileHandlingUtils {
             String repoDirectory = System.getProperty("user.dir") + "/" + sessionId;
             log.info("Deleting: " + repoDirectory);
             File repo = new File(repoDirectory);
-            FileUtils.deleteDirectory(repo);
+            if (repo.exists()) {
+                FileUtils.deleteDirectory(repo);
+            }
 
             String tempDirectory = System.getProperty("user.dir") + "/" + generateTempDirectoryName(sessionId, "");
             log.info("Deleting: " + tempDirectory);
             File temp = new File(tempDirectory);
-            FileUtils.deleteDirectory(temp);
+            if (temp.exists()) {
+                FileUtils.deleteDirectory(temp);
+            }
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }
