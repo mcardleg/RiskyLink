@@ -109,7 +109,7 @@ public class DBHandler {
     private void uploadFile(String sessionId, String filePath, RDFFormat format, Boolean deleteAfter) {
         try {
             log.info("Uploaded " + filePath);
-            activeRepos.get(sessionId).add(new File(filePath), baseURI, format);
+            activeRepos.get(sessionId).add(new File( "temp_files_" + sessionId + "/" + filePath), baseURI, format);
 
 //            if (deleteAfter) {
 //                String currentDirectory = System.getProperty("user.dir") + "/" + filePath;
