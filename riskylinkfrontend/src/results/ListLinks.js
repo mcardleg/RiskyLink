@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import './ListLinks.css';
-import { RedirectIfNoSessionID } from '../Cookies';
+import { GetCookie, RedirectIfNoSessionID } from '../Cookies';
 
 const TripleTableRow = ({ triple }) => (
   <tr>
@@ -38,15 +38,15 @@ function ListLinks() {
     fetch('http://localhost:8080/runQueries', {
       method: 'GET',
       headers: {
-        'sessionID': document.cookie,
+        'sessionID': GetCookie(),
       }
     })
       .then(response => response.json())
       .then(data => {
         const triples = data.basic_query.map(item => ({
-          subject: item.demographic,
-          predicate: item.data,
-          object: item.equivalentClass
+          subject: item.types_of_sensitive_info,
+          predicate: item.demographic,
+          object: item.subject
         }));
         setTriples(triples);
       });
