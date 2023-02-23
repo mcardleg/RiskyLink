@@ -53,7 +53,7 @@ public class DBHandler {
         if (checkSessionExists(sessionId)) {
             uploadFile(sessionId, path.toString(), RDFFormat.TURTLE, true);
 
-            for (String alignmentPath : AlignmentGenerator.runGenerator(path.toString())) {
+            for (String alignmentPath : AlignmentGenerator.runGenerator(sessionId, path.toString())) {
                 uploadFile(sessionId, alignmentPath, RDFFormat.RDFXML, true);
             }
         }
@@ -96,7 +96,7 @@ public class DBHandler {
 
     // Utils
     private void setUpSession(String sessionId) {
-        File tempDir = new File("temp_files_" + sessionId + "/");
+        File tempDir = new File(FileHandlingUtils.generateTempDirectoryName(sessionId, ""));
         if (!tempDir.exists()) {
             tempDir.mkdirs();
         }

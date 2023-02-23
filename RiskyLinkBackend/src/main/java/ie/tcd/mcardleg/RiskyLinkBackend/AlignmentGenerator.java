@@ -32,7 +32,7 @@ public class AlignmentGenerator {
 
     private static Logger log = LoggerFactory.getLogger(AlignmentGenerator.class);
 
-    public static List<String> runGenerator(String ontologyDirectory) {
+    public static List<String> runGenerator(String sessionId, String ontologyDirectory) {
         HashMap<String, AlignmentProcess> aligners = new HashMap<String, AlignmentProcess>();
         aligners.put(CLASS_STRUCT_MATCHER, new ClassStructAlignment());
         aligners.put(EDIT_DIST_NAME_MATCHER, new EditDistNameAlignment());
@@ -45,15 +45,16 @@ public class AlignmentGenerator {
 
         List<String> filePaths = new ArrayList<String>();
         for (Map.Entry<String, AlignmentProcess> set : aligners.entrySet()) {
-            filePaths.add(generate(ontologyDirectory, set.getKey(), set.getValue()));
+            filePaths.add(generate(sessionId, ontologyDirectory, set.getKey(), set.getValue()));
         }
         log.info("Alignments generated.");
         return filePaths;
     }
 
-    public static String generate(String ontologyDirectory, String alignerName, AlignmentProcess aligner) {
+    public static String generate(String sessionId, String ontologyDirectory, String alignerName, AlignmentProcess aligner) {
         String currentDirectory = System.getProperty("user.dir");
-        String filePath = String.format("%s_%s.owl", FilenameUtils.getBaseName(ontologyDirectory), alignerName);
+        String filePath = FileHandlingUtils.generateTempDirectoryName(
+                sessionId, FilenameUtils.getBaseName(ontologyDirectory) + "_" + alignerName + ".owl");
 
         URI onto1 = null;
         URI onto2 = null;

@@ -15,15 +15,15 @@ public class FileHandlingUtils {
 
     private static Logger log = LoggerFactory.getLogger(FileHandlingUtils.class);
 
-    public static String generateTempDirectoryName() {
-        return "";
+    public static String generateTempDirectoryName(String sessionId, String filename) {
+         return String.format("temp_files_%s/%s", sessionId, filename);
     }
 
     public static Path fileUpload(String sessionId, MultipartFile file) {
         Path path = null;
         try {
             byte[] bytes = file.getBytes();
-            path = Paths.get("temp_files_" + sessionId + "/" + file.getOriginalFilename());
+            path = Paths.get(generateTempDirectoryName(sessionId, file.getOriginalFilename()));
             log.info(path.toString());
             Files.write(path, bytes);
         } catch (IOException e) {
@@ -33,13 +33,15 @@ public class FileHandlingUtils {
     }
 
     public static void deleteSessionFiles(String sessionId) {
-        //Delete files uploaded above
-        //Delete alignments
-        String currentDirectory = System.getProperty("user.dir") + "/" + sessionId;
-        log.info(currentDirectory);
-        File temp2 = new File(currentDirectory);
-        temp2.delete();
-        log.info("Deleted session resources.");
+        String repoDirectory = System.getProperty("user.dir") + "/" + sessionId;
+        log.info("Deleting: " + repoDirectory);
+        File repo = new File(repoDirectory);
+        repo.delete();
+
+        String tempDirectory = System.getProperty("user.dir") + "/" + generateTempDirectoryName(sessionId, "");
+        log.info("Deleting: " + tempDirectory);
+        File temp = new File(tempDirectory);
+        temp.delete();
     }
 
 }
