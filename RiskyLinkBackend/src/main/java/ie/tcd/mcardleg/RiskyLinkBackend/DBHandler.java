@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.io.FileReader;
 
-import org.apache.commons.io.FilenameUtils;
 import org.eclipse.rdf4j.rio.RDFFormat;
 import org.eclipse.rdf4j.query.BindingSet;
 import org.eclipse.rdf4j.query.TupleQuery;
@@ -40,7 +39,7 @@ public class DBHandler {
 
     public void addDataset(String sessionId, Path path) {
         if (!checkRepositoryExists(sessionId)) {
-            setUpRepository(sessionId);
+            setUpSession(sessionId);
         }
         uploadFile(sessionId, path.toString(), RDFFormat.TURTLE, true);
     }
@@ -89,13 +88,15 @@ public class DBHandler {
     }
 
     // Utils
-    private void setUpRepository(String sessionId) {
-        File dataDir = new File(sessionId + "/");
+    private void setUpSession(String sessionId) {
         File tempDir = new File("temp_files_" + sessionId + "/");
-        Repository repo = new SailRepository(new NativeStore(dataDir));
+        if (!tempDir.exists()) {
+            tempDir.mkdirs();
+        }
+        Repository repo = new SailRepository(new NativeStore(new File(sessionId + "/")));
         activeRepos.put(sessionId, repo.getConnection());
         uploadFile(sessionId, ETHICS_ONTOLOGOY_DIRECTORY, RDFFormat.TURTLE, false);
-        log.info("Set up repo");
+        log.info("Set up session");
     }
 
     private boolean checkRepositoryExists(String sessionId) {
