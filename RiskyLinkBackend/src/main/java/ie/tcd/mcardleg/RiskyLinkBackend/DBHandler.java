@@ -44,23 +44,23 @@ public class DBHandler {
     }
 
     public Boolean addDataset(String sessionId, Path path) {
-        if (checkSessionExists(sessionId)) {
-            uploadFile(sessionId, path.toString(), RDFFormat.TURTLE, true);
-            return true;
+        if (!checkSessionExists(sessionId)) {
+            return false;
         }
+        uploadFile(sessionId, path.toString(), RDFFormat.TURTLE, true);
         return false;
     }
 
     public Boolean addOntology(String sessionId, Path path) {
-        if (checkSessionExists(sessionId)) {
-            uploadFile(sessionId, path.toString(), RDFFormat.TURTLE, true);
-
-            for (String alignmentPath : AlignmentGenerator.runGenerator(sessionId, path.toString())) {
-                uploadFile(sessionId, alignmentPath, RDFFormat.RDFXML, true);
-            }
-            return true;
+        if (!checkSessionExists(sessionId)) {
+            return false;
         }
-        return false;
+
+        uploadFile(sessionId, path.toString(), RDFFormat.TURTLE, true);
+        for (String alignmentPath : AlignmentGenerator.runGenerator(sessionId, path.toString())) {
+            uploadFile(sessionId, alignmentPath, RDFFormat.RDFXML, true);
+        }
+        return true;
     }
 
     public HashMap<String, List<QueryResult>> runQueries(String sessionId) {
