@@ -33,6 +33,8 @@ public class AlignmentGenerator {
     private static Logger log = LoggerFactory.getLogger(AlignmentGenerator.class);
 
     public static List<String> runGenerator(String ontologyDirectory) {
+        log.info("REACHED 2");
+
         HashMap<String, AlignmentProcess> aligners = new HashMap<String, AlignmentProcess>();
         aligners.put(CLASS_STRUCT_MATCHER, new ClassStructAlignment());
         aligners.put(EDIT_DIST_NAME_MATCHER, new EditDistNameAlignment());
@@ -55,7 +57,8 @@ public class AlignmentGenerator {
         String currentDirectory = System.getProperty("user.dir");
         String filePath = String.format("resources/%s_%s.owl",
                 FilenameUtils.getBaseName(ontologyDirectory), alignerName);
-        log.info("REACHED");
+        log.info("REACHED 3");
+
         log.info(filePath);
 
         URI onto1 = null;
