@@ -53,8 +53,7 @@ public class AlignmentGenerator {
 
     public static String generate(String ontologyDirectory, String alignerName, AlignmentProcess aligner) {
         String currentDirectory = System.getProperty("user.dir");
-        String filePath = String.format("alignment/%s_%s.owl",
-                FilenameUtils.getBaseName(ontologyDirectory), alignerName);
+        String filePath = String.format("%s_%s.owl", FilenameUtils.getBaseName(ontologyDirectory), alignerName);
 
         URI onto1 = null;
         URI onto2 = null;
