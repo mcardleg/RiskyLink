@@ -110,6 +110,8 @@ public class DBHandler {
         try {
             log.info("Uploaded " + filePath);
             activeRepos.get(sessionId).add(new File(filePath), baseURI, format);
+            log.info("Uploading file to: " + sessionId + " : " + activeRepos.get(sessionId).toString());
+
 //            if (deleteAfter) {
 //                String currentDirectory = System.getProperty("user.dir") + "/" + filePath;
 //                log.info(currentDirectory);

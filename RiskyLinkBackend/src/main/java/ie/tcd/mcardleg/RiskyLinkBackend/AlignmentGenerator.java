@@ -55,7 +55,6 @@ public class AlignmentGenerator {
         String currentDirectory = System.getProperty("user.dir");
         String filePath = String.format("resources/%s_%s.owl",
                 FilenameUtils.getBaseName(ontologyDirectory), alignerName);
-        log.info("REACHED 3");
 
         URI onto1 = null;
         URI onto2 = null;
