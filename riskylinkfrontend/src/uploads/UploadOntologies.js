@@ -2,7 +2,7 @@ import upload_icon from './upload-icon.png';
 import './Upload.css';
 import {useState} from 'react';
 import { Link } from "react-router-dom";
-import { RedirectIfNoSessionID } from '../Cookies';
+import { GetCookie, RedirectIfNoSessionID } from '../Cookies';
 
 
 function UploadOntologies() {
@@ -26,7 +26,7 @@ function UploadOntologies() {
     fetch('http://localhost:8080/uploadOntology', {
       method: 'POST',
       headers: {
-        'sessionID': document.cookie,
+        'sessionID': GetCookie(),
       },
       body: formData
     })
