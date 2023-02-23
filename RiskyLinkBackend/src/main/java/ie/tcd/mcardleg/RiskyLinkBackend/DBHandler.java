@@ -46,13 +46,9 @@ public class DBHandler {
     }
 
     public void addOntology(String sessionId, Path path) {
-        if (!checkRepositoryExists(sessionId)) {
-            setUpRepository(sessionId);
-        }
         uploadFile(sessionId, path.toString(), RDFFormat.TURTLE, true);
 
         for (String alignmentPath : AlignmentGenerator.runGenerator(path.toString())){
-            log.info("REACHED 2");
             uploadFile(sessionId, alignmentPath, RDFFormat.RDFXML, true);
         }
     }
