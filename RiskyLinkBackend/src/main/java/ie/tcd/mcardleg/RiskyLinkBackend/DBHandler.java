@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.io.FileReader;
 
-import ch.qos.logback.core.util.FileUtil;
-import org.apache.commons.io.FileUtils;
 import org.eclipse.rdf4j.rio.RDFFormat;
 import org.eclipse.rdf4j.query.BindingSet;
 import org.eclipse.rdf4j.query.TupleQuery;
@@ -59,6 +57,7 @@ public class DBHandler {
 
     public HashMap<String, List<QueryResult>> runQueries(String sessionId) {
         HashMap<String, List<QueryResult>> results = new HashMap<String, List<QueryResult>>();
+        log.debug(String.valueOf(checkRepositoryExists(sessionId)));
         JSONParser parser = new JSONParser();
         try {
             JSONObject jsonObject = (JSONObject)parser.parse(
@@ -68,6 +67,7 @@ public class DBHandler {
             while (queriesIterator.hasNext()) {
                 JSONObject object = (JSONObject)queriesIterator.next();
                 String queryName = (String)object.get("query_name");
+                log.debug(queryName);
                 JSONArray queryLines = (JSONArray)object.get("query");
                 Iterator linesIterator = queryLines.iterator();
                 String queryString = "";
@@ -113,9 +113,7 @@ public class DBHandler {
     private void uploadFile(String sessionId, String filePath, RDFFormat format) {
         try {
             log.info("Uploaded " + filePath);
-            File temp = new File(filePath);
-            activeRepos.get(sessionId).add(temp, baseURI, format);
-            FileUtils.delete(temp);
+            activeRepos.get(sessionId).add(new File(filePath), baseURI, format);
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }
