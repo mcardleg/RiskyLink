@@ -41,7 +41,7 @@ public class AlignmentGenerator {
         aligners.put(SMOAN_NAME_MATCHER, new SMOANameAlignment());
         aligners.put(STRING_DIST_MATCHER, new StringDistAlignment());
         aligners.put(STRUC_SUBS_DIST_MATCHER, new StrucSubsDistAlignment());
-        aligners.put(SUBS_DIST_NAME_MATCHER, new SubsDistNameAlignment());
+//        aligners.put(SUBS_DIST_NAME_MATCHER, new SubsDistNameAlignment());
 
         List<String> filePaths = new ArrayList<String>();
         for (Map.Entry<String, AlignmentProcess> set : aligners.entrySet()) {
@@ -53,7 +53,7 @@ public class AlignmentGenerator {
 
     public static String generate(String ontologyDirectory, String alignerName, AlignmentProcess aligner) {
         String currentDirectory = System.getProperty("user.dir");
-        String filePath = String.format("resources/%s_%s.owl",
+        String filePath = String.format("%s_%s.owl",
                 FilenameUtils.getBaseName(ontologyDirectory), alignerName);
 
         URI onto1 = null;
