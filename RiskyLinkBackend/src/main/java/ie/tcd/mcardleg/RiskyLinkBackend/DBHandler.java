@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.io.FileReader;
 
-import ch.qos.logback.core.util.FileUtil;
-import org.apache.commons.io.FileUtils;
 import org.eclipse.rdf4j.rio.RDFFormat;
 import org.eclipse.rdf4j.query.BindingSet;
 import org.eclipse.rdf4j.query.TupleQuery;
@@ -115,7 +113,7 @@ public class DBHandler {
             log.info("Uploaded " + filePath);
             File temp = new File(filePath);
             activeRepos.get(sessionId).add(temp, baseURI, format);
-            FileUtils.delete(temp);
+            temp.delete();
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }
