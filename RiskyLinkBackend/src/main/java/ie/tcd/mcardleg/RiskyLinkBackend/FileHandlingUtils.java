@@ -35,16 +35,16 @@ public class FileHandlingUtils {
     public static void deleteSessionFiles(String sessionId) {
         try {
             String repoDirectory = System.getProperty("user.dir") + "/" + sessionId;
-            log.info("Deleting: " + repoDirectory);
             File repo = new File(repoDirectory);
             if (repo.exists()) {
+                log.info("Deleting: " + repoDirectory);
                 FileUtils.deleteDirectory(repo);
             }
 
             String tempDirectory = System.getProperty("user.dir") + "/" + generateTempDirectoryName(sessionId, "");
-            log.info("Deleting: " + tempDirectory);
             File temp = new File(tempDirectory);
             if (temp.exists()) {
+                log.info("Deleting: " + tempDirectory);
                 FileUtils.deleteDirectory(temp);
             }
         } catch (IOException e) {

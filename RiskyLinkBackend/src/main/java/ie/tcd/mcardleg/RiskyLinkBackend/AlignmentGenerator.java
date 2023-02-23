@@ -16,7 +16,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static ie.tcd.mcardleg.RiskyLinkBackend.Constants.ETHICS_ONTOLOGOY_DIRECTORY;
+import static ie.tcd.mcardleg.RiskyLinkBackend.DBHandler.ETHICS_ONTOLOGOY_DIRECTORY;
 
 
 public class AlignmentGenerator {

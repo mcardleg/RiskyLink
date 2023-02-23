@@ -14,7 +14,6 @@ import org.eclipse.rdf4j.query.BindingSet;
 import org.eclipse.rdf4j.query.TupleQuery;
 import org.eclipse.rdf4j.query.TupleQueryResult;
 import org.eclipse.rdf4j.repository.Repository;
-import org.eclipse.rdf4j.repository.RepositoryConnection;
 import org.eclipse.rdf4j.repository.sail.SailRepository;
 import org.eclipse.rdf4j.sail.nativerdf.NativeStore;
 import org.slf4j.Logger;
@@ -23,11 +22,11 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import static ie.tcd.mcardleg.RiskyLinkBackend.Constants.ETHICS_ONTOLOGOY_DIRECTORY;
 
 public class DBHandler {
 
-    private HashMap<String, RepositoryConnection> activeRepos = new HashMap<>();
+    public static final String ETHICS_ONTOLOGOY_DIRECTORY = "src/main/resources/risky_link_ethics.ttl";
+    private HashMap<String, RepositoryHolder> activeRepos = new HashMap<>();
     private String baseURI = "http://www.semanticweb.org/riskylink";
     private Logger log = LoggerFactory.getLogger(DBHandler.class);
     private final String QUERIES_DIRECTORY = "src/main/resources/sparql_queries.json";
@@ -92,10 +91,11 @@ public class DBHandler {
     
     public void tearDownDB(String sessionId) {
         if (activeRepos.containsKey(sessionId)) {
-            activeRepos.get(sessionId).close();
+            activeRepos.get(sessionId).getConnection().close();
+            activeRepos.get(sessionId).getRepository().shutDown();
             activeRepos.remove(sessionId);
         }
-        log.info("Repo connection closed.");
+        log.info("Repo torn down.");
     }
 
     // Utils
@@ -105,38 +105,30 @@ public class DBHandler {
             tempDir.mkdirs();
         }
         Repository repo = new SailRepository(new NativeStore(new File(sessionId + "/")));
-        activeRepos.put(sessionId, repo.getConnection());
+        activeRepos.put(sessionId, new RepositoryHolder(repo, repo.getConnection()));
         uploadFile(sessionId, ETHICS_ONTOLOGOY_DIRECTORY, RDFFormat.TURTLE, false);
         log.info("Set up session");
     }
 
     private boolean checkSessionExists(String sessionId) {
-        if (activeRepos.containsKey(sessionId) && activeRepos.get(sessionId).isOpen()) {
-            log.info("Repo exists");
+        if (activeRepos.containsKey(sessionId) && activeRepos.get(sessionId).getConnection().isOpen()) {
             return true;
         }
-        log.info("Repo does not exist");
         return false;
     }
 
     private void uploadFile(String sessionId, String filePath, RDFFormat format, Boolean deleteAfter) {
         try {
             log.info("Uploaded " + filePath);
-            activeRepos.get(sessionId).add(new File(filePath), baseURI, format);
-
-//            if (deleteAfter) {
-//                String currentDirectory = System.getProperty("user.dir") + "/" + filePath;
-//                log.info(currentDirectory);
-//                File temp2 = new File(currentDirectory);
-//                temp2.delete();
-//            }
-        } catch (IOException e) {
+            activeRepos.get(sessionId).getConnection().add(new File(filePath), baseURI, format);
+        }
+        catch (IOException e) {
             log.error(e.getMessage(), e);
         }
     }
 
     private List<QueryResult> query(String sessionId, String queryString) {
-        TupleQuery tupleQuery = activeRepos.get(sessionId).prepareTupleQuery(queryString);
+        TupleQuery tupleQuery = activeRepos.get(sessionId).getConnection().prepareTupleQuery(queryString);
         TupleQueryResult result = tupleQuery.evaluate();
         List<QueryResult> queryResults = new ArrayList<QueryResult>();
 
@@ -145,7 +137,6 @@ public class DBHandler {
             QueryResult queryResult = new QueryResult(
                     bindingSet.getValue(SENSITIVE_INFO_FIELD),
                     bindingSet.getValue(DEMOGRAPHIC_FIELD),
-//                    null, null,
                     bindingSet.getValue(SUBJECT_FIELD),
                     bindingSet.getValue(PREDICATE_FIELD),
                     bindingSet.getValue(OBJECT_FIELD));
