@@ -49,8 +49,7 @@ public class RESTController {
 
     @GetMapping("/sessionEnded")
     public ResponseEntity<String> sessionEnded(@RequestHeader("sessionID") String sessionId) {
-        log.debug("REACHED");
-        log.info(sessionId);
+        log.debug(sessionId);
         dbHandler.tearDownDB(sessionId);
         FileHandlingUtils.deleteSessionFiles(sessionId);
         //Delete files
