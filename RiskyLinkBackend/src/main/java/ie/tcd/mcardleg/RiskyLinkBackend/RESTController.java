@@ -18,6 +18,11 @@ public class RESTController {
     private DBHandler dbHandler = new DBHandler();
     private Logger log = LoggerFactory.getLogger(RESTController.class);
 
+    @GetMapping("/startSession")
+    public ResponseEntity<String> startSession(@RequestHeader("sessionID") String sessionId) {
+        dbHandler.ensureSessionSetUp(sessionId);
+        return ResponseEntity.ok("Session set up complete.");
+    }
 
     @PostMapping("/uploadDataset")
     public ResponseEntity<String> uploadDataset(@RequestHeader("sessionID") String sessionId, @RequestPart("file") MultipartFile file) {

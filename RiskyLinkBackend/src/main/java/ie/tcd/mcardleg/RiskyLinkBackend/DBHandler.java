@@ -37,18 +37,25 @@ public class DBHandler {
     private final String PREDICATE_FIELD = "predicate";
     private final String OBJECT_FIELD = "object";
 
-    public void addDataset(String sessionId, Path path) {
-        if (!checkRepositoryExists(sessionId)) {
+    public void ensureSessionSetUp(String sessionId){
+        if (!checkSessionExists(sessionId)) {
             setUpSession(sessionId);
         }
-        uploadFile(sessionId, path.toString(), RDFFormat.TURTLE, true);
+    }
+
+    public void addDataset(String sessionId, Path path) {
+        if (checkSessionExists(sessionId)) {
+            uploadFile(sessionId, path.toString(), RDFFormat.TURTLE, true);
+        }
     }
 
     public void addOntology(String sessionId, Path path) {
-        uploadFile(sessionId, path.toString(), RDFFormat.TURTLE, true);
+        if (checkSessionExists(sessionId)) {
+            uploadFile(sessionId, path.toString(), RDFFormat.TURTLE, true);
 
-        for (String alignmentPath : AlignmentGenerator.runGenerator(path.toString())){
-            uploadFile(sessionId, alignmentPath, RDFFormat.RDFXML, true);
+            for (String alignmentPath : AlignmentGenerator.runGenerator(path.toString())) {
+                uploadFile(sessionId, alignmentPath, RDFFormat.RDFXML, true);
+            }
         }
     }
 
@@ -99,7 +106,7 @@ public class DBHandler {
         log.info("Set up session");
     }
 
-    private boolean checkRepositoryExists(String sessionId) {
+    private boolean checkSessionExists(String sessionId) {
         if (activeRepos.containsKey(sessionId) && activeRepos.get(sessionId).isOpen()) {
             log.info("Repo exists");
             return true;
