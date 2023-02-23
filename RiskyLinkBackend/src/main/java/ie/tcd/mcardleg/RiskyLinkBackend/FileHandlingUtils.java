@@ -27,21 +27,26 @@ public class FileHandlingUtils {
             log.info(path.toString());
             Files.write(path, bytes);
         } catch (IOException e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return path;
     }
 
     public static void deleteSessionFiles(String sessionId) {
-        String repoDirectory = System.getProperty("user.dir") + "/" + sessionId;
-        log.info("Deleting: " + repoDirectory);
-        File repo = new File(repoDirectory);
-        repo.delete();
+        try {
+            String repoDirectory = System.getProperty("user.dir") + "/" + sessionId;
+            log.info("Deleting: " + repoDirectory);
+            File repo = new File(repoDirectory);
+            FileUtils.deleteDirectory(repo);
 
-        String tempDirectory = System.getProperty("user.dir") + "/" + generateTempDirectoryName(sessionId, "");
-        log.info("Deleting: " + tempDirectory);
-        File temp = new File(tempDirectory);
-        temp.delete();
+            String tempDirectory = System.getProperty("user.dir") + "/" + generateTempDirectoryName(sessionId, "");
+            log.info("Deleting: " + tempDirectory);
+            File temp = new File(tempDirectory);
+            FileUtils.deleteDirectory(temp);
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+        }
+
     }
 
 }

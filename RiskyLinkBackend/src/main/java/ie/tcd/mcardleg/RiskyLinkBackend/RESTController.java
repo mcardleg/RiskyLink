@@ -33,9 +33,12 @@ public class RESTController {
         }
         Path path = FileHandlingUtils.fileUpload(sessionId, file);
         log.info(path.toString());
-        dbHandler.addDataset(sessionId, path);
+        if (dbHandler.addDataset(sessionId, path)) {
+            return ResponseEntity.ok("Dataset uploaded.");
 
-        return ResponseEntity.ok("Dataset uploaded.");
+        }
+
+        return ResponseEntity.badRequest().build();
     }
 
     @PostMapping("/uploadOntology")
@@ -45,9 +48,11 @@ public class RESTController {
             headers.add("Error", "No file passed.");
             return new ResponseEntity<>(null, headers, HttpStatus.BAD_REQUEST);
         }
-        dbHandler.addOntology(sessionId, FileHandlingUtils.fileUpload(sessionId, file));
+        if (dbHandler.addOntology(sessionId, FileHandlingUtils.fileUpload(sessionId, file))) {
+            return ResponseEntity.ok("Ontology uploaded.");
+        }
 
-        return ResponseEntity.ok("Ontology uploaded.");
+        return ResponseEntity.badRequest().build();
     }
 
     @GetMapping("/runQueries")

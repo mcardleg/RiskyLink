@@ -43,20 +43,24 @@ public class DBHandler {
         }
     }
 
-    public void addDataset(String sessionId, Path path) {
+    public Boolean addDataset(String sessionId, Path path) {
         if (checkSessionExists(sessionId)) {
             uploadFile(sessionId, path.toString(), RDFFormat.TURTLE, true);
+            return true;
         }
+        return false;
     }
 
-    public void addOntology(String sessionId, Path path) {
+    public Boolean addOntology(String sessionId, Path path) {
         if (checkSessionExists(sessionId)) {
             uploadFile(sessionId, path.toString(), RDFFormat.TURTLE, true);
 
             for (String alignmentPath : AlignmentGenerator.runGenerator(sessionId, path.toString())) {
                 uploadFile(sessionId, alignmentPath, RDFFormat.RDFXML, true);
             }
+            return true;
         }
+        return false;
     }
 
     public HashMap<String, List<QueryResult>> runQueries(String sessionId) {
