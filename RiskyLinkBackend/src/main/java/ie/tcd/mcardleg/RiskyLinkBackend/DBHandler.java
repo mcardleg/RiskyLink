@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.io.FileReader;
 
+import org.apache.commons.io.FilenameUtils;
 import org.eclipse.rdf4j.rio.RDFFormat;
 import org.eclipse.rdf4j.query.BindingSet;
 import org.eclipse.rdf4j.query.TupleQuery;
@@ -41,17 +42,17 @@ public class DBHandler {
         if (!checkRepositoryExists(sessionId)) {
             setUpRepository(sessionId);
         }
-        uploadFile(sessionId, path.toString(), RDFFormat.TURTLE);
+        uploadFile(sessionId, path.toString(), RDFFormat.TURTLE, true);
     }
 
     public void addOntology(String sessionId, Path path) {
         if (!checkRepositoryExists(sessionId)) {
             setUpRepository(sessionId);
         }
-        uploadFile(sessionId, path.toString(), RDFFormat.TURTLE);
+        uploadFile(sessionId, path.toString(), RDFFormat.TURTLE, true);
 
         for (String alignmentPath : AlignmentGenerator.runGenerator(path.toString())){
-            uploadFile(sessionId, alignmentPath, RDFFormat.RDFXML);
+            uploadFile(sessionId, alignmentPath, RDFFormat.RDFXML, true);
         }
     }
 
@@ -95,7 +96,7 @@ public class DBHandler {
         File dataDir = new File(sessionId + "/");
         Repository repo = new SailRepository(new NativeStore(dataDir));
         activeRepos.put(sessionId, repo.getConnection());
-        uploadFile(sessionId, ETHICS_ONTOLOGOY_DIRECTORY, RDFFormat.TURTLE);
+        uploadFile(sessionId, ETHICS_ONTOLOGOY_DIRECTORY, RDFFormat.TURTLE, false);
         log.info("Set up repo");
     }
 
@@ -108,12 +109,17 @@ public class DBHandler {
         return false;
     }
 
-    private void uploadFile(String sessionId, String filePath, RDFFormat format) {
+    private void uploadFile(String sessionId, String filePath, RDFFormat format, Boolean deleteAfter) {
         try {
             log.info("Uploaded " + filePath);
             File temp = new File(filePath);
             activeRepos.get(sessionId).add(temp, baseURI, format);
-            temp.delete();
+            if (deleteAfter) {
+                String currentDirectory = System.getProperty("user.dir") + filePath;
+                log.info(currentDirectory);
+                File temp2 = new File(currentDirectory);
+                temp2.delete();
+            }
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }
