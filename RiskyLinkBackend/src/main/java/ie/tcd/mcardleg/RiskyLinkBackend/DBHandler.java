@@ -114,12 +114,12 @@ public class DBHandler {
             log.info("Uploaded " + filePath);
             File temp = new File(filePath);
             activeRepos.get(sessionId).add(temp, baseURI, format);
-//            if (deleteAfter) {
-//                String currentDirectory = System.getProperty("user.dir") + "/" + filePath;
-//                log.info(currentDirectory);
-//                File temp2 = new File(currentDirectory);
-//                temp2.delete();
-//            }
+            if (deleteAfter) {
+                String currentDirectory = System.getProperty("user.dir") + "/" + filePath;
+                log.info(currentDirectory);
+                File temp2 = new File(currentDirectory);
+                temp2.delete();
+            }
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }
