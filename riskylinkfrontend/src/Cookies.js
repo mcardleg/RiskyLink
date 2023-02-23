@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
 
-let cookieName = "sessionID=";
+let cookieName = "sessionID";
 
 function SetCookie(life) {
   console.log("SetCookie");
@@ -8,36 +8,33 @@ function SetCookie(life) {
   const d = new Date();
   d.setTime(d.getTime() + (life * 60 * 60 * 1000));
   let expires = "expires="+d.toUTCString();
-  document.cookie = cookieName + uuid() + ";" + expires + ";path=/";
+  document.cookie = cookieName + "=" + uuid() + ";" + expires + ";path=/";
   console.log(document.cookie);
-}
-
-function GetCookie() {
-  let ca = document.cookie.split(';');
-  for(let i = 0; i < ca.length; i++) {
-    let c = ca[i];
-    while (c.charAt(0) === ' ') {
-      c = c.substring(1);
-    }
-    if (c.indexOf(cookieName) === 0) {
-      return c.substring(cookieName.length, c.length);
-    }
-  }
-  return "";
 }
 
 function CheckCookie() {
   console.log("CheckCookie");
   console.log(document.cookie);
 
-  if (GetCookie === "") {
-    return false;
+  let name = cookieName + "=";
+  let ca = document.cookie.split(';');
+  for(let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) === ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) === 0) {
+      return true;
+    }
   }
-  return true;
+  return false;
 }
 
-// function GetSessionID() {
-
+// function CheckCookie() {
+//   if (GetCookie() === "") {
+//     return false;
+//   }
+//   return true;
 // }
 
 function DeleteSessionID() {
@@ -57,4 +54,4 @@ function RedirectIfNoSessionID() {
   }
 }
 
-export { GetCookie, EnsureSessionID, RedirectIfNoSessionID, DeleteSessionID };
+export { EnsureSessionID, RedirectIfNoSessionID, DeleteSessionID };

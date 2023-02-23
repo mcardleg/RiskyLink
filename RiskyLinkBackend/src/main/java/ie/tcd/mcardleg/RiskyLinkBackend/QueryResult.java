@@ -14,6 +14,11 @@ public class QueryResult {
                        Value subject, Value predicate, Value object) {
         this.sensitiveInfo = sensitiveInfo.toString();
         this.demographic = demographic.toString();
+//        this.sensitiveInfo = null;
+//        this.demographic = null;
+//        this.subject = null;
+//        this.predicate = null;
+//        this.object = null;
         this.subject = subject.toString();
         this.predicate = predicate.toString();
         this.object = object.toString();
