@@ -15,6 +15,10 @@ public class FileHandlingUtils {
 
     private static Logger log = LoggerFactory.getLogger(FileHandlingUtils.class);
 
+    public static String generateTempDirectoryName() {
+        return "";
+    }
+
     public static Path fileUpload(String sessionId, MultipartFile file) {
         Path path = null;
         try {

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +26,9 @@ public class RESTController {
             headers.add("Error", "No file passed.");
             return new ResponseEntity<>(null, headers, HttpStatus.BAD_REQUEST);
         }
-        dbHandler.addDataset(sessionId, FileHandlingUtils.fileUpload(sessionId, file));
+        Path path = FileHandlingUtils.fileUpload(sessionId, file);
+        log.info(path.toString());
+        dbHandler.addDataset(sessionId, path);
 
         return ResponseEntity.ok("Dataset uploaded.");
     }
