@@ -9,6 +9,13 @@
         "PREFIX owl: <http://www.w3.org/2002/07/owl#>",
         "SELECT DISTINCT ?subject ?predicate ?object ?types_of_sensitive_info ?demographic",
         "WHERE {",
+        "?types_of_sensitive_info rdfs:subClassOf ont:Sensitive_information .",
+        "?types_of_sensitive_info owl:equivalentClass ?info_equivalents .",
+        "?subject rdf:type ?info_equivalents .",
+
+        "?demographic rdfs:subClassOf ont:Person .",
+        "?demographic owl:equivalentClass ?demo_equivalents .",
+        "?object rdf:type ?demo_equivalents .",
 
         "?subject ?predicate ?object .",
         "}"
@@ -23,6 +30,13 @@
         "PREFIX owl: <http://www.w3.org/2002/07/owl#>",
         "SELECT DISTINCT ?subject ?predicate ?object ?types_of_sensitive_info ?demographic",
         "WHERE {",
+        "?types_of_sensitive_info rdfs:subClassOf ont:Sensitive_information .",
+        "?types_of_sensitive_info owl:equivalentClass ?info_equivalents .",
+        "?subject rdf:type ?info_equivalents .",
+
+        "?demographic rdfs:subClassOf ont:Person .",
+        "?demographic owl:equivalentClass ?demo_equivalents .",
+        "?object rdf:type ?demo_equivalents .",
 
         "?object ?predicate ?subject .",
         "}"
