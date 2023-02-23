@@ -110,7 +110,6 @@ public class DBHandler {
         try {
             log.info("Uploaded " + filePath);
             activeRepos.get(sessionId).add(new File(filePath), baseURI, format);
-            log.info("Uploading file to: " + sessionId + " : " + activeRepos.get(sessionId).toString());
 
 //            if (deleteAfter) {
 //                String currentDirectory = System.getProperty("user.dir") + "/" + filePath;
@@ -124,7 +123,6 @@ public class DBHandler {
     }
 
     private List<QueryResult> query(String sessionId, String queryString) {
-        log.info("Querying: " + sessionId + " : " + activeRepos.get(sessionId).toString());
         TupleQuery tupleQuery = activeRepos.get(sessionId).prepareTupleQuery(queryString);
         TupleQueryResult result = tupleQuery.evaluate();
         List<QueryResult> queryResults = new ArrayList<QueryResult>();
@@ -132,9 +130,9 @@ public class DBHandler {
         while (result.hasNext()) {
             BindingSet bindingSet = result.next();
             QueryResult queryResult = new QueryResult(
-//                    bindingSet.getValue(SENSITIVE_INFO_FIELD),
-//                    bindingSet.getValue(DEMOGRAPHIC_FIELD),
-                    null, null,
+                    bindingSet.getValue(SENSITIVE_INFO_FIELD),
+                    bindingSet.getValue(DEMOGRAPHIC_FIELD),
+//                    null, null,
                     bindingSet.getValue(SUBJECT_FIELD),
                     bindingSet.getValue(PREDICATE_FIELD),
                     bindingSet.getValue(OBJECT_FIELD));
