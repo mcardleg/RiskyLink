@@ -30,11 +30,13 @@ public class FileHandlingUtils {
     public static void deleteSessionFiles(String sessionId) {
         //Delete files uploaded above
         //Delete alignments
-        String currentDirectory = System.getProperty("user.dir") + "/" + sessionId;
-        log.info(currentDirectory);
-        File temp2 = new File(currentDirectory);
-        temp2.delete();
-        log.info("Deleted session resources.");
+        try {
+            FileUtils.deleteDirectory(new File(sessionId));
+            log.info("Deleted session resources.");
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        }
+
     }
 
 }
