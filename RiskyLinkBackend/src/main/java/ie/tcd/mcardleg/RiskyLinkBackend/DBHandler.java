@@ -122,6 +122,7 @@ public class DBHandler {
     }
 
     private List<QueryResult> query(String sessionId, String queryString) {
+        log.info("Querying: " + sessionId + " : " + activeRepos.get(sessionId).toString());
         TupleQuery tupleQuery = activeRepos.get(sessionId).prepareTupleQuery(queryString);
         TupleQueryResult result = tupleQuery.evaluate();
         List<QueryResult> queryResults = new ArrayList<QueryResult>();
