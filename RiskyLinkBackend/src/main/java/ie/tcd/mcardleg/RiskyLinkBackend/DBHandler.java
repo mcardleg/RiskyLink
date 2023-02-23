@@ -115,7 +115,7 @@ public class DBHandler {
             File temp = new File(filePath);
             activeRepos.get(sessionId).add(temp, baseURI, format);
             if (deleteAfter) {
-                String currentDirectory = System.getProperty("user.dir") + "/" + filePath;
+                String currentDirectory = System.getProperty("user.dir") + filePath;
                 log.info(currentDirectory);
                 File temp2 = new File(currentDirectory);
                 temp2.delete();
