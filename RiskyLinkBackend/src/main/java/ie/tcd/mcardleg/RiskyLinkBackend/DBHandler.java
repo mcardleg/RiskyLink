@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.io.FileReader;
 
+import org.eclipse.rdf4j.repository.RepositoryConnection;
 import org.eclipse.rdf4j.rio.RDFFormat;
 import org.eclipse.rdf4j.query.BindingSet;
 import org.eclipse.rdf4j.query.TupleQuery;
@@ -26,7 +27,7 @@ import org.json.simple.parser.JSONParser;
 public class DBHandler {
 
     public static final String ETHICS_ONTOLOGOY_DIRECTORY = "src/main/resources/risky_link_ethics.ttl";
-    private HashMap<String, RepositoryHolder> activeRepos = new HashMap<>();
+    private HashMap<String, RepositoryConnection> activeRepos = new HashMap<>();
     private String baseURI = "http://www.semanticweb.org/riskylink";
     private Logger log = LoggerFactory.getLogger(DBHandler.class);
     private final String QUERIES_DIRECTORY = "src/main/resources/sparql_queries.json";
@@ -91,8 +92,7 @@ public class DBHandler {
     
     public void tearDownDB(String sessionId) {
         if (activeRepos.containsKey(sessionId)) {
-            activeRepos.get(sessionId).getConnection().close();
-            activeRepos.get(sessionId).getRepository().shutDown();
+            activeRepos.get(sessionId).close();
             activeRepos.remove(sessionId);
         }
         log.info("Repo torn down.");
@@ -105,13 +105,13 @@ public class DBHandler {
             tempDir.mkdirs();
         }
         Repository repo = new SailRepository(new NativeStore(new File(sessionId + "/")));
-        activeRepos.put(sessionId, new RepositoryHolder(repo, repo.getConnection()));
+        activeRepos.put(sessionId, repo.getConnection());
         uploadFile(sessionId, ETHICS_ONTOLOGOY_DIRECTORY, RDFFormat.TURTLE, false);
         log.info("Set up session");
     }
 
     private boolean checkSessionExists(String sessionId) {
-        if (activeRepos.containsKey(sessionId) && activeRepos.get(sessionId).getConnection().isOpen()) {
+        if (activeRepos.containsKey(sessionId) && activeRepos.get(sessionId).isOpen()) {
             return true;
         }
         return false;
@@ -120,7 +120,7 @@ public class DBHandler {
     private void uploadFile(String sessionId, String filePath, RDFFormat format, Boolean deleteAfter) {
         try {
             log.info("Uploaded " + filePath);
-            activeRepos.get(sessionId).getConnection().add(new File(filePath), baseURI, format);
+            activeRepos.get(sessionId).add(new File(filePath), baseURI, format);
         }
         catch (IOException e) {
             log.error(e.getMessage(), e);
@@ -128,7 +128,7 @@ public class DBHandler {
     }
 
     private List<QueryResult> query(String sessionId, String queryString) {
-        TupleQuery tupleQuery = activeRepos.get(sessionId).getConnection().prepareTupleQuery(queryString);
+        TupleQuery tupleQuery = activeRepos.get(sessionId).prepareTupleQuery(queryString);
         TupleQueryResult result = tupleQuery.evaluate();
         List<QueryResult> queryResults = new ArrayList<QueryResult>();
 
