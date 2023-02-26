@@ -152,11 +152,17 @@ public class DBHandler {
 
             categories.put(sensitiveInfo, demographic);
 
-            tempMap1 = queryResults.get(sessionId);
-            tempMap2 = tempMap1.get(sensitiveInfo);
-            tempList = tempMap2.get(demographic);
+            if (queryResults.containsKey(sessionId)) {
+                tempMap1 = queryResults.get(sessionId);
+                if (tempMap1.containsKey(sensitiveInfo)) {
+                    tempMap2 = tempMap1.get(sensitiveInfo);
+                    if (tempMap1.containsKey(demographic)) {
+                        tempList = tempMap2.get(demographic);
+                        tempList.add(new Triple(subject, predicate, object));
+                    }
+                }
+            }
 
-            tempList.add(new Triple(subject, predicate, object));
             tempMap2.put(demographic, tempList);
             tempMap1.put(sensitiveInfo, tempMap2);
             queryResults.put(sessionId, tempMap1);
