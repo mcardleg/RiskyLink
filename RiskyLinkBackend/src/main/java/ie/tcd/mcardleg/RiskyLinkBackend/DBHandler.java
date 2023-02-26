@@ -1,9 +1,6 @@
 package ie.tcd.mcardleg.RiskyLinkBackend;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -28,6 +25,7 @@ public class DBHandler {
 
     public static final String ETHICS_ONTOLOGOY_DIRECTORY = "src/main/resources/risky_link_ethics.ttl";
     private HashMap<String, RepositoryConnection> activeRepos = new HashMap<>();
+    private HashMap<String, HashMap<String, HashMap<String, List<Triple>>>> queryResults = new HashMap<>();
     private String baseURI = "http://www.semanticweb.org/riskylink";
     private Logger log = LoggerFactory.getLogger(DBHandler.class);
     private final String QUERIES_DIRECTORY = "src/main/resources/sparql_queries.json";
@@ -63,33 +61,31 @@ public class DBHandler {
         return true;
     }
 
-    public HashMap<String, List<QueryResult>> runQueries(String sessionId) {
-        HashMap<String, List<QueryResult>> results = new HashMap<String, List<QueryResult>>();
+    public HashMap<String, String> runQueries(String sessionId) {
+        HashMap<String, String> categories = new HashMap<>();
         JSONParser parser = new JSONParser();
         try {
-            JSONObject jsonObject = (JSONObject)parser.parse(
-                    new FileReader(QUERIES_DIRECTORY));
+            JSONObject jsonObject = (JSONObject)parser.parse(new FileReader(QUERIES_DIRECTORY));
             JSONArray queries = (JSONArray)jsonObject.get("queries");
             Iterator queriesIterator = queries.iterator();
             while (queriesIterator.hasNext()) {
                 JSONObject object = (JSONObject)queriesIterator.next();
-                String queryName = (String)object.get("query_name");
-                JSONArray queryLines = (JSONArray)object.get("query");
-                Iterator linesIterator = queryLines.iterator();
-                String queryString = "";
-                while (linesIterator.hasNext()) {
-                    queryString += "\n" + linesIterator.next().toString();
-                }
-                results.put(queryName, query(sessionId, queryString));
+                categories = query(sessionId, readInQuery(object), categories);
             }
         } catch(Exception e) {
             log.error(e.getMessage(), e);
         }
         log.info("Queries have been run.");
 
-        return results;
+        return categories;
     }
-    
+
+//    public HashMap<String, List<QueryResult>> getLinks(String sessionId, String demographic, String sensitiveInfo) {
+//        // Replace QueryResult with new POJO that holds the triples
+//        HashMap<String, List<QueryResult>> results = new HashMap<String, List<QueryResult>>();
+//        return results;
+//    }
+
     public void tearDownDB(String sessionId) {
         if (activeRepos.containsKey(sessionId)) {
             activeRepos.get(sessionId).close();
@@ -127,23 +123,54 @@ public class DBHandler {
         }
     }
 
-    private List<QueryResult> query(String sessionId, String queryString) {
+    private String readInQuery(JSONObject object) {
+        JSONArray queryLines = (JSONArray)object.get("query");
+        Iterator linesIterator = queryLines.iterator();
+        String queryString = "";
+        while (linesIterator.hasNext()) {
+            queryString += "\n" + linesIterator.next().toString();
+        }
+        return queryString;
+    }
+
+    private HashMap<String, String> query(String sessionId, String queryString, HashMap<String, String> categories) {
         TupleQuery tupleQuery = activeRepos.get(sessionId).prepareTupleQuery(queryString);
         TupleQueryResult result = tupleQuery.evaluate();
-        List<QueryResult> queryResults = new ArrayList<QueryResult>();
+        HashMap<String, HashMap<String, List<Triple>>> tempMap1 = new HashMap<>();
+        HashMap<String, List<Triple>> tempMap2 = new HashMap<>();
+        List<Triple> tempList = new ArrayList<>();
+
+        String sensitiveInfo, demographic, subject, predicate, object;
 
         while (result.hasNext()) {
             BindingSet bindingSet = result.next();
-            QueryResult queryResult = new QueryResult(
-                    bindingSet.getValue(SENSITIVE_INFO_FIELD),
-                    bindingSet.getValue(DEMOGRAPHIC_FIELD),
-                    bindingSet.getValue(SUBJECT_FIELD),
-                    bindingSet.getValue(PREDICATE_FIELD),
-                    bindingSet.getValue(OBJECT_FIELD));
-            queryResults.add(queryResult);
+            sensitiveInfo = bindingSet.getValue(SENSITIVE_INFO_FIELD).toString();
+            demographic = bindingSet.getValue(DEMOGRAPHIC_FIELD).toString();
+            subject = bindingSet.getValue(DEMOGRAPHIC_FIELD).toString();
+            predicate = bindingSet.getValue(DEMOGRAPHIC_FIELD).toString();
+            object = bindingSet.getValue(DEMOGRAPHIC_FIELD).toString();
+
+            categories.put(sensitiveInfo, demographic);
+
+            tempMap1 = queryResults.get(sessionId);
+            tempMap2 = tempMap1.get(sensitiveInfo);
+            tempList = tempMap2.get(demographic);
+
+            tempList.add(new Triple(subject, predicate, object));
+            tempMap2.put(demographic, tempList);
+            tempMap1.put(sensitiveInfo, tempMap2);
+            queryResults.put(sessionId, tempMap1);
+
+//            QueryResult queryResult = new QueryResult(
+//                    bindingSet.getValue(SENSITIVE_INFO_FIELD),
+//                    bindingSet.getValue(DEMOGRAPHIC_FIELD),
+//                    bindingSet.getValue(SUBJECT_FIELD),
+//                    bindingSet.getValue(PREDICATE_FIELD),
+//                    bindingSet.getValue(OBJECT_FIELD));
+//            queryResults.add(queryResult);
         }
         result.close();
-        return queryResults;
+        return categories;
     }
     
 }

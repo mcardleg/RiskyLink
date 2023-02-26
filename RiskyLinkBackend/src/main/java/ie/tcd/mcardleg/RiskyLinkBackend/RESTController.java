@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -56,9 +57,17 @@ public class RESTController {
     }
 
     @GetMapping("/runQueries")
-    public ResponseEntity<Map<String, List<QueryResult>>> runQueries(@RequestHeader("sessionID") String sessionId) {
+    public ResponseEntity<HashMap<String, String>> runQueries(@RequestHeader("sessionID") String sessionId) {
         return new ResponseEntity<>(dbHandler.runQueries(sessionId), HttpStatus.OK);
     }
+
+//    @GetMapping("/getLinks")
+//    public ResponseEntity<Map<String, List<QueryResult>>> runQueries(
+//            @RequestHeader("sessionID") String sessionId,
+//            @RequestHeader("demographic") String demographic,
+//            @RequestHeader("sensitiveInfo") String sensitiveInfo) {
+//        return new ResponseEntity<>(dbHandler.getLinks(sessionId, demographic, sensitiveInfo), HttpStatus.OK);
+//    }
 
     @GetMapping("/sessionEnded")
     public ResponseEntity<String> sessionEnded(@RequestHeader("sessionID") String sessionId) {
