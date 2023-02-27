@@ -61,7 +61,7 @@ public class RESTController {
 
     @GetMapping("/getLinks")
     public ResponseEntity<List<Triple>> runQueries(
-            @RequestParam("sessionID") String sessionId,
+            @RequestHeader("sessionID") String sessionId,
             @RequestParam("demographic") String demographic,
             @RequestParam("sensitiveInfo") String sensitiveInfo) {
         return new ResponseEntity<>(dbHandler.getLinks(sessionId, demographic, sensitiveInfo), HttpStatus.OK);
