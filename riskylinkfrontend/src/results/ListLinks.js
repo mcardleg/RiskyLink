@@ -1,61 +1,76 @@
 import React, { useState, useEffect } from "react";
+import link_icon from '../link-icon.png';
 import './ListLinks.css';
-import { GetCookie, RedirectIfNoSessionID } from '../Cookies';
-
-const TripleTableRow = ({ triple }) => (
-  <tr>
-    <td>{triple.subject}</td>
-    <td>{triple.predicate}</td>
-    <td>{triple.object}</td>
-  </tr>
-);
-
-const TripleTable = ({ triples }) => {
-  return (
-    <table>
-      <thead>
-        <tr>
-          <th>Subject</th>
-          <th>Predicate</th>
-          <th>Object</th>
-        </tr>
-      </thead>
-      <tbody>
-        {triples.map((triple, index) => (
-          <TripleTableRow key={index} triple={triple} />
-        ))}
-      </tbody>
-    </table>
-  );
-};
+import { GetSessionID, RedirectIfNoSessionID } from '../SessionIDHandling';
 
 function ListLinks() {
   RedirectIfNoSessionID();
 
-  const [triples, setTriples] = useState([]);
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch('http://localhost:8080/runQueries', {
       method: 'GET',
       headers: {
-        'sessionID': GetCookie(),
+        'sessionID': GetSessionID(),
       }
     })
-      .then(response => response.json())
-      .then(data => {
-        const triples = data.basic_query.map(item => ({
-          subject: item.types_of_sensitive_info,
-          predicate: item.demographic,
-          object: item.subject
-        }));
-        setTriples(triples);
-      });
+    .then(response => response.json())
+    .then(data => {
+      setData(data);
+      setLoading(false);
+    })
+    .catch(error => console.error(error));
   }, []);
+
+  const handleClick = (key) => {
+    // Fetch new data based on the clicked row's key
+    // fetch(`http://localhost:8080/runQueries?key=${key}`, {
+      fetch(`http://localhost:8080/sessionEnded`, {
+      method: 'GET',
+      headers: {
+        'sessionID': GetSessionID(),
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      setData(data);
+    })
+    .catch(error => console.error(error));
+  };
+
+  if (!data) return null;
+
+  const tableRows = Object.entries(data).map(([key, value]) => (
+    <tr key={key} onClick={() => handleClick(key)}>
+      <td>{key}</td>
+      <td>{value}</td>
+    </tr>
+  ));
 
   return (
     <div className="ListLinks">
       <header className="ListLinks-header">
-        <TripleTable className="table" triples={triples} />
+        {loading && 
+          <div>Getting RiskyLinks.<br></br>This could take a few minutes.</div>
+        }
+        <br></br>
+        {loading ? (
+          <img src={link_icon} className="link_icon" alt="link_icon" />
+        ) : (
+          <table>
+          <thead>
+            <tr>
+              <th>Demographic</th>
+              <th>Sensitive Information</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tableRows}
+          </tbody>
+        </table>          
+        )}
       </header>
     </div>
   );

@@ -1,12 +1,24 @@
 import logo from './logo.png';
-import link_icon from './link-icon.png';
+import link_icon from '../link-icon.png';
 import './Home.css';
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { EnsureSessionID } from "../Cookies";
+import { GetSessionID, EnsureSessionID } from "../SessionIDHandling";
 
 
 function Home() {
   EnsureSessionID();
+
+  //Set up session
+  useEffect(() => {
+    fetch('http://localhost:8080/startSession', {
+      method: 'GET',
+      headers: {
+        'sessionID': GetSessionID(),
+      }
+    });
+  }, []);
+
   return (
     <div className="Home">
       <header className="header">

@@ -2,15 +2,15 @@ import upload_icon from './upload-icon.png';
 import './Upload.css';
 import { useState } from 'react';
 import { Link } from "react-router-dom";
-import { RedirectIfNoSessionID } from '../Cookies';
+import { GetSessionID, RedirectIfNoSessionID } from '../SessionIDHandling';
 
 function UploadDatasets() {
-  RedirectIfNoSessionID();
+  RedirectIfNoSessionID()
 
+  //Handle file upload
   const [selectedFile, setSelectedFile] = useState();
 	const [isFilePicked, setIsFilePicked] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);
-
 
   const changeHandler = (event) => {
 		setSelectedFile(event.target.files[0]);
@@ -19,13 +19,12 @@ function UploadDatasets() {
 
   const handleSubmission = () => {
 		const formData = new FormData();
-
 		formData.append('file', selectedFile);
 
     fetch('http://localhost:8080/uploadDataset', {
       method: 'POST',
       headers: {
-        'sessionID': document.cookie,
+        'sessionID': GetSessionID(),
       },
       body: formData
     })
@@ -35,16 +34,15 @@ function UploadDatasets() {
 		.catch((error) => {
 			console.error('Error:', error);
 		});
-
     setButtonClicked(true);
 	};
+
   return (
     <div className="Upload">
       <header className="Upload-header">
         <img src={upload_icon} className="icon" alt="icon" />
         {!buttonClicked &&
-          <div>You have uploaded all of your datasets.<br></br>
-          Now please upload the ontologies that describe your datasets, one by one.</div>
+          <div>Please upload your datasets, one by one.</div>
         }
 
         <br></br>

@@ -9,7 +9,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: small;
+    font-size: large;
     color: white;
 }
   
@@ -24,3 +24,14 @@
     background-color: white;
     color: #61b3fb;
 }
+
+.link_icon {
+    height: 20vmin;
+    pointer-events: none;
+  }
+  
+  @media (prefers-reduced-motion: no-preference) {
+    .link_icon {
+      animation: link_icon-spin infinite 20s linear;
+    }
+  }
