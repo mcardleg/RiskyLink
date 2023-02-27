@@ -78,15 +78,19 @@ public class DBHandler {
     }
 
     public List<Triple> getLinks(String sessionId, String demographic, String sensitiveInfo) {
+        log.info(String.format("Session:%s requested the links between %s and %s.", sessionId, demographic, sensitiveInfo));
         return queryResults.get(sessionId).get(demographic).get(sensitiveInfo);
     }
 
-    public void tearDownDB(String sessionId) {
+    public void endSession(String sessionId) {
         if (activeRepos.containsKey(sessionId)) {
             activeRepos.get(sessionId).close();
             activeRepos.remove(sessionId);
         }
-        log.info("Repo torn down.");
+        if (queryResults.containsKey(sessionId)) {
+            queryResults.remove(sessionId);
+        }
+        log.info("Session torn down.");
     }
 
     // Utils

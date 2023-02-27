@@ -8,10 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 @RestController
@@ -62,14 +60,14 @@ public class RESTController {
     @GetMapping("/getLinks")
     public ResponseEntity<List<Triple>> runQueries(
             @RequestHeader("sessionID") String sessionId,
-            @RequestParam("demographic") String demographic,
-            @RequestParam("sensitiveInfo") String sensitiveInfo) {
+            @RequestHeader("demographic") String demographic,
+            @RequestHeader("sensitiveInfo") String sensitiveInfo) {
         return new ResponseEntity<>(dbHandler.getLinks(sessionId, demographic, sensitiveInfo), HttpStatus.OK);
     }
 
     @GetMapping("/sessionEnded")
     public ResponseEntity<String> sessionEnded(@RequestHeader("sessionID") String sessionId) {
-        dbHandler.tearDownDB(sessionId);
+        dbHandler.endSession(sessionId);
         FileHandlingUtils.deleteSessionFiles(sessionId);
 
         return ResponseEntity.ok("Session shutdown");
