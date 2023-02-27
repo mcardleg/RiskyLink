@@ -32,9 +32,7 @@ public class RESTController {
             headers.add("Error", "No file passed.");
             return new ResponseEntity<>(null, headers, HttpStatus.BAD_REQUEST);
         }
-        Path path = FileHandlingUtils.fileUpload(sessionId, file);
-        log.info(path.toString());
-        if (dbHandler.addDataset(sessionId, path)) {
+        if (dbHandler.addDataset(sessionId, FileHandlingUtils.fileUpload(sessionId, file))) {
             return ResponseEntity.ok("Dataset uploaded.");
 
         }
@@ -61,17 +59,16 @@ public class RESTController {
         return new ResponseEntity<>(dbHandler.runQueries(sessionId), HttpStatus.OK);
     }
 
-//    @GetMapping("/getLinks")
-//    public ResponseEntity<Map<String, List<QueryResult>>> runQueries(
-//            @RequestHeader("sessionID") String sessionId,
-//            @RequestHeader("demographic") String demographic,
-//            @RequestHeader("sensitiveInfo") String sensitiveInfo) {
-//        return new ResponseEntity<>(dbHandler.getLinks(sessionId, demographic, sensitiveInfo), HttpStatus.OK);
-//    }
+    @GetMapping("/getLinks")
+    public ResponseEntity<List<Triple>> runQueries(
+            @RequestParam("sessionID") String sessionId,
+            @RequestParam("demographic") String demographic,
+            @RequestParam("sensitiveInfo") String sensitiveInfo) {
+        return new ResponseEntity<>(dbHandler.getLinks(sessionId, demographic, sensitiveInfo), HttpStatus.OK);
+    }
 
     @GetMapping("/sessionEnded")
     public ResponseEntity<String> sessionEnded(@RequestHeader("sessionID") String sessionId) {
-        log.info(sessionId);
         dbHandler.tearDownDB(sessionId);
         FileHandlingUtils.deleteSessionFiles(sessionId);
 

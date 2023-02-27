@@ -31,9 +31,6 @@ public class DBHandler {
     private final String QUERIES_DIRECTORY = "src/main/resources/sparql_queries.json";
     private final String SENSITIVE_INFO_FIELD = "types_of_sensitive_info";
     private final String DEMOGRAPHIC_FIELD = "demographic";
-    private final String SUBJECT_FIELD = "subject";
-    private final String PREDICATE_FIELD = "predicate";
-    private final String OBJECT_FIELD = "object";
 
     public void ensureSessionSetUp(String sessionId){
         if (!checkSessionExists(sessionId)) {
@@ -80,11 +77,9 @@ public class DBHandler {
         return categories;
     }
 
-//    public HashMap<String, List<QueryResult>> getLinks(String sessionId, String demographic, String sensitiveInfo) {
-//        // Replace QueryResult with new POJO that holds the triples
-//        HashMap<String, List<QueryResult>> results = new HashMap<String, List<QueryResult>>();
-//        return results;
-//    }
+    public List<Triple> getLinks(String sessionId, String demographic, String sensitiveInfo) {
+        return queryResults.get(sessionId).get(demographic).get(sensitiveInfo);
+    }
 
     public void tearDownDB(String sessionId) {
         if (activeRepos.containsKey(sessionId)) {
@@ -144,8 +139,8 @@ public class DBHandler {
 
         while (result.hasNext()) {
             BindingSet bindingSet = result.next();
-            sensitiveInfo = bindingSet.getValue(SENSITIVE_INFO_FIELD).toString();
             demographic = bindingSet.getValue(DEMOGRAPHIC_FIELD).toString();
+            sensitiveInfo = bindingSet.getValue(SENSITIVE_INFO_FIELD).toString();
             subject = bindingSet.getValue(DEMOGRAPHIC_FIELD).toString();
             predicate = bindingSet.getValue(DEMOGRAPHIC_FIELD).toString();
             object = bindingSet.getValue(DEMOGRAPHIC_FIELD).toString();
@@ -154,26 +149,17 @@ public class DBHandler {
 
             if (queryResults.containsKey(sessionId)) {
                 tempMap1 = queryResults.get(sessionId);
-                if (tempMap1.containsKey(sensitiveInfo)) {
-                    tempMap2 = tempMap1.get(sensitiveInfo);
-                    if (tempMap1.containsKey(demographic)) {
-                        tempList = tempMap2.get(demographic);
+                if (tempMap1.containsKey(demographic)) {
+                    tempMap2 = tempMap1.get(demographic);
+                    if (tempMap1.containsKey(sensitiveInfo)) {
+                        tempList = tempMap2.get(sensitiveInfo);
                         tempList.add(new Triple(subject, predicate, object));
                     }
                 }
             }
-
-            tempMap2.put(demographic, tempList);
-            tempMap1.put(sensitiveInfo, tempMap2);
+            tempMap2.put(sensitiveInfo, tempList);
+            tempMap1.put(demographic, tempMap2);
             queryResults.put(sessionId, tempMap1);
-
-//            QueryResult queryResult = new QueryResult(
-//                    bindingSet.getValue(SENSITIVE_INFO_FIELD),
-//                    bindingSet.getValue(DEMOGRAPHIC_FIELD),
-//                    bindingSet.getValue(SUBJECT_FIELD),
-//                    bindingSet.getValue(PREDICATE_FIELD),
-//                    bindingSet.getValue(OBJECT_FIELD));
-//            queryResults.add(queryResult);
         }
         result.close();
         return categories;
