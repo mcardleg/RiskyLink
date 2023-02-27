@@ -152,7 +152,7 @@ public class DBHandler {
             predicate = bindingSet.getValue(DEMOGRAPHIC_FIELD).toString();
             object = bindingSet.getValue(DEMOGRAPHIC_FIELD).toString();
 
-            categories.put(sensitiveInfo, demographic);
+            categories.put(demographic, sensitiveInfo);
 
             if (queryResults.containsKey(sessionId)) {
                 tempMap1 = queryResults.get(sessionId);
