@@ -73,6 +73,4 @@ public class RESTController {
         return ResponseEntity.ok("Session shutdown");
     }
 
-
-
 }
