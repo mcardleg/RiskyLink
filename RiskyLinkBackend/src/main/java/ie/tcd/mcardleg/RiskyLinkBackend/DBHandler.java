@@ -82,9 +82,6 @@ public class DBHandler {
 
     public List<Triple> getLinks(String sessionId, String demographic, String sensitiveInfo) {
         log.info(String.format("Session:%s requested the links between %s and %s.", sessionId, demographic, sensitiveInfo));
-        log.info(queryResults.get(sessionId).toString());
-        log.info(queryResults.get(sessionId).get(demographic).toString());
-        log.info(queryResults.get(sessionId).get(demographic).get(sensitiveInfo).toString());
         return queryResults.get(sessionId).get(demographic).get(sensitiveInfo);
     }
 
