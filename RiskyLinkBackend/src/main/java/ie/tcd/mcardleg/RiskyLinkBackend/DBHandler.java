@@ -169,12 +169,9 @@ public class DBHandler {
                     if (tempMap2.containsKey(sensitiveInfo)) {
                         tempList = tempMap2.get(sensitiveInfo);
                         tempList.add(new Triple(subject, predicate, object));
-                        log.info("reached 3");
                     }
                 }
             }
-            log.info(tempList.toString());
-
             tempMap2.put(sensitiveInfo, tempList);
             tempMap1.put(demographic, tempMap2);
             queryResults.put(sessionId, tempMap1);
