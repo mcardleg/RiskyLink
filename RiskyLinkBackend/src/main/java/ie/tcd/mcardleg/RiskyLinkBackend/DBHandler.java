@@ -159,12 +159,17 @@ public class DBHandler {
 
             if (queryResults.containsKey(sessionId)) {
                 tempMap1 = queryResults.get(sessionId);
+                log.info("reached 1");
+
+
                 if (tempMap1.containsKey(demographic)) {
                     tempMap2 = tempMap1.get(demographic);
+                    log.info("reached 2");
+
                     if (tempMap1.containsKey(sensitiveInfo)) {
-                        log.info("reached");
                         tempList = tempMap2.get(sensitiveInfo);
                         tempList.add(new Triple(subject, predicate, object));
+                        log.info("reached 3");
                     }
                 }
             }
