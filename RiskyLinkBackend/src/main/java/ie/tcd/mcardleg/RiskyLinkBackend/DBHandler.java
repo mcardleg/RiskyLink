@@ -31,6 +31,9 @@ public class DBHandler {
     private final String QUERIES_DIRECTORY = "src/main/resources/sparql_queries.json";
     private final String SENSITIVE_INFO_FIELD = "types_of_sensitive_info";
     private final String DEMOGRAPHIC_FIELD = "demographic";
+    private final String SUBJECT_FIELD = "subject";
+    private final String PREDICATE_FIELD = "predicate";
+    private final String OBJECT_FIELD = "object";
 
     public void ensureSessionSetUp(String sessionId){
         if (!checkSessionExists(sessionId)) {
@@ -148,9 +151,9 @@ public class DBHandler {
             BindingSet bindingSet = result.next();
             demographic = bindingSet.getValue(DEMOGRAPHIC_FIELD).toString();
             sensitiveInfo = bindingSet.getValue(SENSITIVE_INFO_FIELD).toString();
-            subject = bindingSet.getValue(DEMOGRAPHIC_FIELD).toString();
-            predicate = bindingSet.getValue(DEMOGRAPHIC_FIELD).toString();
-            object = bindingSet.getValue(DEMOGRAPHIC_FIELD).toString();
+            subject = bindingSet.getValue(SUBJECT_FIELD).toString();
+            predicate = bindingSet.getValue(PREDICATE_FIELD).toString();
+            object = bindingSet.getValue(OBJECT_FIELD).toString();
 
             CategoryPair pair = new CategoryPair(demographic, sensitiveInfo);
             if (!categories.contains(pair)) {
@@ -160,7 +163,6 @@ public class DBHandler {
             if (queryResults.containsKey(sessionId)) {
                 tempMap1 = queryResults.get(sessionId);
                 log.info("reached 1");
-
 
                 if (tempMap1.containsKey(demographic)) {
                     tempMap2 = tempMap1.get(demographic);
