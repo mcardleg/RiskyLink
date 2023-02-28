@@ -1,5 +1,7 @@
 package ie.tcd.mcardleg.RiskyLinkBackend;
 
+import java.util.Objects;
+
 public class CategoryPair {
 
     private String demographic;
@@ -32,5 +34,18 @@ public class CategoryPair {
                 "demographic='" + demographic + '\'' +
                 ", sensitiveInfo='" + sensitiveInfo + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CategoryPair that = (CategoryPair) o;
+        return getDemographic().equals(that.getDemographic()) && getSensitiveInfo().equals(that.getSensitiveInfo());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getDemographic(), getSensitiveInfo());
     }
 }
