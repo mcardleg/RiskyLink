@@ -3,35 +3,50 @@
 }
 
 .ListLinks-header {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: large;
-    color: white;
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: large;
+  color: white;
 }
-  
-.TripleTable {
-    font-size: small;
-    margin-right: auto;  /* push the table to the left */
-    float: 'left';
-    width: '50%';
+
+.Background-info {
+  font-size: small;
+  width: 50%;
+  white-space: pre-wrap;
+}
+
+.Classes-table {
+  position: absolute; left: 1%;
+  font-size: xx-small;
+  table-layout: fixed;
+  width: 45%;
+  border-collapse: collapse;
+  border: 1px solid #61b3fb;
+}
+
+.Classes-table th,
+.Classes-table td {
+  border: 1px solid #61b3fb;
+  padding: 8px;
+  word-wrap: break-word;
 }
 
 .filename {
-    background-color: white;
-    color: #61b3fb;
+  background-color: white;
+  color: #61b3fb;
 }
 
 .link_icon {
-    height: 20vmin;
-    pointer-events: none;
-  }
+  height: 20vmin;
+  pointer-events: none;
+}
   
-  @media (prefers-reduced-motion: no-preference) {
-    .link_icon {
-      animation: link_icon-spin infinite 20s linear;
-    }
+@media (prefers-reduced-motion: no-preference) {
+  .link_icon {
+    animation: link_icon-spin infinite 20s linear;
   }
+}

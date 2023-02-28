@@ -156,22 +156,18 @@ public class DBHandler {
             if (!categories.contains(pair)) {
                 categories.add(pair);
             }
-            else {
-                log.info("REACHED");
-            }
 
             if (queryResults.containsKey(sessionId)) {
                 tempMap1 = queryResults.get(sessionId);
                 if (tempMap1.containsKey(demographic)) {
                     tempMap2 = tempMap1.get(demographic);
                     if (tempMap1.containsKey(sensitiveInfo)) {
+                        log.info("reached");
                         tempList = tempMap2.get(sensitiveInfo);
                         tempList.add(new Triple(subject, predicate, object));
                     }
                 }
             }
-            log.info(tempMap1.toString());
-            log.info(tempMap2.toString());
             log.info(tempList.toString());
 
             tempMap2.put(sensitiveInfo, tempList);
