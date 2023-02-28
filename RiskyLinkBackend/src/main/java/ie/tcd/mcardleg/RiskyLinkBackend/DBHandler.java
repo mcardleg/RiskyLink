@@ -152,7 +152,10 @@ public class DBHandler {
             predicate = bindingSet.getValue(DEMOGRAPHIC_FIELD).toString();
             object = bindingSet.getValue(DEMOGRAPHIC_FIELD).toString();
 
-            categories.add(new CategoryPair(demographic, sensitiveInfo));
+            CategoryPair pair = new CategoryPair(demographic, sensitiveInfo);
+            if (!categories.contains(pair)) {
+                categories.add(pair);
+            }
 
             if (queryResults.containsKey(sessionId)) {
                 tempMap1 = queryResults.get(sessionId);
@@ -173,7 +176,7 @@ public class DBHandler {
             queryResults.put(sessionId, tempMap1);
         }
         result.close();
-        
+
         return categories;
     }
     
