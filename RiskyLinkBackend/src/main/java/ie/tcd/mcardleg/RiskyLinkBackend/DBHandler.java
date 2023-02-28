@@ -156,6 +156,9 @@ public class DBHandler {
             if (!categories.contains(pair)) {
                 categories.add(pair);
             }
+            else {
+                log.info("REACHED");
+            }
 
             if (queryResults.containsKey(sessionId)) {
                 tempMap1 = queryResults.get(sessionId);
