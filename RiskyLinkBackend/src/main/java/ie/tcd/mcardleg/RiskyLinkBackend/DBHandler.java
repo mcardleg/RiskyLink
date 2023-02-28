@@ -58,8 +58,8 @@ public class DBHandler {
         return true;
     }
 
-    public HashMap<String, String> runQueries(String sessionId) {
-        HashMap<String, String> categories = new HashMap<>();
+    public List<CategoryPair> runQueries(String sessionId) {
+        List<CategoryPair> categories = new ArrayList<>();
         JSONParser parser = new JSONParser();
         try {
             JSONObject jsonObject = (JSONObject)parser.parse(new FileReader(QUERIES_DIRECTORY));
@@ -135,7 +135,7 @@ public class DBHandler {
         return queryString;
     }
 
-    private HashMap<String, String> query(String sessionId, String queryString, HashMap<String, String> categories) {
+    private List<CategoryPair> query(String sessionId, String queryString, List<CategoryPair> categories) {
         TupleQuery tupleQuery = activeRepos.get(sessionId).prepareTupleQuery(queryString);
         TupleQueryResult result = tupleQuery.evaluate();
         HashMap<String, HashMap<String, List<Triple>>> tempMap1 = new HashMap<>();
@@ -152,7 +152,7 @@ public class DBHandler {
             predicate = bindingSet.getValue(DEMOGRAPHIC_FIELD).toString();
             object = bindingSet.getValue(DEMOGRAPHIC_FIELD).toString();
 
-            categories.put(demographic, sensitiveInfo);
+            categories.add(new CategoryPair(demographic, sensitiveInfo));
 
             if (queryResults.containsKey(sessionId)) {
                 tempMap1 = queryResults.get(sessionId);
@@ -164,11 +164,16 @@ public class DBHandler {
                     }
                 }
             }
+            log.info(tempMap1.toString());
+            log.info(tempMap2.toString());
+            log.info(tempList.toString());
+
             tempMap2.put(sensitiveInfo, tempList);
             tempMap1.put(demographic, tempMap2);
             queryResults.put(sessionId, tempMap1);
         }
         result.close();
+        
         return categories;
     }
     

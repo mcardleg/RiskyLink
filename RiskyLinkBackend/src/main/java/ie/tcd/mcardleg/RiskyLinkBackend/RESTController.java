@@ -53,12 +53,12 @@ public class RESTController {
     }
 
     @GetMapping("/runQueries")
-    public ResponseEntity<HashMap<String, String>> runQueries(@RequestHeader("sessionID") String sessionId) {
+    public ResponseEntity<List<CategoryPair>> runQueries(@RequestHeader("sessionID") String sessionId) {
         return new ResponseEntity<>(dbHandler.runQueries(sessionId), HttpStatus.OK);
     }
 
     @GetMapping("/getLinks")
-    public ResponseEntity<List<Triple>> runQueries(
+    public ResponseEntity<List<Triple>> getLinks(
             @RequestHeader("sessionID") String sessionId,
             @RequestHeader("demographic") String demographic,
             @RequestHeader("sensitiveInfo") String sensitiveInfo) {
