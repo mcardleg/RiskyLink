@@ -10,6 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+import static ie.tcd.mcardleg.RiskyLinkBackend.FileHandlingUtils.writeTickedRowsToFile;
+
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 @RestController
 public class RESTController {
@@ -66,9 +68,8 @@ public class RESTController {
 
     @PostMapping("/saveTickedRows")
     public ResponseEntity<String> saveTickedRows(@RequestHeader("sessionID") String sessionId,
-                                                 @RequestBody List<ClassPair> checkedRows) {
-//                                                 @RequestBody List<String> checkedRows) {
-        log.info(checkedRows.toString());
+                                                 @RequestBody List<ClassPair> tickedRows) {
+        writeTickedRowsToFile(sessionId, tickedRows);
         return ResponseEntity.ok("Ticked rows received.");
     }
 
