@@ -66,9 +66,9 @@ public class RESTController {
 
     @PostMapping("/saveTickedRows")
     public ResponseEntity<String> saveTickedRows(@RequestHeader("sessionID") String sessionId,
-//                                                 @RequestBody List<ClassPair> checkedRows) {
-                                                 @RequestBody String checkedRows) {
-        log.info(checkedRows);
+                                                 @RequestBody List<ClassPair> checkedRows) {
+//                                                 @RequestBody List<String> checkedRows) {
+        log.info(checkedRows.toString());
         return ResponseEntity.ok("Ticked rows received.");
     }
 
