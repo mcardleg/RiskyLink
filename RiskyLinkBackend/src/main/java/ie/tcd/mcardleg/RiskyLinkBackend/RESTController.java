@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashMap;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
@@ -53,7 +52,7 @@ public class RESTController {
     }
 
     @GetMapping("/runQueries")
-    public ResponseEntity<List<CategoryPair>> runQueries(@RequestHeader("sessionID") String sessionId) {
+    public ResponseEntity<List<ClassPair>> runQueries(@RequestHeader("sessionID") String sessionId) {
         return new ResponseEntity<>(dbHandler.runQueries(sessionId), HttpStatus.OK);
     }
 
@@ -63,6 +62,12 @@ public class RESTController {
             @RequestHeader("demographic") String demographic,
             @RequestHeader("sensitiveInfo") String sensitiveInfo) {
         return new ResponseEntity<>(dbHandler.getLinks(sessionId, demographic, sensitiveInfo), HttpStatus.OK);
+    }
+
+    @PostMapping("/saveTickedRows")
+    public ResponseEntity<String> saveTickedRows(@RequestHeader("sessionID") String sessionId, @RequestBody List<ClassPair> checkedRows) {
+        log.info(checkedRows.toString());
+        return ResponseEntity.ok("Ticked rows received.");
     }
 
     @GetMapping("/sessionEnded")

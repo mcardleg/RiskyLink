@@ -61,8 +61,8 @@ public class DBHandler {
         return true;
     }
 
-    public List<CategoryPair> runQueries(String sessionId) {
-        List<CategoryPair> categories = new ArrayList<>();
+    public List<ClassPair> runQueries(String sessionId) {
+        List<ClassPair> categories = new ArrayList<>();
         JSONParser parser = new JSONParser();
         try {
             JSONObject jsonObject = (JSONObject)parser.parse(new FileReader(QUERIES_DIRECTORY));
@@ -135,7 +135,7 @@ public class DBHandler {
         return queryString;
     }
 
-    private List<CategoryPair> query(String sessionId, String queryString, List<CategoryPair> categories) {
+    private List<ClassPair> query(String sessionId, String queryString, List<ClassPair> categories) {
         TupleQuery tupleQuery = activeRepos.get(sessionId).prepareTupleQuery(queryString);
         TupleQueryResult result = tupleQuery.evaluate();
         HashMap<String, HashMap<String, List<Triple>>> tempMap1 = new HashMap<>();
@@ -152,7 +152,7 @@ public class DBHandler {
             predicate = bindingSet.getValue(PREDICATE_FIELD).toString();
             object = bindingSet.getValue(OBJECT_FIELD).toString();
 
-            CategoryPair pair = new CategoryPair(demographic, sensitiveInfo);
+            ClassPair pair = new ClassPair(demographic, sensitiveInfo);
             if (!categories.contains(pair)) {
                 categories.add(pair);
             }

@@ -2,12 +2,12 @@ package ie.tcd.mcardleg.RiskyLinkBackend;
 
 import java.util.Objects;
 
-public class CategoryPair {
+public class ClassPair {
 
     private String demographic;
     private String sensitiveInfo;
 
-    public CategoryPair(String demographic, String sensitiveInfo) {
+    public ClassPair(String demographic, String sensitiveInfo) {
         this.demographic = demographic;
         this.sensitiveInfo = sensitiveInfo;
     }
@@ -40,7 +40,7 @@ public class CategoryPair {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CategoryPair that = (CategoryPair) o;
+        ClassPair that = (ClassPair) o;
         return getDemographic().equals(that.getDemographic()) && getSensitiveInfo().equals(that.getSensitiveInfo());
     }
 
