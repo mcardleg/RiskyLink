@@ -40,8 +40,8 @@ public class AlignmentGenerator {
         aligners.put(NAME_EQ_MATCHER, new NameEqAlignment());
         aligners.put(SMOAN_NAME_MATCHER, new SMOANameAlignment());
         aligners.put(STRING_DIST_MATCHER, new StringDistAlignment());
-        aligners.put(STRUC_SUBS_DIST_MATCHER, new StrucSubsDistAlignment());
-        aligners.put(SUBS_DIST_NAME_MATCHER, new SubsDistNameAlignment());
+//        aligners.put(STRUC_SUBS_DIST_MATCHER, new StrucSubsDistAlignment());
+//        aligners.put(SUBS_DIST_NAME_MATCHER, new SubsDistNameAlignment());
 
         List<String> filePaths = new ArrayList<String>();
         for (Map.Entry<String, AlignmentProcess> set : aligners.entrySet()) {
