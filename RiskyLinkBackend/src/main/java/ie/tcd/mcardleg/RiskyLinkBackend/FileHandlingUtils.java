@@ -35,9 +35,9 @@ public class FileHandlingUtils {
 
     public static void writeTickedRowsToFile(String sessionId, List<ClassPair> tickedRows) {
         try {
-            PrintWriter writer = new PrintWriter(new FileWriter("tickedRows/" + sessionId + ".txt"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("tickedRows/" + sessionId + ".txt"));
             for (ClassPair classPair: tickedRows) {
-                writer.print(classPair);
+                writer.write(String.valueOf(classPair));
             }
             writer.close();
             log.info("Wrote ticked rows to file.");
