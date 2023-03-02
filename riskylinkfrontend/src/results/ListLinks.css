@@ -1,5 +1,10 @@
+body {
+  background-color: #282c34;
+}
+
 .ListLinks {
     text-align: center;
+    background-color: #282c34;
 }
 
 .ListLinks-header {
@@ -19,34 +24,63 @@
   white-space: pre-wrap;
 }
 
-.Classes-table {
-  position: absolute; left: 1%;
+.Instruction {
+  width: 75%;
+  position: absolute; top: 5%; left:5%;
+}
+
+.Done-button {
+  position: absolute; top: 5%; right:5%;
+  width: 7.5%;
+  height: 5%;
+  background-color: #61c0fb;
+}
+
+.Classes-table,
+.Triples-table {
   font-size: xx-small;
   table-layout: fixed;
-  width: 45%;
+  width: 42.5%;
+  position: absolute; top: 15%;
   border-collapse: collapse;
-  border: 1px solid #61b3fb;
+}
+
+.Classes-table {
+  position: absolute; left: 5%;
+}
+
+.Triples-table {
+  position: absolute; right: 5%;
 }
 
 .Classes-table th,
-.Classes-table td {
+.Classes-table td,
+.Triples-table th,
+.Triples-table td {
   border: 1px solid #61b3fb;
   padding: 8px;
   word-wrap: break-word;
 }
 
-.filename {
-  background-color: white;
-  color: #61b3fb;
+.Classes-table th:nth-child(3),
+.Classes-table td:nth-child(3) {
+  width: 5%;
 }
 
 .link_icon {
   height: 20vmin;
   pointer-events: none;
 }
+
+.link_icon2 {
+  height: 15vmin;
+  pointer-events: none;
+  position: absolute; right: 25%;
+}
   
 @media (prefers-reduced-motion: no-preference) {
-  .link_icon {
+  .link_icon,
+  .link_icon2 {
     animation: link_icon-spin infinite 20s linear;
   }
 }

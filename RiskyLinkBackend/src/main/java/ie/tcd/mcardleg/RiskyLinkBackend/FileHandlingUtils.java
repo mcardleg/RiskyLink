@@ -44,7 +44,6 @@ public class FileHandlingUtils {
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }
-
     }
 
     public static void deleteSessionFiles(String sessionId) {
