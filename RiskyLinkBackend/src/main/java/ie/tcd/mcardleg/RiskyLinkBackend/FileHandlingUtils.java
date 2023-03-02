@@ -35,17 +35,11 @@ public class FileHandlingUtils {
 
     public static void writeTickedRowsToFile(String sessionId, List<ClassPair> tickedRows) {
         try {
-            PrintWriter writer = new PrintWriter("tickedRows/" + sessionId + ".txt", "UTF-8");
-            writer.println("The first line");
-            writer.println("The second line");
-            writer.close();
-
+            PrintWriter writer = new PrintWriter(new FileWriter("tickedRows/" + sessionId + ".txt"));
             for (ClassPair classPair: tickedRows) {
-                printWriter.print(classPair);
+                writer.print(classPair);
             }
-//            printWriter.print("Some String");
-//            printWriter.printf("Product name is %s and its price is %d $", "iPhone", 1000);
-            printWriter.close();
+            writer.close();
             log.info("Wrote ticked rows to file.");
         } catch (IOException e) {
             log.error(e.getMessage(), e);
