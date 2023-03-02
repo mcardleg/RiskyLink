@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import link_icon from '../link-icon.png';
 import './ListLinks.css';
 import { GetSessionID, RedirectIfNoSessionID } from '../SessionIDHandling';
@@ -11,7 +12,7 @@ function ListLinks() {
   const [loading, setLoading] = useState(true);
   const [triplesLoading, setTriplesLoading] = useState(false);
   const [tickedRows, setTickedRows] = useState([]);
-
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch('http://localhost:8080/runQueries', {
@@ -28,7 +29,7 @@ function ListLinks() {
     .catch(error => console.error(error));
   }, []);
 
-  const handleClick = (key, value) => {
+  const handleClassesTableClick = (key, value) => {
     setTriplesLoading(true);
     fetch('http://localhost:8080/getLinks', {
       method: 'GET',
@@ -54,7 +55,7 @@ function ListLinks() {
 
   const handleDoneButtonClick = () => {
     const tickedRowsData = classes.filter((_, index) => tickedRows[index]);
-    console.log(JSON.stringify(tickedRowsData));
+
     fetch('http://localhost:8080/saveTickedRows', {
       method: 'POST',
       headers: {
@@ -63,6 +64,7 @@ function ListLinks() {
       },
       body: JSON.stringify(tickedRowsData)
     })
+    .then(navigate('/ThankYou'))
     .catch(error => console.error(error));
   };
 
@@ -71,7 +73,7 @@ function ListLinks() {
 
 
   const classesRows = classes.map(({ demographic, sensitiveInfo }, index) => (
-    <tr key={index} onClick={() => handleClick(demographic, sensitiveInfo)}>
+    <tr key={index} onClick={() => handleClassesTableClick(demographic, sensitiveInfo)}>
       <td>{demographic}</td>
       <td>{sensitiveInfo}</td>
       <td>
@@ -80,7 +82,7 @@ function ListLinks() {
   ));  
 
   const tripleRows = triples.map(({ subject, predicate, object }, index) => (
-    <tr key={index} onClick={() => handleClick(subject, predicate, object)}>
+    <tr key={index} onClick={() => handleClassesTableClick(subject, predicate, object)}>
       <td>{subject}</td>
       <td>{predicate}</td>
       <td>{object}</td>

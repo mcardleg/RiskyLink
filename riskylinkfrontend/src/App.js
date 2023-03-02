@@ -3,14 +3,13 @@ import Home from './home/Home';
 import UploadDatasets from './uploads/UploadDatasets';
 import UploadOntologies from './uploads/UploadOntologies';
 import ListLinks from './results/ListLinks';
-import GenerateOntodia from './results/OntodiaDisplay';
+import ThankYou from './results/ThankYou';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
 import { GetSessionID, DeleteSessionID } from './SessionIDHandling';
 
 
 function App() {
-  // Close session when user leaves app
 
   useEffect(() => {
     const handleUnload = () => {
@@ -40,7 +39,7 @@ function App() {
         <Route path="/UploadDatasets" element={<UploadDatasets />} />
         <Route path="/UploadOntologies" element={<UploadOntologies />} />
         <Route path="/ListLinks" element={<ListLinks />} />
-        <Route path="/Ontodia" element={<GenerateOntodia />} />
+        <Route path="/ThankYou" element={<ThankYou />} />
       </Routes>
     </Router>
   );

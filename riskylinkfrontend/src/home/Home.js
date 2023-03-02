@@ -1,4 +1,4 @@
-import logo from './logo.png';
+import logo from '../logo.png';
 import link_icon from '../link-icon.png';
 import './Home.css';
 import React, { useEffect } from "react";
