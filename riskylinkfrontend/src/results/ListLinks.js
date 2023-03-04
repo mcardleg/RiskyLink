@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import link_icon from '../link-icon.png';
 import './ListLinks.css';
 import { GetSessionID, RedirectIfNoSessionID } from '../SessionIDHandling';
+import { backendURL } from "../App";
 
 function ListLinks() {
   RedirectIfNoSessionID();
@@ -15,7 +16,7 @@ function ListLinks() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://${window.location.hostname}:8080/runQueries', {
+    fetch(backendURL + 'runQueries', {
       method: 'GET',
       headers: {
         'sessionID': GetSessionID(),
@@ -31,7 +32,7 @@ function ListLinks() {
 
   const handleClassesTableClick = (key, value) => {
     setTriplesLoading(true);
-    fetch('http://${window.location.hostname}:8080/getLinks', {
+    fetch(backendURL + 'getLinks', {
       method: 'GET',
       headers: {
         'sessionID': GetSessionID(),
@@ -56,7 +57,7 @@ function ListLinks() {
   const handleDoneButtonClick = () => {
     const tickedRowsData = classes.filter((_, index) => tickedRows[index]);
 
-    fetch('http://${window.location.hostname}:8080/saveTickedRows', {
+    fetch(backendURL + 'saveTickedRows', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

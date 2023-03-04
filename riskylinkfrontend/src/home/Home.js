@@ -4,6 +4,7 @@ import './Home.css';
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { GetSessionID, EnsureSessionID } from "../SessionIDHandling";
+import { backendURL } from '../App';
 
 
 function Home() {
@@ -11,7 +12,7 @@ function Home() {
 
   //Set up session
   useEffect(() => {
-    fetch('http://167.99.90.191:8080/startSession', {
+    fetch(backendURL + 'startSession', {
       method: 'GET',
       headers: {
         'sessionID': GetSessionID(),

@@ -3,6 +3,7 @@ import './Upload.css';
 import { useState } from 'react';
 import { Link } from "react-router-dom";
 import { GetSessionID, RedirectIfNoSessionID } from '../SessionIDHandling';
+import { backendURL } from '../App';
 
 function UploadDatasets() {
   RedirectIfNoSessionID()
@@ -21,7 +22,7 @@ function UploadDatasets() {
 		const formData = new FormData();
 		formData.append('file', selectedFile);
 
-    fetch('http://${window.location.hostname}:8080/uploadDataset', {
+    fetch(backendURL + 'uploadDataset', {
       method: 'POST',
       headers: {
         'sessionID': GetSessionID(),

@@ -10,11 +10,12 @@ import { GetSessionID, DeleteSessionID } from './SessionIDHandling';
 
 
 function App() {
+  let backendURL = "http://" + window.location.hostname + ":8080/";
 
   useEffect(() => {
     const handleUnload = () => {
       if(window.performance.getEntries()[0].type  !== 'reload'){
-        fetch('http://${window.location.hostname}:8080/sessionEnded', {
+        fetch(backendURL + "sessionEnded", {
           method: 'GET',
           headers: {
             'sessionID': GetSessionID(),
@@ -46,4 +47,4 @@ function App() {
 }
 
 
-export default App;
+export {App, backendURL};

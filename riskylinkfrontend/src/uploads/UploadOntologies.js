@@ -3,6 +3,7 @@ import './Upload.css';
 import {useState} from 'react';
 import { Link } from "react-router-dom";
 import { GetSessionID, RedirectIfNoSessionID } from '../SessionIDHandling';
+import { backendURL } from '../App';
 
 
 function UploadOntologies() {
@@ -23,7 +24,7 @@ function UploadOntologies() {
 
 		formData.append('file', selectedFile);
 
-    fetch('http://${window.location.hostname}:8080/uploadOntology', {
+    fetch(backendURL + 'uploadOntology', {
       method: 'POST',
       headers: {
         'sessionID': GetSessionID(),

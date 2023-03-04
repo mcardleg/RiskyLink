@@ -1,5 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import { useEffect } from "react";
+import { backendURL } from './App';
 
 
 let cookieName = "sessionID=";
@@ -11,7 +12,7 @@ function SetSessionID(life) {
   document.cookie = cookieName + uuid() + ";" + expires + ";path=/";
 
   useEffect(() => {
-    fetch('http://${window.location.hostname}:8080/startSession', {
+    fetch(backendURL + 'startSession', {
       method: 'GET',
       headers: {
         'sessionID': GetSessionID(),
