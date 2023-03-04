@@ -1,5 +1,4 @@
 import logo from '../logo.png';
-import link_icon from '../link-icon.png';
 import './ThankYou.css';
 
 function ThankYou() {
