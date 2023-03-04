@@ -94,7 +94,8 @@ function ListLinks() {
     <div className="ListLinks">
       <header className="ListLinks-header">
         {loading && 
-          <div>Getting RiskyLinks.<br></br>This could take a few minutes.</div>
+          <div>Getting RiskyLinks!<br></br><br></br>
+          This could take a few minutes.</div>
         }
         <br></br>
         {loading &&
@@ -104,9 +105,9 @@ function ListLinks() {
         {loading ? (
             <div className="Background-info">"Ethical objections to linking [health data with ethnic minorities] 
               include concerns about informed consent and the possibility of the findings 
-              being misused against the interests of ethnic minority groups." <br></br>
+              being misused against the interests of ethnic minority groups." <br></br><br></br>
               ~ Boyd, Kenneth M. 2007. “Ethnicity and the Ethics of Data Linkage.” 
-              BMC Public Health 7 (1). doi:10.1186/1471-2458-7-318.<br></br>
+              BMC Public Health 7 (1). doi:10.1186/1471-2458-7-318.<br></br><br></br>
               RiskyLink expands on this concept and flags links between demographics 
               and sensitive information.</div>
         ) : (
