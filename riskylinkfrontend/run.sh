@@ -6,4 +6,6 @@ nvm install v16.0.0
 npm install
 chmod +x node_modules/.bin/react-scripts
 # webpack.config.js edits
-npm start
+npm run build
+npm install -g serve
+serve -s build
