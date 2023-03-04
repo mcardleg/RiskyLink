@@ -2,11 +2,14 @@ package ie.tcd.mcardleg.RiskyLinkBackend;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -14,7 +17,7 @@ import java.util.List;
 
 import static ie.tcd.mcardleg.RiskyLinkBackend.FileHandlingUtils.writeTickedRowsToFile;
 
-@CrossOrigin(origins = "*", allowCredentials = "true")
+@CrossOrigin()
 @RestController
 public class RESTController {
     private DBHandler dbHandler = new DBHandler();
@@ -92,6 +95,17 @@ public class RESTController {
             log.error(e.getMessage(), e);
         }
         return "";
+    }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+
+                registry.addMapping("/greeting-javaconfig").allowedOrigins("http://localhost:8080");
+            }
+        };
     }
 
 }
