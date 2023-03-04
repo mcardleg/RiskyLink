@@ -47,4 +47,4 @@ function App() {
 }
 
 
-export {App, backendURL};
+export { App, backendURL };
