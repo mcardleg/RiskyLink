@@ -14,7 +14,7 @@ import java.util.List;
 
 import static ie.tcd.mcardleg.RiskyLinkBackend.FileHandlingUtils.writeTickedRowsToFile;
 
-@CrossOrigin(origins = "${crossOriginUrl}", allowCredentials = "true")
+@CrossOrigin(origins = "*", allowCredentials = "true")
 @RestController
 public class RESTController {
     private DBHandler dbHandler = new DBHandler();
