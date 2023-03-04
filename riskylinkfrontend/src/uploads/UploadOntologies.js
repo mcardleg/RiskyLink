@@ -23,7 +23,7 @@ function UploadOntologies() {
 
 		formData.append('file', selectedFile);
 
-    fetch('http://localhost:8080/uploadOntology', {
+    fetch('http://${window.location.hostname}:8080/uploadOntology', {
       method: 'POST',
       headers: {
         'sessionID': GetSessionID(),

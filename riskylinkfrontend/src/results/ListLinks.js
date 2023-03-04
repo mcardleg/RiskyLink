@@ -15,7 +15,7 @@ function ListLinks() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost:8080/runQueries', {
+    fetch('http://${window.location.hostname}:8080/runQueries', {
       method: 'GET',
       headers: {
         'sessionID': GetSessionID(),
@@ -31,7 +31,7 @@ function ListLinks() {
 
   const handleClassesTableClick = (key, value) => {
     setTriplesLoading(true);
-    fetch('http://localhost:8080/getLinks', {
+    fetch('http://${window.location.hostname}:8080/getLinks', {
       method: 'GET',
       headers: {
         'sessionID': GetSessionID(),
@@ -56,7 +56,7 @@ function ListLinks() {
   const handleDoneButtonClick = () => {
     const tickedRowsData = classes.filter((_, index) => tickedRows[index]);
 
-    fetch('http://localhost:8080/saveTickedRows', {
+    fetch('http://${window.location.hostname}:8080/saveTickedRows', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

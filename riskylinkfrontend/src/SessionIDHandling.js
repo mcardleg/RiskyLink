@@ -11,7 +11,7 @@ function SetSessionID(life) {
   document.cookie = cookieName + uuid() + ";" + expires + ";path=/";
 
   useEffect(() => {
-    fetch('http://localhost:8080/startSession', {
+    fetch('http://${window.location.hostname}:8080/startSession', {
       method: 'GET',
       headers: {
         'sessionID': GetSessionID(),

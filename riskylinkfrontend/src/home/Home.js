@@ -11,7 +11,7 @@ function Home() {
 
   //Set up session
   useEffect(() => {
-    fetch('http://localhost:8080/startSession', {
+    fetch('http://167.99.90.191:8080/startSession', {
       method: 'GET',
       headers: {
         'sessionID': GetSessionID(),

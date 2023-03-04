@@ -14,7 +14,7 @@ function App() {
   useEffect(() => {
     const handleUnload = () => {
       if(window.performance.getEntries()[0].type  !== 'reload'){
-        fetch('http://localhost:8080/sessionEnded', {
+        fetch('http://${window.location.hostname}:8080/sessionEnded', {
           method: 'GET',
           headers: {
             'sessionID': GetSessionID(),
