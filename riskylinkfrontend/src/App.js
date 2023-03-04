@@ -8,9 +8,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
 import { GetSessionID, DeleteSessionID } from './SessionIDHandling';
 
+const backendURL = "http://" + window.location.hostname + ":8080/";
 
 function App() {
-  let backendURL = "http://" + window.location.hostname + ":8080/";
 
   useEffect(() => {
     const handleUnload = () => {
