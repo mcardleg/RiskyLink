@@ -8,11 +8,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 
 import static ie.tcd.mcardleg.RiskyLinkBackend.FileHandlingUtils.writeTickedRowsToFile;
 
-@CrossOrigin(origins = "http://${window.location.hostname}:3000", allowCredentials = "true")
+@CrossOrigin(origins = "${crossOriginUrl}", allowCredentials = "true")
 @RestController
 public class RESTController {
     private DBHandler dbHandler = new DBHandler();
@@ -79,6 +81,17 @@ public class RESTController {
         FileHandlingUtils.deleteSessionFiles(sessionId);
 
         return ResponseEntity.ok("Session shutdown");
+    }
+
+    @ModelAttribute("crossOriginUrl")
+    public String crossOriginUrl() {
+        try {
+            return "http://" + InetAddress.getLocalHost().getHostName() + ":3000";
+        }
+        catch (UnknownHostException e) {
+            log.error(e.getMessage(), e);
+        }
+        return "";
     }
 
 }
