@@ -104,7 +104,7 @@
         "?object rdf:type ?demo_equivalents .",
 
         "?subject ?predicate ?hop .",
-        "?hop ?predicate2 ?hop2",
+        "?hop ?predicate2 ?hop2 .",
         "?hop2 ?predicate3 ?object .",
         "}"
       ]
@@ -127,7 +127,7 @@
         "?object rdf:type ?demo_equivalents .",
 
         "?object ?predicate ?hop .",
-        "?hop ?predicate2 ?hop2",
+        "?hop ?predicate2 ?hop2 .",
         "?hop2 ?predicate3 ?subject .",
         "}"
       ]
