@@ -36,11 +36,11 @@ public class AlignmentGenerator {
         HashMap<String, AlignmentProcess> aligners = new HashMap<String, AlignmentProcess>();
         aligners.put(CLASS_STRUCT_MATCHER, new ClassStructAlignment());
         aligners.put(EDIT_DIST_NAME_MATCHER, new EditDistNameAlignment());
-//        aligners.put(NAME_AND_PROPERTY_MATCHER, new NameAndPropertyAlignment());
-//        aligners.put(NAME_EQ_MATCHER, new NameEqAlignment());
-//        aligners.put(SMOAN_NAME_MATCHER, new SMOANameAlignment());
-//        aligners.put(STRING_DIST_MATCHER, new StringDistAlignment());
-//        aligners.put(STRUC_SUBS_DIST_MATCHER, new StrucSubsDistAlignment());
+        aligners.put(NAME_AND_PROPERTY_MATCHER, new NameAndPropertyAlignment());
+        aligners.put(NAME_EQ_MATCHER, new NameEqAlignment());
+        aligners.put(SMOAN_NAME_MATCHER, new SMOANameAlignment());
+        aligners.put(STRING_DIST_MATCHER, new StringDistAlignment());
+        aligners.put(STRUC_SUBS_DIST_MATCHER, new StrucSubsDistAlignment());
 //        aligners.put(SUBS_DIST_NAME_MATCHER, new SubsDistNameAlignment());
 
         List<String> filePaths = new ArrayList<String>();
