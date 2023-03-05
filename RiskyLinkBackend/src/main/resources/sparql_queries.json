@@ -60,7 +60,7 @@
         "?object rdf:type ?demo_equivalents .",
 
         "?object ?predicate ?hop .",
-        "?hop ?predicate2 ?subject",
+        "?hop ?predicate2 ?subject .",
         "}"
       ]
     },
@@ -82,7 +82,28 @@
         "?object rdf:type ?demo_equivalents .",
 
         "?object ?predicate ?hop .",
-        "?hop ?predicate2 ?subject",
+        "?hop ?predicate2 ?subject .",
+        "}"
+      ]
+    },
+    {
+      "query_name": "sensitive_sensitive",
+      "query": [
+        "PREFIX ont: <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/risky_link_ethics#>",
+        "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>",
+        "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>",
+        "PREFIX owl: <http://www.w3.org/2002/07/owl#>",
+        "SELECT DISTINCT ?subject ?predicate ?object ?types_of_sensitive_info ?demographic",
+        "WHERE {",
+        "?types_of_sensitive_info rdfs:subClassOf ont:Sensitive_information .",
+        "?types_of_sensitive_info owl:equivalentClass ?info_equivalents .",
+        "?subject rdf:type ?info_equivalents .",
+
+        "?types_of_sensitive_info rdfs:subClassOf ont:Sensitive_information .",
+        "?types_of_sensitive_info owl:equivalentClass ?info_equivalents .",
+        "?object rdf:type ?info_equivalents .",
+
+        "?subject ?predicate ?object .",
         "}"
       ]
     }
