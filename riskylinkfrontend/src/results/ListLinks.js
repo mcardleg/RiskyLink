@@ -83,7 +83,7 @@ function ListLinks() {
   ));  
 
   const tripleRows = triples.map(({ subject, predicate, object }, index) => (
-    <tr key={index} onClick={() => handleClassesTableClick(subject, predicate, object)}>
+    <tr key={index}>
       <td>{subject}</td>
       <td>{predicate}</td>
       <td>{object}</td>
