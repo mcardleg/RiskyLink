@@ -11,7 +11,7 @@ function UploadDatasets() {
   //Handle file upload
   const [selectedFile, setSelectedFile] = useState();
 	const [isFilePicked, setIsFilePicked] = useState(false);
-  const [buttonClicked, setButtonClicked] = useState(false);
+  const [isButtonClicked, setIsButtonClicked] = useState(false);
 
   const changeHandler = (event) => {
 		setSelectedFile(event.target.files[0]);
@@ -35,14 +35,14 @@ function UploadDatasets() {
 		.catch((error) => {
 			console.error('Error:', error);
 		});
-    setButtonClicked(true);
+    setIsButtonClicked(true);
 	};
 
   return (
     <div className="Upload">
       <header className="Upload-header">
         <img src={upload_icon} className="icon" alt="icon" />
-        {!buttonClicked &&
+        {!isButtonClicked &&
           <div>Please upload your datasets, one by one.</div>
         }
 
@@ -57,13 +57,13 @@ function UploadDatasets() {
         }
         <br></br>
 
-        {buttonClicked && 
+        {isButtonClicked && 
           <div>If you have uploaded all your datasets, click the link below.<br></br>
           If not, continue uploading your datasets one by one.</div>
         }
         <br></br>
 
-        {buttonClicked &&
+        {isButtonClicked &&
         <Link to={'/UploadOntologies'} className="link" alt="link">Go to ontology upload page</Link>
         }
       </header>

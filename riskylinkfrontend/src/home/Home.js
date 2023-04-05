@@ -27,7 +27,7 @@ function Home() {
         <img src={link_icon} className="link_icon" alt="link_icon" />
         <br></br>
         <p>A tool for highlighting links that could be unethical 
-          to publish in integrated datasets</p>
+          to publish within datasets</p>
         <Link to={'/UploadDatasets'} className="Home-link" alt="link">Start</Link>
       </header>
     </div>

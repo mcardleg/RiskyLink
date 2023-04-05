@@ -22,7 +22,6 @@ import org.json.simple.parser.JSONParser;
 
 
 public class DBHandler {
-
     public static final String ETHICS_ONTOLOGOY_DIRECTORY = "src/main/resources/risky_link_ethics.ttl";
     private HashMap<String, RepositoryConnection> activeRepos = new HashMap<>();
     private HashMap<String, HashMap<String, HashMap<String, List<Triple>>>> queryResults = new HashMap<>();
@@ -46,7 +45,7 @@ public class DBHandler {
             return false;
         }
         uploadFile(sessionId, path.toString(), RDFFormat.TURTLE, true);
-        return false;
+        return true;
     }
 
     public Boolean addOntology(String sessionId, Path path) {
@@ -61,8 +60,8 @@ public class DBHandler {
         return true;
     }
 
-    public List<ClassPair> runQueries(String sessionId) {
-        List<ClassPair> categories = new ArrayList<>();
+    public Set<ClassPair> runQueries(String sessionId) {
+        Set<ClassPair> categories = new HashSet<ClassPair>();
         JSONParser parser = new JSONParser();
         try {
             JSONObject jsonObject = (JSONObject)parser.parse(new FileReader(QUERIES_DIRECTORY));
@@ -108,7 +107,7 @@ public class DBHandler {
         log.info("Set up session");
     }
 
-    private boolean checkSessionExists(String sessionId) {
+    private Boolean checkSessionExists(String sessionId) {
         if (activeRepos.containsKey(sessionId) && activeRepos.get(sessionId).isOpen()) {
             return true;
         }
@@ -135,7 +134,7 @@ public class DBHandler {
         return queryString;
     }
 
-    private List<ClassPair> query(String sessionId, String queryString, List<ClassPair> categories) {
+    private Set<ClassPair> query(String sessionId, String queryString, Set<ClassPair> categories) {
         TupleQuery tupleQuery = activeRepos.get(sessionId).prepareTupleQuery(queryString);
         TupleQueryResult result = tupleQuery.evaluate();
         HashMap<String, HashMap<String, List<Triple>>> tempMap1 = new HashMap<>();
@@ -152,10 +151,7 @@ public class DBHandler {
             predicate = bindingSet.getValue(PREDICATE_FIELD).toString();
             object = bindingSet.getValue(OBJECT_FIELD).toString();
 
-            ClassPair pair = new ClassPair(demographic, sensitiveInfo);
-            if (!categories.contains(pair)) {
-                categories.add(pair);
-            }
+            categories.add(new ClassPair(demographic, sensitiveInfo));
 
             if (queryResults.containsKey(sessionId)) {
                 tempMap1 = queryResults.get(sessionId);

@@ -23,6 +23,17 @@ function SetSessionID(life) {
   console.log(GetSessionID());
 }
 
+function EndSession() {
+  fetch(backendURL + "sessionEnded", {
+    method: 'GET',
+    headers: {
+      'sessionID': GetSessionID(),
+    },
+  });
+
+  DeleteSessionID();
+}
+
 function GetSessionID() {
   let ca = document.cookie.split(';');
   for(let i = 0; i < ca.length; i++) {
@@ -57,11 +68,11 @@ function EnsureSessionID() {
 
 function RedirectIfNoSessionID() {
   if (!CheckSessionID()) {
-    alert("Sorry! You for some reason you haven't been assigned a Session ID. You'll be redirected to the homepage to start again.");
+    alert("Sorry! For some reason you haven't been assigned a Session ID. You'll be redirected to the homepage to start again.");
     window.location.href = '/';
     return true;
   }
   return false;
 }
 
-export { GetSessionID, EnsureSessionID, RedirectIfNoSessionID, DeleteSessionID };
+export { GetSessionID, EndSession, EnsureSessionID, RedirectIfNoSessionID, DeleteSessionID };
