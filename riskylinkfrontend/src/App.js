@@ -6,7 +6,7 @@ import ListLinks from './results/ListLinks';
 import ThankYou from './results/ThankYou';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
-import { GetSessionID, DeleteSessionID } from './SessionIDHandling';
+import { EndSession } from './SessionIDHandling';
 
 const backendURL = "http://" + window.location.hostname + ":8080/";
 
@@ -15,14 +15,7 @@ function App() {
   useEffect(() => {
     const handleUnload = () => {
       if(window.performance.getEntries()[0].type  !== 'reload'){
-        fetch(backendURL + "sessionEnded", {
-          method: 'GET',
-          headers: {
-            'sessionID': GetSessionID(),
-          },
-        });
-      
-        DeleteSessionID();
+        EndSession();
       }
     };
   

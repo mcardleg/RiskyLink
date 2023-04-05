@@ -23,6 +23,17 @@ function SetSessionID(life) {
   console.log(GetSessionID());
 }
 
+function EndSession() {
+  fetch(backendURL + "sessionEnded", {
+    method: 'GET',
+    headers: {
+      'sessionID': GetSessionID(),
+    },
+  });
+
+  DeleteSessionID();
+}
+
 function GetSessionID() {
   let ca = document.cookie.split(';');
   for(let i = 0; i < ca.length; i++) {
@@ -64,4 +75,4 @@ function RedirectIfNoSessionID() {
   return false;
 }
 
-export { GetSessionID, EnsureSessionID, RedirectIfNoSessionID, DeleteSessionID };
+export { GetSessionID, EndSession, EnsureSessionID, RedirectIfNoSessionID, DeleteSessionID };
