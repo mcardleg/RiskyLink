@@ -24,7 +24,7 @@ function SetSessionID(life) {
 }
 
 function EndSession() {
-  fetch(backendURL + "sessionEnded", {
+  fetch(backendURL + "endSession", {
     method: 'GET',
     headers: {
       'sessionID': GetSessionID(),
