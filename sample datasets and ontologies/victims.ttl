@@ -1,0 +1,72 @@
+<http://riskylink.ie#Murder%2Fmanslaughter%2Finfanticide>
+        a       <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/victims#offence> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/victims#type>
+                "Murder/manslaughter/infanticide"^^<http://www.w3.org/ns/r2rml#string> .
+
+<http://riskylink.ie#Under%2018%20years>
+        a       <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/victims#victimGroup> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/victims#ageBand>
+                "Under 18 years"^^<http://www.w3.org/ns/r2rml#string> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/victims#committedAgainst>
+                <http://riskylink.ie#Rape%20and%20sexual%20assault> , <http://riskylink.ie#Dangerous%20driving%20leading%20to%20death> , <http://riskylink.ie#Murder%2Fmanslaughter%2Finfanticide> , <http://riskylink.ie#Assaults> , <http://riskylink.ie#Harassment%20and%20related%20offences> , <http://riskylink.ie#Attempts%2Fthreats%20to%20murder> , <http://riskylink.ie#Homicide%20offences> , <http://riskylink.ie#Attempts%2Fthreats%20to%20murder%2C%20assaults%2C%20harassments%20and%20related%20offences> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/victims#quantity>
+                "1317"^^<http://www.w3.org/2001/XMLSchema#int> , "2050"^^<http://www.w3.org/2001/XMLSchema#int> , "22"^^<http://www.w3.org/2001/XMLSchema#int> , "9"^^<http://www.w3.org/2001/XMLSchema#int> , "2168"^^<http://www.w3.org/2001/XMLSchema#int> , "96"^^<http://www.w3.org/2001/XMLSchema#int> , "6"^^<http://www.w3.org/2001/XMLSchema#int> , "3"^^<http://www.w3.org/2001/XMLSchema#int> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/victims#year>
+                "2016"^^<http://www.w3.org/2001/XMLSchema#int> .
+
+<http://riskylink.ie#30%20-%2044%20years>
+        a       <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/victims#victimGroup> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/victims#ageBand>
+                "30 - 44 years"^^<http://www.w3.org/ns/r2rml#string> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/victims#committedAgainst>
+                <http://riskylink.ie#Dangerous%20driving%20leading%20to%20death> , <http://riskylink.ie#Murder%2Fmanslaughter%2Finfanticide> , <http://riskylink.ie#Homicide%20offences> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/victims#quantity>
+                "9"^^<http://www.w3.org/2001/XMLSchema#int> , "14"^^<http://www.w3.org/2001/XMLSchema#int> , "23"^^<http://www.w3.org/2001/XMLSchema#int> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/victims#year>
+                "2016"^^<http://www.w3.org/2001/XMLSchema#int> .
+
+<http://riskylink.ie#Attempts%2Fthreats%20to%20murder%2C%20assaults%2C%20harassments%20and%20related%20offences>
+        a       <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/victims#offence> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/victims#type>
+                "Attempts/threats to murder, assaults, harassments and related offences"^^<http://www.w3.org/ns/r2rml#string> .
+
+<http://riskylink.ie#Dangerous%20driving%20leading%20to%20death>
+        a       <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/victims#offence> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/victims#type>
+                "Dangerous driving leading to death"^^<http://www.w3.org/ns/r2rml#string> .
+
+<http://riskylink.ie#Homicide%20offences>
+        a       <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/victims#offence> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/victims#type>
+                "Homicide offences"^^<http://www.w3.org/ns/r2rml#string> .
+
+<http://riskylink.ie#Rape%20and%20sexual%20assault>
+        a       <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/victims#offence> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/victims#type>
+                "Rape and sexual assault"^^<http://www.w3.org/ns/r2rml#string> .
+
+<http://riskylink.ie#18%20-%2029%20years>
+        a       <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/victims#victimGroup> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/victims#ageBand>
+                "18 - 29 years"^^<http://www.w3.org/ns/r2rml#string> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/victims#committedAgainst>
+                <http://riskylink.ie#Assaults> , <http://riskylink.ie#Dangerous%20driving%20leading%20to%20death> , <http://riskylink.ie#Homicide%20offences> , <http://riskylink.ie#Murder%2Fmanslaughter%2Finfanticide> , <http://riskylink.ie#Attempts%2Fthreats%20to%20murder%2C%20assaults%2C%20harassments%20and%20related%20offences> , <http://riskylink.ie#Attempts%2Fthreats%20to%20murder> , <http://riskylink.ie#Harassment%20and%20related%20offences> , <http://riskylink.ie#Rape%20and%20sexual%20assault> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/victims#quantity>
+                "163"^^<http://www.w3.org/2001/XMLSchema#int> , "9"^^<http://www.w3.org/2001/XMLSchema#int> , "4706"^^<http://www.w3.org/2001/XMLSchema#int> , "5162"^^<http://www.w3.org/2001/XMLSchema#int> , "17"^^<http://www.w3.org/2001/XMLSchema#int> , "539"^^<http://www.w3.org/2001/XMLSchema#int> , "26"^^<http://www.w3.org/2001/XMLSchema#int> , "293"^^<http://www.w3.org/2001/XMLSchema#int> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/victims#year>
+                "2016"^^<http://www.w3.org/2001/XMLSchema#int> .
+
+<http://riskylink.ie#Assaults>
+        a       <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/victims#offence> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/victims#type>
+                "Assaults"^^<http://www.w3.org/ns/r2rml#string> .
+
+<http://riskylink.ie#Harassment%20and%20related%20offences>
+        a       <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/victims#offence> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/victims#type>
+                "Harassment and related offences"^^<http://www.w3.org/ns/r2rml#string> .
+
+<http://riskylink.ie#Attempts%2Fthreats%20to%20murder>
+        a       <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/victims#offence> ;
+        <http://www.semanticweb.org/gwenmcardle/ontologies/2022/11/victims#type>
+                "Attempts/threats to murder"^^<http://www.w3.org/ns/r2rml#string> .
